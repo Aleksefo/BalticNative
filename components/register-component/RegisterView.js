@@ -65,24 +65,3 @@ export default class RegisterView extends Component {
     );
   }
 }
-
-/*
-<div className="templateComponentDiv" style={templateStyle}>
-  <p>Welcome registeration</p>
-  <form id="registerForm">
-    <input  name='usernameInput' id="usernameInput" type="text" placeholder="Username"></input>
-    <br/>
-    <input name="passwordInput" id="passwordInput" type="password" placeholder="Password"></input>
-    <br/>
-    <input name="confirmPasswordInput" id="confirmPasswordInput" type="password" placeholder="Confirm Password"></input>
-    <br/>
-    <input name="emailInput" id="emailInput" type="text" placeholder="E-mail"></input>
-    <br/>
-  </form>
-
-  <div>
-  <button onClick={this.handleRegisteration}>Register</button>
-  <button onClick={this.handleRedirectLogin}><Link to="/loginForm">Already a user?</Link></button>
-  </div>
-</div>
-*/
