@@ -12,16 +12,6 @@ export default class UploadView extends React.Component {
     this.geoLocation = new GeoLocation();
   }
 
-  componentWillMount(){
-  }
-
-  componentDidMount(){
-  }
-
-  componentDidUpdate(){
-  }
-
-
   loadFile(event){
     var output = document.getElementById('output');
     output.src = URL.createObjectURL(event.target.files[0]);

@@ -18,7 +18,7 @@ export default class LoginView extends Component {
 
   handleLogin () {
     console.log("handleLogin");
-    
+
   }
 
   handleForgotPassword(){
@@ -53,21 +53,3 @@ export default class LoginView extends Component {
     );
   }
 }
-
-/*
-
-  //this.handleForgotPassword = this.handleForgotPassword.bind(this);
-  //this.handleRedirectRegister = this.handleRedirectRegister.bind(this);
-
-handleLogin () {
-  console.log("handleLogin");
-}
-
-handleForgotPassword(){
-  console.log("handleForgotPassword");
-}
-
-handleRedirectRegister(){
-  console.log("handleRedirectRegister");
-}
-*/
