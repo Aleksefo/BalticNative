@@ -22,8 +22,9 @@ var styles = StyleSheet.create({
     justifyContent: 'center',
   },
   style2: {
-
-
+    fontSize: 20,
+    color: 'white',
+    backgroundColor: 'skyblue'
   }
 });
 

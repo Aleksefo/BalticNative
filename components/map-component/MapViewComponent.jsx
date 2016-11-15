@@ -1,12 +1,4 @@
 import React from 'react';
-import ol from 'openlayers';
-import GeoConverter from '../utils/GeoConverter.jsx';
-//require("openlayers/css/ol.css");
-//If doesn't work, use:
-/*
-var Path = require("path");
-noParse: [Path.join(__dirname, "node_modules/openlayers/dist/ol.js")]
-*/
 
 /*MapViewComponent which shows map with given parameters*/
 class MapViewComponent extends React.Component {
