@@ -1,5 +1,6 @@
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
   "exponentServerPort": 19002,
   "packagerPort": 19003,
   "packagerPid": 86929,
@@ -12,3 +13,12 @@
   "ngrokPid": null
 >>>>>>> c01cdffc3660ff255e92dc29c5fa73eede90ee28
 }
+=======
+  "exponentServerNgrokUrl": "https://5v-ud8.juhanivl.balticnative.exp.direct",
+  "packagerNgrokUrl": "https://packager.5v-ud8.juhanivl.balticnative.exp.direct",
+  "ngrokPid": 5813,
+  "exponentServerPort": 19000,
+  "packagerPort": 19002,
+  "packagerPid": 5799
+}
+>>>>>>> db793604b08e204b1173630c8a977959eef77c96
