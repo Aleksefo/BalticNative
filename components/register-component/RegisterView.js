@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import {Text, View, TextInput } from 'react-native';
 import Button from 'react-native-button';
-
+import styles from '../styles.js'
 //import FormValidator from '../utils/FormValidator';
-
-
+import api from '../utils/serverCommunicator.js'
 export default class RegisterView extends Component {
 
   constructor(props) {
@@ -16,9 +15,14 @@ export default class RegisterView extends Component {
       email: '',
       registered: false
     }
-    //this.formValidator = new FormValidator();
-    this.handleRegisterStateUpdate = this.handleRegisterStateUpdate.bind(this);
     this.handleRegister = this.handleRegister.bind(this);
+  }
+
+  componentWillMount(){
+    api.testServerConnection().then(response => {
+      console.log("callback " , response.status , response.type , response.ok);
+    })
+
   }
 
   handleRegister () {
@@ -31,37 +35,30 @@ export default class RegisterView extends Component {
 
       console.log("registerObject" , registerObject);
 
-      //this.formValidator.validateRegister(registerObject);
-
   }
-
-  handleRegisterStateUpdate(param){
-    console.log("PARAMETER" , param);
-  }
-
 
   render() {
     console.log("render: ",  this.state);
     return (
-      <View style={{width: 200}}>
-        <Text>Registeration</Text>
+      <View style={styles.registerViewContainer}>
+        <View style={styles.registerViewStyle}>
+          <Text>Registeration</Text>
 
-        <TextInput placeholder="Username"  onChangeText={(userName) => this.setState({userName})}></TextInput>
+          <TextInput placeholder="Username"  onChangeText={(userName) => this.setState({userName})}></TextInput>
+          <TextInput placeholder="Password"  onChangeText={(password) => this.setState({password})} secureTextEntry={true}></TextInput>
+          <TextInput placeholder="Confirm Password"  onChangeText={(confirmPassword) => this.setState({confirmPassword})} secureTextEntry={true}></TextInput>
+          <TextInput placeholder="email"  onChangeText={(email) => this.setState({email})}></TextInput>
 
-        <TextInput placeholder="Password"  onChangeText={(password) => this.setState({password})} secureTextEntry={true}></TextInput>
-        <TextInput placeholder="Confirm Password"  onChangeText={(confirmPassword) => this.setState({confirmPassword})} secureTextEntry={true}></TextInput>
-        <TextInput placeholder="email"  onChangeText={(email) => this.setState({email})}></TextInput>
+          <Button
+           style={{fontSize: 20, width: 80 ,  color: 'white', backgroundColor: 'orange'}}
+           styleDisabled={{color: 'red'}}
+           onPress={this.handleRegister}>
+           Register
+         </Button>
 
-        <Button
-         style={{fontSize: 20, width: 80 ,  color: 'white', backgroundColor: 'green'}}
-         styleDisabled={{color: 'red'}}
-         onPress={this.handleRegister}>
-         Register
-       </Button>
-
-
-
+        </View>
       </View>
+
     );
   }
 }

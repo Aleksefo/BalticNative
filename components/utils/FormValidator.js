@@ -1,6 +1,7 @@
 import React from 'react';
 var Validator = require('jsonschema').Validator;
 
+
 export default class FormValidator {
   constructor() {
     let validator = new Validator();

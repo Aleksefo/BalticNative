@@ -21,11 +21,39 @@ var styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  style2: {
-    fontSize: 20,
-    color: 'white',
-    backgroundColor: 'skyblue'
-  }
+  registerViewContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  registerViewStyle: {
+    width: 300,
+    padding: 25
+  },
+
+  scrollView: {
+    width: 200,
+    height: 200,
+		backgroundColor: '#D19FFF',
+	},
+	container: {
+    width: 200,
+    height: 200,
+		backgroundColor: '#FFF497'
+	},
+	title: {
+		fontSize: 30,
+		marginTop: 30,
+		textAlign: 'center'
+	},
+	button: {
+		height: 40,
+		marginTop: 10,
+		justifyContent: 'center',
+		alignItems: 'center',
+		marginLeft: 10,
+		marginRight: 10,
+		backgroundColor: '#EDEDED'
+	}
 });
 
 module.exports = styles;

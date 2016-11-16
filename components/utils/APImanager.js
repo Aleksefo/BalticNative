@@ -1,21 +1,49 @@
-import React from 'react';
+/*USAGE:
+import api from './path_to_apiManager/apiManager.js'
+...
+api.testServerConnection().then(response => {
+  console.log("testServerConnection callback " , response.status , response.type , response.ok);
+});
 
-export default class APImanager {
-  constructor() {
+**/
 
-    this.checkServerStatus = function(){
-      console.log("checkServerStatus");
-      // url (required), options (optional)
-      fetch('http://www.balticapp.fi/lukeB/callback', {
-      	method: 'get'
-      }).then(function(response) {
-        console.log("respoense: " , response.status, response.type);
-        return response
-      }).catch(function(err) {
-        console.log("error: " , err.status , err.type);
-      	// Error :(
-        return err
+var serverCommunicator = {
+  example: function() {
+    return fetch('http://www.balticapp.fi/lukeB/callback', {
+      method: 'get'
+      }) // return a promise! ..important!
+      .then((response) => response.text())
+      .then((responseText) => {
+         return responseText
+      })
+  },
+
+  testServerConnection: function() {
+    return fetch('http://www.balticapp.fi/lukeB/callback',
+    {
+      method: 'get'
+    }) // return a promise! ..important!
+      .then((response) => {
+         return response
+      })
+      .catch((err) => {
+      	return err
       });
-    }
+  },
+
+  getSome: function(param){
+    return fetch('http://balticapp.fi/lukeB/'+param,
+    {
+      method: 'get'
+
+    })
+      .then((response) => {
+         return response
+      })
+      .catch((err) => {
+      	return err
+      });
   }
 }
+
+module.exports = serverCommunicator;
