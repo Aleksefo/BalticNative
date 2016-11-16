@@ -1,7 +1,7 @@
 {
-  "name": "balticnative2",
+  "name": "balticnative",
   "description": "An empty new project",
-  "slug": "balticnative2",
+  "slug": "balticnative",
   "sdkVersion": "11.0.0",
   "version": "1.0.0",
   "orientation": "portrait",

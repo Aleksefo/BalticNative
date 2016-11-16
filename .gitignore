@@ -1,4 +1,6 @@
 # Created by .ignore support plugin (hsz.mobi)
-.exponent/
-.idead/
+.idea/
+node_modules/.staging/
+node_modules/normalize-package-data/test/normalize.js~
+/.exponent/
 /exp.json
