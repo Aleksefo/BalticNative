@@ -2,3 +2,5 @@
 .idea/
 node_modules/.staging/
 node_modules/normalize-package-data/test/normalize.js~
+/.exponent/
+/exp.json
