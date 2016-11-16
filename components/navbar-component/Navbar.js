@@ -12,7 +12,7 @@ import styles from '../styles.js';
 
 
 
-export default class ToolbarAndroidExample extends React.Component {
+export default class MainNavbar extends React.Component {
 
   state = {
     actionText: 'Example app with toolbar component',

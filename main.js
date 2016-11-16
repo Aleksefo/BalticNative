@@ -6,11 +6,11 @@ import {
   View,
 } from 'react-native';
 import styles from './components/styles.js';
-import ToolbarAndroidExample from './components/navbar-component/Navbar'
+import MainNavbar from './components/navbar-component/Navbar'
 
 class App extends React.Component {
   componentDidMount(){
-    console.log("<--------TESTI TOOLBAR HERE------>", ToolbarAndroidExample);
+    
   }
 
   render() {
@@ -18,10 +18,8 @@ class App extends React.Component {
     return (
       <View>
         <Text>Open up main.js to start working on your app!</Text>
-        <ToolbarAndroidExample/>
+        <MainNavbar/>
       </View>
-
-
 
 
     );
