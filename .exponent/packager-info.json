@@ -1,8 +1,8 @@
 {
-  "exponentServerNgrokUrl": "https://5v-ud8.juhanivl.balticnative.exp.direct",
-  "packagerNgrokUrl": "https://packager.5v-ud8.juhanivl.balticnative.exp.direct",
-  "ngrokPid": 6068,
+  "exponentServerNgrokUrl": null,
+  "packagerNgrokUrl": null,
+  "ngrokPid": null,
   "exponentServerPort": 19003,
-  "packagerPort": 19005,
-  "packagerPid": 6054
+  "packagerPort": null,
+  "packagerPid": null
 }
