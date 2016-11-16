@@ -2,5 +2,6 @@
 .idea/
 node_modules/.staging/
 node_modules/normalize-package-data/test/normalize.js~
-/.exponent/
-/.exponent/packager-info.json
+.exponent/
+.exponent/packager-info.json
+.babelrc

@@ -24,6 +24,28 @@ var styles = StyleSheet.create({
   toolbar: {
     backgroundColor: 'rgb(0, 198, 209)',
     height: 56,
+  },
+  scrollView: {
+    backgroundColor: '#D19FFF',
+    flex: 1
+  },
+  container: {
+    flex: 1,
+    backgroundColor: '#FFF497'
+  },
+  title: {
+    fontSize: 30,
+    marginTop: 30,
+    textAlign: 'center'
+  },
+  button: {
+    height: 40,
+    marginTop: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginLeft: 10,
+    marginRight: 10,
+    backgroundColor: '#EDEDED'
   }
 });
 

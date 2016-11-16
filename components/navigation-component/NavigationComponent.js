@@ -11,6 +11,8 @@ import {
 
 import { Components } from 'exponent';
 import MapViewComponent from '../map-component/MapViewComponent';
+import styles from '../styles.js';
+import MainNavbar from '../navbar-component/Navbar'
 
 export default class App extends Component {
 	constructor(props) {
@@ -104,12 +106,14 @@ const Button = ({title, onPress}) => (
 const Page1 = ({ onPress }) => (
 	<View style={styles.container}>
 		<Button onPress={onPress} title='Next' />
+
 	</View>
 )
 const Page2 = ({ onPress, goBack }) => (
 	<View style={styles.container}>
 		<Button onPress={onPress} title='Next' />
 		<Button onPress={goBack} title='Back' />
+
 	</View>
 )
 const Page3 = ({ goBack }) => (
@@ -117,32 +121,6 @@ const Page3 = ({ goBack }) => (
 		<Button title='Back' onPress={goBack} />
 		<MapViewComponent/>
 	</View>
-
-
 )
 
-
-const styles = StyleSheet.create({
-	scrollView: {
-		backgroundColor: '#D19FFF',
-		flex: 1
-	},
-	container: {
-		flex: 1,
-		backgroundColor: '#FFF497'
-	},
-	title: {
-		fontSize: 30,
-		marginTop: 30,
-		textAlign: 'center'
-	},
-	button: {
-		height: 40,
-		marginTop: 10,
-		justifyContent: 'center',
-		alignItems: 'center',
-		marginLeft: 10,
-		marginRight: 10,
-		backgroundColor: '#EDEDED'
-	}
-})
+//<MainNavbar/>

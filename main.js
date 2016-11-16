@@ -18,10 +18,13 @@ class App extends Component {
 
 	render() {
 		return (
-			<NavigationComponent/>,
-			<MainNavbar/>
+			<View><MainNavbar/></View>
+
 		)
 	}
 }
-
+//<MainNavbar/>
 Exponent.registerRootComponent(App);
+/*
+,
+<NavigationComponent/>*/

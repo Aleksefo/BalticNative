@@ -9,7 +9,7 @@ var {
 } = ReactNative;
 import ToolbarAndroid  from 'ToolbarAndroid';
 import styles from '../styles.js';
-
+import NavigationComponent from '../navigation-component/NavigationComponent';
 
 
 export default class MainNavbar extends React.Component {
@@ -35,7 +35,11 @@ export default class MainNavbar extends React.Component {
             //subtitle={this.state.actionText}
             title="Bonus Baltic App" />
           <Text>{this.state.actionText}</Text>
-        </View>
+
+
+
+        </View>,
+        <NavigationComponent/>
     );
   }
 
