@@ -17,5 +17,13 @@
   },
   "packagerOpts": {
     "assetExts": ["ttf", "mp4"]
+  },
+  "android": {
+    "package": "com.pluralsight.pluralsight",
+    "config": {
+      "googleMaps": {
+        "apiKey": "AIzaSyCnf9j0MW8OZb1QGYROv0fI84O0qtznK6c"
+      }
+    }
   }
 }
