@@ -21,9 +21,9 @@ var styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  style2: {
-
-
+  toolbar: {
+    backgroundColor: 'rgb(0, 198, 209)',
+    height: 56,
   }
 });
 
