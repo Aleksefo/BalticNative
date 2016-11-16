@@ -1,3 +1,4 @@
+import MainNavbar from './components/navbar-component/Navbar'
 import Exponent from 'exponent';
 import React, {Component} from 'react';
 import {
@@ -11,41 +12,29 @@ import {
 import styles from './components/styles.js';
 import api from './components/utils/apiManager.js'
 import Button from 'react-native-button';
+import { Components } from 'exponent';
+import NavigationComponent from './components/navigation-component/NavigationComponent';
 
 class App extends Component {
+constructor(props) {
+	super(props)
 
-	constructor(props) {
-		super(props)
+	this.handleGet = this.handleGet.bind(this);
+}
 
-		this.handleGet = this.handleGet.bind(this);
-	}
+handleGet(){
+	console.log("***handleGet***");
 
-	handleGet(){
-		console.log("***handleGet***");
-
-		api.getSome("category").then(response => {
-			console.log("getSome callback category " , response);
-		});
-	}
+	api.getSome("category").then(response => {
+		console.log("getSome callback category " , response);
+	});
+}
 
 	render() {
 		return (
-			<View>
-				<Text>main.js</Text>
+			<View><MainNavbar/></View>
 
-
-				<Button
-				 style={{fontSize: 20, width: 80 ,  color: 'white', backgroundColor: 'skyblue'}}
-				 styleDisabled={{color: 'red'}}
-				 onPress={this.handleGet}>
-				 Get
-			 </Button>
-
-
-
-			</View>
 		)
 	}
 }
-
 Exponent.registerRootComponent(App);
