@@ -1,7 +1,7 @@
 'use strict';
 import React, { Component } from 'react';
 import Button from 'react-native-button';
-import MapViewComponent from '../map-component/MapViewComponent';
+import styles from '../../resources/styles.js'
 
 import  {
   StyleSheet,
@@ -20,12 +20,11 @@ class LoginPage extends Component {
 
 
   render() {
-    console.log("render loginpage:");
     return (
       <Navigator
           renderScene={this.renderScene.bind(this)}
           navigationBar={
-            <Navigator.NavigationBar style={{backgroundColor: '#246dd5', alignItems: 'center'}}
+            <Navigator.NavigationBar style={styles.navbarParentStyle}
                 routeMapper={NavigationBarRouteMapper} />
           } />
     );
@@ -35,13 +34,12 @@ class LoginPage extends Component {
       <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
         <TouchableHighlight
             onPress={this.gotoNext.bind(this)}>
-          <Text style={{color: 'red'}}>LoginPage aka MapView</Text>
+          <Text>Press to MapView</Text>
         </TouchableHighlight>
       </View>
     );
   }
   gotoNext() {
-    console.log("go to next!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
     this.props.navigator.push({
       id: 'MainPage',
       name: 'Main',
@@ -51,12 +49,7 @@ class LoginPage extends Component {
 
 var NavigationBarRouteMapper = {
   LeftButton(route, navigator, index, navState) {
-    return (
-      <Image
-       style={{width: 48, height: 48}}
-          source={require('../../resources/ic_menu_white_24dp.png')}
-        />
-    );
+    return null;
   },
 
   RightButton(route, navigator, index, navState) {
@@ -64,8 +57,8 @@ var NavigationBarRouteMapper = {
   },
   Title(route, navigator, index, navState) {
     return (
-      <TouchableOpacity style={{flex: 1, justifyContent: 'center'}}>
-        <Text style={{color: 'white', margin: 10, fontSize: 16}}>
+      <TouchableOpacity style={styles.navbarStyle}>
+        <Text style={styles.navbarHeader}>
            Balticapp Login
         </Text>
       </TouchableOpacity>

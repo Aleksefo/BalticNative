@@ -15,30 +15,28 @@ alignItems: 'center', flex-start' , 'flex-end'
 */
 
 var styles = StyleSheet.create({
-  navigator: {
-   flex: 1,
- },
- scrollView: {
-   marginTop: 64
- },
- row: {
-   padding: 15,
-   backgroundColor: 'white',
-   borderBottomWidth: 1 / PixelRatio.get(),
-   borderBottomColor: '#CDCDCD',
- },
- rowText: {
-   fontSize: 17,
- },
- buttonText: {
-   fontSize: 17,
-   fontWeight: '500',
- },
-  style1: {
+  navbarParentStyle: {
+    backgroundColor: 'rgb(0, 198, 209)',
+    alignItems: 'center'
+  },
+  navbarStyle: {
     flex: 1,
-    backgroundColor: '#fff',
+    justifyContent: 'center'
+  },
+  navbarHeader:{
+    color: 'white',
+    margin: 10,
+    fontSize: 16
+  },
+  splash: {
+    flex: 1,
+    backgroundColor: 'rgb(0, 198, 209)',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'center'
+  },
+  headerStyle: {
+    color: 'white',
+    fontSize: 32
   },
   registerViewContainer: {
     alignItems: 'center',
@@ -47,7 +45,7 @@ var styles = StyleSheet.create({
   registerViewStyle: {
     width: 300,
     padding: 25
-  },
+  }, //UNTIL NOW ALL ARE USED
 	container: {
     width: 200,
     height: 200,

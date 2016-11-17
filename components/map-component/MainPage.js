@@ -2,7 +2,7 @@
 
 import React, { Component } from 'react';
 import Button from 'react-native-button';
-import MapViewComponent from '../map-component/MapViewComponent';
+import MapViewComponent from './MapViewComponent';
 
 import  {
   StyleSheet,
@@ -28,22 +28,13 @@ class MainPage extends Component {
   }
   renderScene(route, navigator) {
     return (
-      <View>
-      <View style={{flex: 1, alignItems: 'center', justifyContent:'center'}}>
-        <TouchableHighlight style={{backgroundColor: 'yellow', padding: 10}}
-            onPress={this.gotoPersonPage.bind(this)}>
-          <Text style={{color: 'green'}}>MainPage</Text>
-        </TouchableHighlight>
-      </View>
+      <View style={{marginTop: 50}}>
 
-      <View>
-        <MapViewComponent/>
-      </View>
+        <View>
+          <MapViewComponent/>
+        </View>
 
       </View>
-
-
-
     );
   }
   gotoPersonPage() {
@@ -85,3 +76,9 @@ var NavigationBarRouteMapper = {
 };
 
 module.exports = MainPage;
+/**<View>
+  <TouchableHighlight
+      onPress={this.gotoPersonPage.bind(this)}>
+    <Text style={{color: 'green'}}>MainPage</Text>
+  </TouchableHighlight>
+</View>*/

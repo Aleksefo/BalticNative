@@ -46,7 +46,7 @@ class SearchPage extends Component {
       <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
         <TouchableOpacity
             onPress={this.gotoNext.bind(this)}>
-          <Text>Don't push me </Text>
+          <Text>Show results</Text>
         </TouchableOpacity>
       </View>
     );

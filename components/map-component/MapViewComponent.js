@@ -96,7 +96,7 @@ export default class MapViewComponent extends Component {
 
 	render() {
 		return (
-			<View style={{marginTop: 30}}>
+			<View>
 			<MapView
 				style={styles.container}
 				region={this.state.region}

@@ -16,24 +16,16 @@ import MainNavbar from '../navbar-component/MainNavbar';
 import MapViewComponent from '../map-component/MapViewComponent';
 import RegisterView from '../register-component/RegisterView';
 
-import  LoginPage from './LoginPage.js';
-import  MainPage from './MainPage.js';
-import 	SearchPage  from './SearchPage.js';
+import  LoginPage from '../login-component/LoginPage.js';
+import  MainPage from '../map-component/MainPage.js';
+import 	SearchPage  from '../search-component/SearchPage.js';
 import  SplashPage from './SplashPage.js';
 import  NoNavigatorPage from './NoNavigatorPage.js';
-
-//import styles from '../../resources/styles.js';
-
 
 export default class LandingComponent extends Component {
 
 constructor(props){
   super(props);
-	this.componentChanged = this.componentChanged.bind(this);
- }
-
- componentChanged (param) {
-	 console.log("what are you saying: " , param)
  }
 
  render() {
@@ -48,8 +40,6 @@ constructor(props){
              }
              return Navigator.SceneConfigs.FloatFromRight;
            }} />
-
-
   );
 }
 
@@ -87,46 +77,17 @@ renderScene(route, navigator) {
     );
   }
   return this.noRoute(navigator);
-
 }
 
 noRoute(navigator) {
     return (
-      <View style={{flex: 1, alignItems: 'stretch', justifyContent: 'center'}}>
-        <TouchableOpacity style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}
+      <View>
+        <TouchableOpacity
             onPress={() => navigator.pop()}>
-          <Text style={{color: 'red', fontWeight: 'bold'}}>LandingComponent index.js noRoute</Text>
+          <Text>LandingComponent noRoute</Text>
         </TouchableOpacity>
       </View>
     );
   }
 
 }
-
-var styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
-});
-
-/**
-<View>
-<MainNavbar
-	componentChangedCallback = {this.componentChanged}
-	testing = {"hello handsome"}/>
-</View>
-
-*/

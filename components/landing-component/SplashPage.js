@@ -1,18 +1,17 @@
 'use strict';
 import React, { Component } from 'react';
 import Button from 'react-native-button';
-
+import styles from '../../resources/styles.js'
 import  {
-  StyleSheet,
   View,
   Text,
   Navigator,
-  TouchableHighlight,
-  TouchableOpacity,
 } from 'react-native';
 
 class SplashPage extends Component {
+
   componentWillMount() {
+    //After second navigate to login
     var navigator = this.props.navigator;
     setTimeout(() => {
       navigator.replace({
@@ -22,8 +21,8 @@ class SplashPage extends Component {
   }
   render() {
     return (
-      <View style={{flex: 1, backgroundColor: '#246dd5', alignItems: 'center', justifyContent: 'center'}}>
-        <Text style={{color: 'white', fontSize: 32,}}>Balticapp</Text>
+      <View style={styles.splash}>
+        <Text style={styles.headerStyle}>Balticapp</Text>
       </View>
     );
   }
