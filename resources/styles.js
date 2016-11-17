@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, NavigationExperimental, PixelRatio, ScrollView, Text, TouchableHighlight  } from 'react-native';
 
 /*
 color: 'blue',
@@ -15,6 +15,25 @@ alignItems: 'center', flex-start' , 'flex-end'
 */
 
 var styles = StyleSheet.create({
+  navigator: {
+   flex: 1,
+ },
+ scrollView: {
+   marginTop: 64
+ },
+ row: {
+   padding: 15,
+   backgroundColor: 'white',
+   borderBottomWidth: 1 / PixelRatio.get(),
+   borderBottomColor: '#CDCDCD',
+ },
+ rowText: {
+   fontSize: 17,
+ },
+ buttonText: {
+   fontSize: 17,
+   fontWeight: '500',
+ },
   style1: {
     flex: 1,
     backgroundColor: '#fff',
@@ -29,12 +48,6 @@ var styles = StyleSheet.create({
     width: 300,
     padding: 25
   },
-
-  scrollView: {
-    width: 200,
-    height: 200,
-		backgroundColor: '#D19FFF',
-	},
 	container: {
     width: 200,
     height: 200,

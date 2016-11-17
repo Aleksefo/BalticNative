@@ -5,6 +5,10 @@ api.testServerConnection().then(response => {
   console.log("testServerConnection callback " , response.status , response.type , response.ok);
 });
 
+api.getSome("category").then(response => {
+  console.log("getSome callback category " , response);
+});
+
 **/
 
 var serverCommunicator = {
@@ -19,10 +23,7 @@ var serverCommunicator = {
   },
 
   testServerConnection: function() {
-    return fetch('http://www.balticapp.fi/lukeB/callback',
-    {
-      method: 'get'
-    }) // return a promise! ..important!
+    return fetch('http://www.balticapp.fi/lukeB/callback', {method: 'get'}) // return a promise! ..important!
       .then((response) => {
          return response
       })
