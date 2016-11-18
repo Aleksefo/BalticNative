@@ -11,33 +11,23 @@ import {
 	ScrollView
 } from 'react-native';
 
-import MainNavbar from '../navbar-component/MainNavbar';
-
-import MapViewComponent from '../map-component/MapViewComponent';
+//Import components where to navigate
 import RegisterView from '../register-component/RegisterView';
-
-import  LoginPage from './LoginPage.js';
-import  MainPage from './MainPage.js';
-import 	SearchPage  from './SearchPage.js';
+import  LoginPage from '../login-component/LoginPage.js';
+import  MainPage from '../map-component/MainPage.js';
+import 	SearchPage  from '../search-component/SearchPage.js';
 import  SplashPage from './SplashPage.js';
 import  NoNavigatorPage from './NoNavigatorPage.js';
-
-//import styles from '../../resources/styles.js';
-
 
 export default class LandingComponent extends Component {
 
 constructor(props){
   super(props);
-	this.componentChanged = this.componentChanged.bind(this);
- }
-
- componentChanged (param) {
-	 console.log("what are you saying: " , param)
  }
 
  render() {
   return (
+		//Navigator which holds navigation bar and renderscene where we render  navigated component
 		<Navigator
 					style={{marginTop: 30}}
            initialRoute={{id: 'SplashPage', name: 'Index'}}
@@ -48,13 +38,11 @@ constructor(props){
              }
              return Navigator.SceneConfigs.FloatFromRight;
            }} />
-
-
   );
 }
 
+//renderScene function gets route and decides based on route's id what component to render
 renderScene(route, navigator) {
-	console.log("renderScene: " , route);
   var routeId = route.id;
   if (routeId === 'SplashPage') {
     return (
@@ -87,46 +75,18 @@ renderScene(route, navigator) {
     );
   }
   return this.noRoute(navigator);
-
 }
 
+//LandingComponent's route to a view with no navigator view
 noRoute(navigator) {
     return (
-      <View style={{flex: 1, alignItems: 'stretch', justifyContent: 'center'}}>
-        <TouchableOpacity style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}
+      <View>
+        <TouchableOpacity
             onPress={() => navigator.pop()}>
-          <Text style={{color: 'red', fontWeight: 'bold'}}>LandingComponent index.js noRoute</Text>
+          <Text>LandingComponent noRoute view</Text>
         </TouchableOpacity>
       </View>
     );
   }
 
 }
-
-var styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
-});
-
-/**
-<View>
-<MainNavbar
-	componentChangedCallback = {this.componentChanged}
-	testing = {"hello handsome"}/>
-</View>
-
-*/

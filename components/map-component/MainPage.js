@@ -1,11 +1,14 @@
 'use strict';
 
+/*MainPage of the application. Holds navigation to other compoents via drawer or serach icon
+Has Maview ad a child component*/
+
 import React, { Component } from 'react';
 import Button from 'react-native-button';
-import MapViewComponent from '../map-component/MapViewComponent';
+import MapViewComponent from './MapViewComponent';
+import styles from '../../resources/styles.js'
 
 import  {
-  StyleSheet,
   View,
   Text,
   Navigator,
@@ -15,42 +18,26 @@ import  {
 
 class MainPage extends Component {
   render() {
-    console.log("render MainPage");
     return (
       <Navigator
           renderScene={this.renderScene.bind(this)}
           navigator={this.props.navigator}
           navigationBar={
-            <Navigator.NavigationBar style={{backgroundColor: '#246dd5'}}
+            <Navigator.NavigationBar style={styles.navbarParentStyle}
                 routeMapper={NavigationBarRouteMapper} />
           } />
     );
   }
   renderScene(route, navigator) {
     return (
-      <View>
-      <View style={{flex: 1, alignItems: 'center', justifyContent:'center'}}>
-        <TouchableHighlight style={{backgroundColor: 'yellow', padding: 10}}
-            onPress={this.gotoPersonPage.bind(this)}>
-          <Text style={{color: 'green'}}>MainPage</Text>
-        </TouchableHighlight>
-      </View>
+      <View style={{marginTop: 50}}>
 
-      <View>
-        <MapViewComponent/>
-      </View>
+        <View>
+          <MapViewComponent/>
+        </View>
 
       </View>
-
-
-
     );
-  }
-  gotoPersonPage() {
-    this.props.navigator.push({
-      id: 'SearchPage',
-      name: 'SearchPage',
-    });
   }
 }
 
@@ -75,8 +62,8 @@ var NavigationBarRouteMapper = {
   },
   Title(route, navigator, index, navState) {
     return (
-      <TouchableOpacity style={{flex: 1, justifyContent: 'center'}}>
-        <Text style={{color: 'white', margin: 10, fontSize: 16}}>
+      <TouchableOpacity style={styles.navbarStyle}>
+        <Text style={styles.navbarHeader}>
            Balticapp Main
         </Text>
       </TouchableOpacity>
@@ -85,3 +72,16 @@ var NavigationBarRouteMapper = {
 };
 
 module.exports = MainPage;
+/*
+gotoSearchPage() {
+  this.props.navigator.push({
+    id: 'SearchPage',
+    name: 'SearchPage',
+  });
+}
+*<View>
+  <TouchableHighlight
+      onPress={this.gotoSearchPage.bind(this)}>
+    <Text style={{color: 'green'}}>MainPage</Text>
+  </TouchableHighlight>
+</View>*/

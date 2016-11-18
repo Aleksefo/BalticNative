@@ -17,8 +17,8 @@ class App extends Component {
 
 	render() {
 		return (
+        //Start application from LandingComponent where handle the navigation
         <LandingComponent/>
-
 		)
 	}
 }
