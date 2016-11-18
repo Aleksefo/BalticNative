@@ -79,9 +79,8 @@ export default class MapViewComponent extends Component {
 
 	render() {
 		return (
-			<View>
 			<MapView
-				style={styles.mapContainer}
+				style={{flex: 1}}
 				region={this.state.region}
 				onRegionChange={this.onRegionChange}
 				onPress={this.onPress}
@@ -99,7 +98,6 @@ export default class MapViewComponent extends Component {
 			 ))}
 
 			</MapView>
-			</View>
 
 		);
 	}
