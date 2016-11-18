@@ -3,7 +3,7 @@ import {Text, View, TextInput } from 'react-native';
 import Button from 'react-native-button';
 import styles from '../../resources/styles.js'
 //import FormValidator from '../utils/FormValidator';
-import api from '../utils/apiManager.js'
+import api from '../utils/APImanager.js'
 export default class RegisterView extends Component {
 
   constructor(props) {
