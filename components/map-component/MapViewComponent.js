@@ -3,25 +3,11 @@ import Exponent from 'exponent';
 
 import { Components } from 'exponent';
 import {
-	StyleSheet,
-	Text,
 	View,
-	StatusBar,
-	TouchableHighlight,
-	NavigationExperimental,
-	ScrollView
+	StatusBar
 } from 'react-native';
 import MapView from 'react-native-maps';
-
-
-const styles = StyleSheet.create({
- container: {
-   height: 400,
-   width: 360,
-   ...StyleSheet.absoluteFillObject,
-   alignItems: 'center',
- }
-});
+import styles from '../../resources/styles.js'
 
 export default class MapViewComponent extends Component {
 	constructor(props) {
@@ -60,7 +46,6 @@ export default class MapViewComponent extends Component {
     this.onMarkerPress = this.onMarkerPress.bind(this);
   }
 
-
 	static route = {
 		navigationBar: {
 			visible: false,
@@ -92,13 +77,11 @@ export default class MapViewComponent extends Component {
 
   }
 
-
-
 	render() {
 		return (
 			<View>
 			<MapView
-				style={styles.container}
+				style={styles.mapContainer}
 				region={this.state.region}
 				onRegionChange={this.onRegionChange}
 				onPress={this.onPress}

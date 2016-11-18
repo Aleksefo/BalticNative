@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 import Button from 'react-native-button';
 
 import  {
-  StyleSheet,
   View,
   Text,
   Navigator,

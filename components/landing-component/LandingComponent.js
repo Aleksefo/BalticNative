@@ -11,11 +11,8 @@ import {
 	ScrollView
 } from 'react-native';
 
-import MainNavbar from '../navbar-component/MainNavbar';
-
-import MapViewComponent from '../map-component/MapViewComponent';
+//Import components where to navigate
 import RegisterView from '../register-component/RegisterView';
-
 import  LoginPage from '../login-component/LoginPage.js';
 import  MainPage from '../map-component/MainPage.js';
 import 	SearchPage  from '../search-component/SearchPage.js';
@@ -30,6 +27,7 @@ constructor(props){
 
  render() {
   return (
+		//Navigator which holds navigation bar and renderscene where we render  navigated component
 		<Navigator
 					style={{marginTop: 30}}
            initialRoute={{id: 'SplashPage', name: 'Index'}}
@@ -43,8 +41,8 @@ constructor(props){
   );
 }
 
+//renderScene function gets route and decides based on route's id what component to render
 renderScene(route, navigator) {
-	console.log("renderScene: " , route);
   var routeId = route.id;
   if (routeId === 'SplashPage') {
     return (
@@ -79,12 +77,13 @@ renderScene(route, navigator) {
   return this.noRoute(navigator);
 }
 
+//LandingComponent's route to a view with no navigator view
 noRoute(navigator) {
     return (
       <View>
         <TouchableOpacity
             onPress={() => navigator.pop()}>
-          <Text>LandingComponent noRoute</Text>
+          <Text>LandingComponent noRoute view</Text>
         </TouchableOpacity>
       </View>
     );

@@ -45,6 +45,12 @@ var styles = StyleSheet.create({
   registerViewStyle: {
     width: 300,
     padding: 25
+  },
+  mapContainer: {
+    height: 400,
+    width: 360,
+    ...StyleSheet.absoluteFillObject,
+    alignItems: 'center',
   }, //UNTIL NOW ALL ARE USED
 	container: {
     width: 200,

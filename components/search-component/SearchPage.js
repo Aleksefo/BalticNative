@@ -2,6 +2,8 @@
 
 import React, { Component } from 'react';
 import Button from 'react-native-button';
+import styles from '../../resources/styles.js'
+
 
 import  {
   StyleSheet,
@@ -36,7 +38,7 @@ class SearchPage extends Component {
           renderScene={this.renderScene.bind(this)}
           navigator={this.props.navigator}
           navigationBar={
-            <Navigator.NavigationBar style={{backgroundColor: '#246dd5'}}
+            <Navigator.NavigationBar style={styles.navbarParentStyle}
                 routeMapper={NavigationBarRouteMapper} />
           } />
     );
