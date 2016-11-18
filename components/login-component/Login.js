@@ -2,29 +2,40 @@
  * Created by Antti on 28.10.2016.
  */
 import React, { PropTypes as T } from 'react'
-import {ButtonToolbar, Button} from 'react-bootstrap'
-import AuthService from 'utils/AuthService'
-import styles from './styles.module.css'
-import LoginForm from './LoginView.jsx';
+import Auth0 from 'auth0-react-native';
 
-export class Login extends React.Component {
-    static propTypes = {
-        location: T.object,
-        auth: T.instanceOf(AuthService)
-    }
+const auth0 = new Auth0({
+    domain: 'balticapp.eu.auth0.com',
+    clientID: 'voG0W2Q9lEfTxdUlKkGANJTjdpXQkCBc'
+});
 
-    render() {
-        const { auth } = this.props
-        return (
-            <div className={styles.root}>
-    <h2>Login</h2>
-                <LoginForm/>
-        <ButtonToolbar className={styles.toolbar}>
-    <Button bsStyle="primary" onClick={auth.login.bind(this)}>Login</Button>
-        </ButtonToolbar>
-        </div>
-    )
+var loginHandler  = {
+    getRequest: function() {
+        return fetch('http://www.balticapp.fi/lukeB/authzero', {method: 'get'}) // return a promise! ..important!
+            .then((response) => {
+                return response
+            })
+            .catch((err) => {
+                return err
+            });
+    },
+    handleLogin: function() {
+        auth0.login({
+            connection: 'google-oauth2',
+        }).then((response) => {
+            console.log("response:" + response);
+
+            const {auth: {id_token, access_token}, profile} = response;
+            // Use id_token, access_token, profile.
+        }).catch(function(error){
+            console.log("**", error);
+        });
     }
 }
+module.exports = loginHandler;
 
-export default Login;
+// We do not support callbacks.
+// Use Promise everywhere.
+
+
+
