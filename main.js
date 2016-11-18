@@ -10,15 +10,15 @@ import MainNavbar from './components/navbar-component/Navbar'
 
 class App extends React.Component {
   componentDidMount(){
-    
+
   }
 
   render() {
 
     return (
       <View>
-        <Text>Open up main.js to start working on your app!</Text>
         <MainNavbar/>
+        <Text>Open up main.js to start working on your app!</Text>
       </View>
 
 

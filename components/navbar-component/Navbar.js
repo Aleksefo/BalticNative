@@ -5,11 +5,11 @@ import ReactNative from 'react-native';
 var {
   StyleSheet,
   Text,
+  TextInput,
   View,
 } = ReactNative;
 import ToolbarAndroid  from 'ToolbarAndroid';
 import styles from '../styles.js';
-
 
 
 export default class MainNavbar extends React.Component {
@@ -19,6 +19,7 @@ export default class MainNavbar extends React.Component {
     toolbarSwitch: false,
     colorProps: {
       titleColor: '#3b5998',
+      text: 'Useless Placeholder',
       subtitleColor: '#6a7180',
     },
   };
@@ -34,6 +35,25 @@ export default class MainNavbar extends React.Component {
             style={styles.toolbar}
             //subtitle={this.state.actionText}
             title="Bonus Baltic App" />
+
+            <TextInput
+            style={{height: 40, borderColor: 'gray', borderWidth: 1}}
+            onChangeText={(text) => this.setState({text})}
+            value={this.state.text}
+            />
+
+            <ToolbarAndroid
+            style={styles.toolbar}
+            title={
+              <TextInput
+            style={{height: 40, borderColor: 'gray', borderWidth: 1}}
+            onChangeText={(text) => this.setState({text})}
+            value={this.state.text}
+            />}
+
+              />
+
+
           <Text>{this.state.actionText}</Text>
         </View>
     );
@@ -48,7 +68,7 @@ export default class MainNavbar extends React.Component {
 }
 
 var toolbarActions = [
-{title: 'GPS', icon: require('image!ic_gps_fixed_white_24dp'), show: 'always'},
-{title: 'Filter'},
-{title: 'Search', icon: require('image!ic_search_white_24dp'), show: 'always'},
+  {title: 'Search', icon: require('../../resources/ic_search_white_24dp.png'), show: 'always'},
+  {title: 'GPS', icon: require('../../resources/ic_gps_fixed_white_24dp.png'), show: 'always'},
+  //{title: 'Filter'},
 ];
