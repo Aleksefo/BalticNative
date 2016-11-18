@@ -1,29 +1,25 @@
 import Exponent from 'exponent';
-import React from 'react';
-import {
+import React, {Component} from 'react';
+import ReactNative from 'react-native';
+var {
   StyleSheet,
   Text,
   View,
-} from 'react-native';
-import styles from './components/styles.js';
-import MainNavbar from './components/navbar-component/Navbar'
+} = ReactNative;
+import { Components } from 'exponent';
+import LandingComponent from './components/landing-component/LandingComponent';
 
-class App extends React.Component {
-  componentDidMount(){
+class App extends Component {
+	constructor(props) {
+		super(props)
 
-  }
+	}
 
-  render() {
-
-    return (
-      <View>
-        <MainNavbar/>
-        <Text>Open up main.js to start working on your app!</Text>
-      </View>
-
-
-    );
-  }
+	render() {
+		return (
+        //Start application from LandingComponent where handle the navigation
+        <LandingComponent/>
+		)
+	}
 }
-
 Exponent.registerRootComponent(App);
