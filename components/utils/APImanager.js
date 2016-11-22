@@ -29,6 +29,7 @@ var serverCommunicator = {
       })
       .catch((err) => {
       	return err
+        
       });
   },
 
