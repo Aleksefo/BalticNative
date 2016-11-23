@@ -7,6 +7,7 @@ import React, {Component} from 'react';
 import Button from 'react-native-button';
 import MapViewComponent from './MapViewComponent';
 import styles from '../../resources/styles.js'
+import CameraViewComponent from '../camera-component/CameraViewComponent';
 
 import  {
 	View,
@@ -31,6 +32,9 @@ class MainPage extends Component {
 				</View>
 				<View style={{flex: 16, backgroundColor: 'powderblue'}}>
 					<MapViewComponent/>
+				</View>
+				<View style={{flex: 1, backgroundColor: 'powderblue'}}>
+					<CameraViewComponent/>
 				</View>
 			</View>
 		);
