@@ -36,9 +36,19 @@ class MainPage extends Component {
           <MapViewComponent/>
         </View>
 
+  
+
       </View>
     );
   }
+
+  gotoProfile() {
+    this.props.navigator.push({
+      id: 'ProfilePage',
+      name: 'Profile',
+    });
+  }
+
 }
 
 var NavigationBarRouteMapper = {
