@@ -20,7 +20,6 @@ var styles = StyleSheet.create({
     alignItems: 'center'
   },
   navbarStyle: {
-    flex: 1,
     justifyContent: 'center'
   },
   navbarHeader:{

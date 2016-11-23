@@ -1,8 +1,7 @@
 # Created by .ignore support plugin (hsz.mobi)
 .idea/
+.exponent/
+.babelrc
 node_modules/.staging/
 node_modules/normalize-package-data/test/normalize.js~
-
-/exp.json
 .exponent/packager-info.json
-.babelrc

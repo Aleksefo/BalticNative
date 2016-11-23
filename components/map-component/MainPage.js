@@ -1,9 +1,9 @@
 'use strict';
 
 /*MainPage of the application. Holds navigation to other compoents via drawer or serach icon
-Has Maview ad a child component*/
+ Has Maview ad a child component*/
 
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import Button from 'react-native-button';
 import MapViewComponent from './MapViewComponent';
 import styles from '../../resources/styles.js';
@@ -30,28 +30,33 @@ class MainPage extends Component {
        this.drawer.openDrawer();
    }*/
 
-  render() {
+	render() {
+		return (
+			<View style={{flex: 1}}>
+				<View style={{flex: 1}}>
+					<Navigator
+						renderScene={this.renderScene.bind(this)}
+						navigator={this.props.navigator}
+						navigationBar={
+							<Navigator.NavigationBar style={styles.navbarParentStyle}
+													 routeMapper={NavigationBarRouteMapper}/>
+						}/>
+				</View>
+				<View style={{flex: 12, backgroundColor: 'powderblue'}}>
+					<MapViewComponent/>
+				</View>
+			</View>
+		);
+	}
 
-    return (
-          <Navigator
-              renderScene={this.renderScene.bind(this)}
-              navigator={this.props.navigator}
-              navigationBar={
-                <Navigator.NavigationBar style={styles.navbarParentStyle}
-                    routeMapper={NavigationBarRouteMapper} />
-              } />
-    );
-  }
-  renderScene(route, navigator) {
+	renderScene(route, navigator) {
+		return (
+			<View style={{marginTop: 50}}>
 
-    return (
-      <View style={{marginTop: 50}}>
 
-          <MapViewComponent/>
-
-      </View>
-    );
-  }
+			</View>
+		);
+	}
 }
 
 
@@ -105,8 +110,8 @@ function sayHello(){
 
 }
 var navigationView = (
-      <View style={{backgroundColor: "blue" , width: 300, height: 300}}>
-      <Text>navigationView</Text>
+      <View style={{backgroundColor: "white" , width: 70, height: 50}}>
+      <Text>Drawer</Text>
 
       </View>
    );
@@ -118,13 +123,13 @@ var NavigationBarRouteMapper = {
 
   LeftButton(route, navigator, index, navState) {
     return (
-      <View style={{backgroundColor: "green" , width: 50, height: 30}}>
+      <View style={{backgroundColor: "white" , width: 70, height: 50}}>
       <DrawerLayoutAndroid
      drawerWidth={300}
      ref={(_drawer) => this.drawer = _drawer}
      drawerPosition={DrawerLayoutAndroid.positions.Left}
      renderNavigationView={() => navigationView}>
-     <View style={{backgroundColor: "green"}}>
+     <View>
        <TouchableHighlight onPress={this.openDrawer.bind(this)}>
          <Text>{'Open Drawer'}</Text>
        </TouchableHighlight>
@@ -155,15 +160,15 @@ var NavigationBarRouteMapper = {
 
 module.exports = MainPage;
 /*
-gotoSearchPage() {
-  this.props.navigator.push({
-    id: 'SearchPage',
-    name: 'SearchPage',
-  });
-}
-*<View>
-  <TouchableHighlight
-      onPress={this.gotoSearchPage.bind(this)}>
-    <Text style={{color: 'green'}}>MainPage</Text>
-  </TouchableHighlight>
-</View>*/
+ gotoSearchPage() {
+ this.props.navigator.push({
+ id: 'SearchPage',
+ name: 'SearchPage',
+ });
+ }
+ *<View>
+ <TouchableHighlight
+ onPress={this.gotoSearchPage.bind(this)}>
+ <Text style={{color: 'green'}}>MainPage</Text>
+ </TouchableHighlight>
+ </View>*/

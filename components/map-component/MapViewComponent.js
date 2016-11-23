@@ -74,14 +74,12 @@ export default class MapViewComponent extends Component {
 
   onMarkerPress(marker , region){
     console.log("onMarkerPress_" , marker);
-
   }
 
 	render() {
 		return (
-			<View>
 			<MapView
-				style={styles.mapContainer}
+				style={{flex: 1}}
 				region={this.state.region}
 				onRegionChange={this.onRegionChange}
 				onPress={this.onPress}
@@ -99,35 +97,7 @@ export default class MapViewComponent extends Component {
 			 ))}
 
 			</MapView>
-			</View>
 
 		);
 	}
 }
-
-/*<View>
-        <View style ={styles.container}>
-
-           <MapView
-             style={styles.container}
-             region={this.state.region}
-             onRegionChange={this.onRegionChange}
-             onPress={this.onPress}
-             onMarkerPress={this.onMarkerPress}
-             loadingEnabled={true}
-             showsUserLocation={true}
-           >
-
-           {this.state.markers.map(marker => (
-             <MapView.Marker
-              coordinate={marker.latlng}
-              title={marker.title}
-              description={marker.description}
-              />
-            ))}
-
-           </MapView>
-
-         </View>
-
-      </View>**/

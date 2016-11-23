@@ -4,6 +4,7 @@ import Button from 'react-native-button';
 import styles from '../../resources/styles.js'
 //import FormValidator from '../utils/FormValidator';
 import api from '../utils/APIManager.js'
+
 export default class RegisterView extends Component {
 
   constructor(props) {
