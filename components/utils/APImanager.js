@@ -12,16 +12,6 @@ api.getSome("category").then(response => {
 **/
 
 var serverCommunicator = {
-  example: function() {
-    return fetch('http://www.balticapp.fi/lukeB/callback', {
-      method: 'get'
-      }) // return a promise! ..important!
-      .then((response) => response.text())
-      .then((responseText) => {
-         return responseText
-      })
-  },
-
   testServerConnection: function() {
     return fetch('http://www.balticapp.fi/lukeB/callback', {method: 'get'}) // return a promise! ..important!
       .then((response) => {
@@ -44,9 +34,67 @@ var serverCommunicator = {
       .catch((err) => {
       	return err
       });
-  }
+  },
+
+  createSome: function(destination, param){
+    return fetch('http://www.balticapp.fi/lukeB/'+destination+'/create' , {
+      method: 'post',
+	     body: JSON.stringify({param})
+    })
+    .then((response) => {
+       return response
+    })
+    .catch((err) => {
+      return err
+    });
+  },
+
+  createPlace: function(title, longitude, latitude, type, description, radius){
+    return fetch('http://www.balticapp.fi/lukeB/place/create' , {
+    method: 'post',
+	  body: JSON.stringify({
+      title: title,
+      location: {
+        longitude: longitude,
+        latitude: latitude,
+      },
+      type: type,
+      description:description,
+      radius: radius
+	   })
+   })
+   .then((response) => {
+      return response
+   })
+   .catch((err) => {
+     return err
+   });
+ },
+
+ createReport: function(title, longitude, latitude, type, description, date, categoryId){
+   return fetch('http://www.balticapp.fi/lukeA/report/create',{
+     method: 'post',
+     body: JSON.stringify({
+       title: title,
+       location: {
+         longitude: longitude,
+         latitude: latitude,
+       },
+       image: type,
+       description:description,
+       date: date,
+       categoryId: categoryId
+      })
+    })
+    .then((response) => {
+       return response
+    })
+    .catch((err) => {
+      return err
+    });
+
+ }
+
 }
-
-
 
 module.exports = serverCommunicator;

@@ -8,6 +8,7 @@ var {
 } = ReactNative;
 import { Components } from 'exponent';
 import LandingComponent from './components/landing-component/LandingComponent';
+import LoginView from './components/login-component/LoginView'
 
 class App extends Component {
 	constructor(props) {
@@ -22,4 +23,5 @@ class App extends Component {
 		)
 	}
 }
+
 Exponent.registerRootComponent(App);

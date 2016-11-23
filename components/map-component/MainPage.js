@@ -7,7 +7,7 @@ import React, {Component} from 'react';
 import Button from 'react-native-button';
 import MapViewComponent from './MapViewComponent';
 import styles from '../../resources/styles.js';
-import api from '../utils/APIManager.js'
+import api from '../utils/APImanager.js'
 
 
 import  {
@@ -22,13 +22,43 @@ import  {
 class MainPage extends Component {
   constructor(props){
     super(props);
-    //this.openDrawer = this.openDrawer.bind(this);
+  }
+
+  componentDidMount(){
+    api.testServerConnection().then(response => {
+      console.log("testServerConnection callback " , response.status , response.type , response.ok);
+    });
+
+    api.getSome("place").then(response => {
+      console.log("getSome callback place " , response);
+    });
+
+    api.createPlace("title", "longitude", "latitude", "type", "description", "radius").then(response => {
+      console.log("createPlace callback " , response);
+    });
+
+    var testPlace ={
+        title: "title",
+        location: {
+          longitude: "longitude",
+          latitude: "latitude",
+        },
+        type: "type",
+        description:"description",
+        radius: "radius"
+
+    }
+
+    api.createSome('place' , testPlace).then(response => {
+      console.log("createSome callback " , response);
+    });
+
+    /*api.createReport("title", "longitude", "latitude", "type", "description", "date", "categoryId").then(response => {
+      console.log("createReport callback " , response);
+    });*/
 
   }
 
-  /*openDrawer() {
-       this.drawer.openDrawer();
-   }*/
 
 	render() {
 		return (
@@ -59,56 +89,6 @@ class MainPage extends Component {
 	}
 }
 
-
-function sayHello(){
-
-  console.log("hello" , this.refs);
-  //this.refs['DRAWER'].openDrawer()
-
-  /*
-   render() {
-       var navigationView = (
-           <SideBarMenu />
-       );
-       return (
-           <DrawerLayoutAndroid
-             drawerWidth={300}
-             ref={'DRAWER'}
-             drawerPosition={DrawerLayoutAndroid.positions.Left}
-             renderNavigationView={() => navigationView}>
-             <View style={{flex: 1, alignItems: 'center'}}>
-               <TouchableHighlight onPress={this.openDrawer}>
-                 <Text>{'Open Drawer'}</Text>
-               </TouchableHighlight>
-             </View>
-             <ComponentDemo />
-           </DrawerLayoutAndroid>
-       );
-   }
-  /*
-  var drawer = {
-    render: function() {
-      var navigationView = (
-        <View style={{flex: 1, backgroundColor: '#fff'}}>
-          <Text style={{margin: 10, fontSize: 15, textAlign: 'left'}}>I'm in the Drawer!</Text>
-        </View>
-      );
-      return (
-        <DrawerLayoutAndroid
-          drawerWidth={300}
-          drawerPosition={DrawerLayoutAndroid.positions.Left}
-          renderNavigationView={() => navigationView}>
-          <View style={{flex: 1, alignItems: 'center'}}>
-            <Text style={{margin: 10, fontSize: 15, textAlign: 'right'}}>Hello</Text>
-            <Text style={{margin: 10, fontSize: 15, textAlign: 'right'}}>World!</Text>
-          </View>
-        </DrawerLayoutAndroid>
-      );
-    },
-  }
-  */
-
-}
 var navigationView = (
       <View style={{backgroundColor: "white" , width: 70, height: 50}}>
       <Text>Drawer</Text>
