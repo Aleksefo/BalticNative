@@ -9,6 +9,7 @@ import MapViewComponent from './MapViewComponent';
 import styles from '../../resources/styles.js';
 import api from '../utils/APImanager.js'
 
+import CameraViewComponent from '../camera-component/CameraViewComponent';
 
 import  {
   View,
@@ -74,6 +75,9 @@ class MainPage extends Component {
 				</View>
 				<View style={{flex: 12, backgroundColor: 'powderblue'}}>
 					<MapViewComponent/>
+				</View>
+				<View style={{flex: 1, backgroundColor: 'powderblue'}}>
+					<CameraViewComponent/>
 				</View>
 			</View>
 		);

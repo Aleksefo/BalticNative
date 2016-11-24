@@ -6,6 +6,8 @@ import {
 import ListItem from './ListItem';
 import { Router } from '../MyNavigator';
 import MapViewComponent from './map-component/MapViewComponent';
+import CameraViewComponent from './camera-component/CameraViewComponent';
+
 
 export default class HomeScreen extends Component {
   /**
@@ -26,7 +28,14 @@ export default class HomeScreen extends Component {
   render() {
     return (
       <View style={styles.container}>
+        <View style={{flex: 12}}>
         <MapViewComponent/>
+        </View>
+
+        <View style={{flex: 1, backgroundColor: 'powderblue'}}>
+					<CameraViewComponent/>
+				</View>
+
       </View>
     );
   }
