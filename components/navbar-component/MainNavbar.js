@@ -5,6 +5,7 @@ import ReactNative from 'react-native';
 var {
   StyleSheet,
   Text,
+  TextInput,
   View,
 } = ReactNative;
 import ToolbarAndroid  from 'ToolbarAndroid';
@@ -39,6 +40,7 @@ export default class MainNavbar extends Component {
     });
 
     this.props.componentChangedCallback(toolbarActions[position].title);
+
 
   };
 

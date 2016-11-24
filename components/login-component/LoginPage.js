@@ -36,13 +36,27 @@ class LoginPage extends Component {
             onPress={this.gotoNext.bind(this)}>
           <Text>Press to MapView</Text>
         </TouchableHighlight>
+
+        <TouchableHighlight
+            onPress={this.gotoProfile.bind(this)}>
+          <Text>Press to ProfilePage</Text>
+        </TouchableHighlight>
       </View>
+
+
     );
   }
   gotoNext() {
     this.props.navigator.push({
       id: 'MainPage',
       name: 'Main',
+    });
+  }
+
+  gotoProfile() {
+    this.props.navigator.push({
+      id: 'ProfilePage',
+      name: 'Profile',
     });
   }
 }

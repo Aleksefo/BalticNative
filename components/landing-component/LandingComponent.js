@@ -18,6 +18,7 @@ import  MainPage from '../map-component/MainPage.js';
 import 	SearchPage  from '../search-component/SearchPage.js';
 import  SplashPage from './SplashPage.js';
 import  NoNavigatorPage from './NoNavigatorPage.js';
+import ProfilePage from '../profile-component/ProfilePage.js';
 
 export default class LandingComponent extends Component {
 
@@ -74,6 +75,12 @@ renderScene(route, navigator) {
           navigator={navigator} />
     );
   }
+	if (routeId === 'ProfilePage') {
+		return (
+			<ProfilePage
+				navigator={navigator} />
+		);
+	}
   return this.noRoute(navigator);
 }
 

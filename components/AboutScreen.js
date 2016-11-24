@@ -15,14 +15,14 @@ export default class HomeScreen extends Component {
     */
   static route = {
     navigationBar: {
-      title: 'My Profile',
+      title: 'Template',
     },
   }
 
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.title}>My Profile page</Text>
+        <Text style={styles.title}>Template</Text>
 
         <StatusBar barStyle="light-content" />
       </View>

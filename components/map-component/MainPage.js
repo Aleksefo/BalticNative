@@ -91,6 +91,7 @@ class MainPage extends Component {
 			</View>
 		);
 	}
+
 }
 
 var navigationView = (

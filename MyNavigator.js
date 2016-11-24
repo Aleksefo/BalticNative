@@ -6,6 +6,7 @@ import HomeScreen from './components/HomeScreen';
 import AboutScreen from './components/AboutScreen';
 import AlertBarsExample from './components/AlertBarsExample';
 import EventEmitterExample from './components/EventEmitterExample';
+import ProfilePage from './components/profile-component/ProfilePage';
 
 import MyComponent from './components/MyComponent';
 
@@ -33,6 +34,7 @@ export const Router = createRouter(() => ({
   about: () => AboutScreen,
   alertBarsExample: () => AlertBarsExample,
   eventEmitterExample: () => EventEmitterExample,
+  profilePage: () => ProfilePage,
 
   myComponent: () => MyComponent
 }));

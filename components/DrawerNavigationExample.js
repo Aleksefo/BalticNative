@@ -68,7 +68,7 @@ export default class DrawerNavigationExample extends Component {
         <DrawerNavigationItem
           id="another"
           selectedStyle={styles.selectedItemStyle}
-          renderTitle={isSelected => this._renderTitle('My Profile', isSelected)}
+          renderTitle={isSelected => this._renderTitle('Template', isSelected)}
           renderIcon={isSelected => this._renderIcon('md-alert', isSelected)}>
           <StackNavigation
             id="about"
@@ -81,6 +81,24 @@ export default class DrawerNavigationExample extends Component {
             }}
           />
         </DrawerNavigationItem>
+
+        <DrawerNavigationItem
+          id="profilePage"
+          selectedStyle={styles.selectedItemStyle}
+          renderTitle={isSelected => this._renderTitle('Profile', isSelected)}
+          renderIcon={isSelected => this._renderIcon('md-alert', isSelected)}>
+          <StackNavigation
+            id="profilePage"
+            initialRoute={Router.getRoute('profilePage')}
+            defaultRouteConfig={{
+              navigationBar: {
+                backgroundColor: 'rgb(0, 198, 209)',
+                tintColor: '#fff',
+              },
+            }}
+          />
+        </DrawerNavigationItem>
+
         <DrawerNavigationItem
           id="alertBarsExample"
           selectedStyle={styles.selectedItemStyle}
@@ -113,6 +131,7 @@ export default class DrawerNavigationExample extends Component {
             }}
           />
         </DrawerNavigationItem>
+
 
 
       </DrawerNavigation>
