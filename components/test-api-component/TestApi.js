@@ -5,7 +5,7 @@ import {
   StyleSheet,
   StatusBar,
 } from 'react-native';
-import api from './utils/APImanager.js';
+import api from '../utils/APImanager.js';
 
 export default class MyComponent extends Component {
   /**

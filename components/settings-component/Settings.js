@@ -7,28 +7,28 @@ import {
   Text,
 } from 'react-native';
 
-export default class TranslucentBarExample extends Component {
+export default class Settings extends Component {
   static route = {
     navigationBar: {
       title: 'Settings',
     },
   }
 
-  _showAlert = () => {
+  _showWarning = () => {
     this.props.navigator.showLocalAlert('warning', {
       text: { color: '#000' },
       container: { backgroundColor: '#FFEB3B' },
     });
   };
 
-  _showAnotherAlert = () => {
+  _showDanger = () => {
     this.props.navigator.showLocalAlert('danger', {
       text: { color: '#fff' },
       container: { backgroundColor: '#F44336' },
     });
   };
 
-  _showSuccessAlert = () =>{
+  _showSuccess = () =>{
     this.props.navigator.showLocalAlert('success', {
       text: { color: '#fff' },
       container: { backgroundColor: '#4CAF50' },
@@ -42,15 +42,14 @@ export default class TranslucentBarExample extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Image source={require('../assets/sparkles.jpg')} style={styles.cover} />
         <View style={styles.buttonsContainer}>
-          <TouchableOpacity style={styles.button} onPress={this._showAlert}>
+          <TouchableOpacity style={styles.button} onPress={this._showWarning}>
             <Text style={styles.buttonText}>warning</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.button} onPress={this._showAnotherAlert}>
+          <TouchableOpacity style={styles.button} onPress={this._showDanger}>
             <Text style={styles.buttonText}>danger</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.button} onPress={this._showSuccessAlert}>
+          <TouchableOpacity style={styles.button} onPress={this._showSuccess}>
             <Text style={styles.buttonText}>success</Text>
           </TouchableOpacity>
         </View>

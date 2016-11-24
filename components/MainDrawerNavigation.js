@@ -14,7 +14,14 @@ import { Ionicons } from '@exponent/vector-icons';
 import { Router } from '../MyNavigator';
 //import styles from '../resources/styles.js';
 
-export default class DrawerNavigationExample extends Component {
+export default class MainDrawerNavigation extends Component {
+
+  constructor(props){
+      super(props);
+      this.state ={
+        isSuperUser: false
+      }
+  }
 
   _renderHeader = () => {
     return <Image source={require('../assets/sparkles.jpg')} style={styles.header} />;
@@ -43,6 +50,35 @@ export default class DrawerNavigationExample extends Component {
   };
 
   render() {
+
+    console.log("this.state.isSuperUser"  , this.state.isSuperUser);
+
+
+    let superUserButton = null;
+
+    if (this.state.isSuperUser) {
+
+      superUserButton = <DrawerNavigationItem
+        id="superUserCreate"
+        selectedStyle={styles.selectedItemStyle}
+        renderTitle={isSelected => this._renderTitle('Create', isSelected)}
+        renderIcon={isSelected => this._renderIcon('md-alert', isSelected)}>
+        <StackNavigation
+          id="superUserCreate"
+          initialRoute={Router.getRoute('superUserCreate')}
+          defaultRouteConfig={{
+            navigationBar: {
+              backgroundColor: 'rgb(0, 198, 209)',
+              tintColor: '#fff',
+            },
+          }}
+        />
+      </DrawerNavigationItem>
+    } else {
+      superUserButton = <DrawerNavigationItem></DrawerNavigationItem>
+    }
+
+
     return (
       <DrawerNavigation
         drawerPosition="left"
@@ -57,22 +93,6 @@ export default class DrawerNavigationExample extends Component {
           <StackNavigation
             id="root"
             initialRoute={Router.getRoute('home')}
-            defaultRouteConfig={{
-              navigationBar: {
-                backgroundColor: 'rgb(0, 198, 209)',
-                tintColor: '#fff',
-              },
-            }}
-          />
-        </DrawerNavigationItem>
-        <DrawerNavigationItem
-          id="another"
-          selectedStyle={styles.selectedItemStyle}
-          renderTitle={isSelected => this._renderTitle('Template', isSelected)}
-          renderIcon={isSelected => this._renderIcon('md-alert', isSelected)}>
-          <StackNavigation
-            id="about"
-            initialRoute={Router.getRoute('about')}
             defaultRouteConfig={{
               navigationBar: {
                 backgroundColor: 'rgb(0, 198, 209)',
@@ -100,13 +120,30 @@ export default class DrawerNavigationExample extends Component {
         </DrawerNavigationItem>
 
         <DrawerNavigationItem
-          id="alertBarsExample"
+          id="browseUploads"
+          selectedStyle={styles.selectedItemStyle}
+          renderTitle={isSelected => this._renderTitle('Browse Uploads', isSelected)}
+          renderIcon={isSelected => this._renderIcon('md-alert', isSelected)}>
+          <StackNavigation
+            id="browseUploads"
+            initialRoute={Router.getRoute('browseUploads')}
+            defaultRouteConfig={{
+              navigationBar: {
+                backgroundColor: 'rgb(0, 198, 209)',
+                tintColor: '#fff',
+              },
+            }}
+          />
+        </DrawerNavigationItem>
+
+        <DrawerNavigationItem
+          id="settings"
           selectedStyle={styles.selectedItemStyle}
           renderTitle={isSelected => this._renderTitle('Settings', isSelected)}
           renderIcon={isSelected => this._renderIcon('md-alert', isSelected)}>
           <StackNavigation
-            id="alertBarsExampleid"
-            initialRoute={Router.getRoute('alertBarsExample')}
+            id="settings"
+            initialRoute={Router.getRoute('settings')}
             defaultRouteConfig={{
               navigationBar: {
                 backgroundColor: 'rgb(0, 198, 209)',
@@ -115,14 +152,49 @@ export default class DrawerNavigationExample extends Component {
             }}
           />
         </DrawerNavigationItem>
+
         <DrawerNavigationItem
-          id="myComponent"
+          id="help"
+          selectedStyle={styles.selectedItemStyle}
+          renderTitle={isSelected => this._renderTitle('Help', isSelected)}
+          renderIcon={isSelected => this._renderIcon('md-alert', isSelected)}>
+          <StackNavigation
+            id="help"
+            initialRoute={Router.getRoute('help')}
+            defaultRouteConfig={{
+              navigationBar: {
+                backgroundColor: 'rgb(0, 198, 209)',
+                tintColor: '#fff',
+              },
+            }}
+          />
+        </DrawerNavigationItem>
+
+        <DrawerNavigationItem
+          id="testApi"
           selectedStyle={styles.selectedItemStyle}
           renderTitle={isSelected => this._renderTitle('Test API', isSelected)}
           renderIcon={isSelected => this._renderIcon('md-alert', isSelected)}>
           <StackNavigation
-            id="myComponentid"
-            initialRoute={Router.getRoute('myComponent')}
+            id="testApi"
+            initialRoute={Router.getRoute('testApi')}
+            defaultRouteConfig={{
+              navigationBar: {
+                backgroundColor: 'rgb(0, 198, 209)',
+                tintColor: '#fff',
+              },
+            }}
+          />
+        </DrawerNavigationItem>
+
+        <DrawerNavigationItem
+          id="template"
+          selectedStyle={styles.selectedItemStyle}
+          renderTitle={isSelected => this._renderTitle('Template', isSelected)}
+          renderIcon={isSelected => this._renderIcon('md-alert', isSelected)}>
+          <StackNavigation
+            id="template"
+            initialRoute={Router.getRoute('template')}
             defaultRouteConfig={{
               navigationBar: {
                 backgroundColor: 'rgb(0, 198, 209)',
@@ -133,6 +205,26 @@ export default class DrawerNavigationExample extends Component {
         </DrawerNavigationItem>
 
 
+        <DrawerNavigationItem
+          id="testAuthentication"
+          selectedStyle={styles.selectedItemStyle}
+          renderTitle={isSelected => this._renderTitle('Test Authentication', isSelected)}
+          renderIcon={isSelected => this._renderIcon('md-alert', isSelected)}>
+          <StackNavigation
+            id="testAuthentication"
+            initialRoute={Router.getRoute('testAuthentication')}
+            defaultRouteConfig={{
+              navigationBar: {
+                backgroundColor: 'rgb(0, 198, 209)',
+                tintColor: '#fff',
+              },
+            }}
+          />
+        </DrawerNavigationItem>
+
+
+
+        {superUserButton}
 
       </DrawerNavigation>
     );

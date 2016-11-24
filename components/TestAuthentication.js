@@ -4,10 +4,15 @@ import {
   Text,
   StyleSheet,
   StatusBar,
+  Navigator,
+  TouchableHighlight,
+  TouchableOpacity,
 } from 'react-native';
-import pak from '@exponent/ex-navigation/package.json';
 
-export default class HomeScreen extends Component {
+import LoginView from './login-component/LoginView'
+import RegisterView from './register-component/RegisterView'
+
+export default class TemplateScreen extends Component {
   /**
     * This is where we can define any route configuration for this
     * screen. For example, in addition to the navigationBar title we
@@ -15,14 +20,17 @@ export default class HomeScreen extends Component {
     */
   static route = {
     navigationBar: {
-      title: 'Template',
+      title: 'Test Authentication',
     },
   }
 
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.title}>Template</Text>
+        <Text style={styles.title}>Test Authentication</Text>
+        <LoginView/>
+
+        <RegisterView/>
 
         <StatusBar barStyle="light-content" />
       </View>

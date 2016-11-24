@@ -1,14 +1,20 @@
 import Exponent, { Asset, Components } from 'exponent';
 import React, { Component } from 'react';
 import { StatusBar } from 'react-native';
-import DrawerNavigationExample from './components/DrawerNavigationExample';
-import HomeScreen from './components/HomeScreen';
-import AboutScreen from './components/AboutScreen';
-import AlertBarsExample from './components/AlertBarsExample';
-import EventEmitterExample from './components/EventEmitterExample';
-import ProfilePage from './components/profile-component/ProfilePage';
 
-import MyComponent from './components/MyComponent';
+import EventEmitterExample from './components/EventEmitterExample';
+
+import MainDrawerNavigation from './components/MainDrawerNavigation';
+import HomeScreen from './components/HomeScreen';
+
+import Settings from './components/settings-component/Settings';
+import Help from './components/help-component/Help'
+import TemplateScreen from './components/TemplateScreen';
+import ProfilePage from './components/profile-component/ProfilePage';
+import BrowseUploads from './components/browse-uploads-component/BrowseUploads';
+import TestApi from './components/test-api-component/TestApi';
+import SuperUserCreate from './components/super-user-component/SuperUserCreate';
+import TestAuthentication from './components/TestAuthentication';
 
 import {
   createRouter,
@@ -31,12 +37,15 @@ const assets = [
   */
 export const Router = createRouter(() => ({
   home: () => HomeScreen,
-  about: () => AboutScreen,
-  alertBarsExample: () => AlertBarsExample,
+  help: () => Help,
+  template: () => TemplateScreen,
+  settings: () => Settings,
   eventEmitterExample: () => EventEmitterExample,
   profilePage: () => ProfilePage,
-
-  myComponent: () => MyComponent
+  superUserCreate: () => SuperUserCreate,
+  browseUploads: ()=> BrowseUploads,
+  testApi: () => TestApi,
+  testAuthentication: () => TestAuthentication
 }));
 
 export default class MyNavigator extends Component {
@@ -78,7 +87,7 @@ export default class MyNavigator extends Component {
     return (
       <NavigationProvider router={Router}>
         <StatusBar barStyle="light-content" />
-        <DrawerNavigationExample />
+        <MainDrawerNavigation />
       </NavigationProvider>
     );
   }
