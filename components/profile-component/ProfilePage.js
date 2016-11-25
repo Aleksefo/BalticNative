@@ -14,7 +14,14 @@ import  {
   TouchableOpacity,
 } from 'react-native';
 
-class ProfilePage extends Component {
+export default class ProfilePage extends Component {
+
+
+  static route = {
+    navigationBar: {
+      title: 'Profile',
+    },
+  }
 
   render() {
     return (
@@ -99,7 +106,3 @@ const styles = StyleSheet.create({
   },
   // <----- END OF BIG LIT YELLOW BUTTON STANTARD ------>
 });
-
-
-
-module.exports = ProfilePage;

@@ -7,7 +7,6 @@ var {
   View,
 } = ReactNative;
 import { Components } from 'exponent';
-import LandingComponent from './components/landing-component/LandingComponent';
 import LoginView from './components/login-component/LoginView';
 import MyNavigator from './MyNavigator';
 

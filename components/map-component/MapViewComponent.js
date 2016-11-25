@@ -58,8 +58,8 @@ export default class MapViewComponent extends Component {
 			enableHighAccuracy: true
 		}
 		console.log("componentWillMount");
-		//var currentPosition = Exponent.Location.getCurrentPositionAsync(options);
-		//console.log("my currentPosition is : " , currentPosition);
+		var currentPosition = Exponent.Location.getCurrentPositionAsync(options);
+		console.log("my currentPosition is : " , currentPosition);
 	}
 
 	//When map region is changed update the state
