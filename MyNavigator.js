@@ -1,6 +1,8 @@
 import Exponent, { Asset, Components } from 'exponent';
 import React, { Component } from 'react';
 import { StatusBar } from 'react-native';
+import Store from './components/utils/Store';
+
 
 import EventEmitterExample from './components/EventEmitterExample';
 
@@ -19,9 +21,15 @@ import TestAuthentication from './components/TestAuthentication';
 
 
 import {
+  NavigationContext,
   createRouter,
   NavigationProvider,
 } from '@exponent/ex-navigation';
+
+const navigationContext = new NavigationContext({
+  router: Router,
+  store: Store,
+})
 
 const assets = [
   require('./assets/beetle.jpg'),
@@ -88,7 +96,7 @@ export default class MyNavigator extends Component {
       * of individual stacks.
       */
     return (
-      <NavigationProvider router={Router}>
+      <NavigationProvider context={navigationContext}>
         <StatusBar barStyle="light-content" />
         <MainDrawerNavigation />
       </NavigationProvider>

@@ -7,6 +7,7 @@ import {
   Navigator,
   TouchableHighlight,
   TouchableOpacity,
+  ScrollView
 } from 'react-native';
 import pak from '@exponent/ex-navigation/package.json';
 
@@ -26,6 +27,20 @@ export default class TemplateScreen extends Component {
     * screen. For example, in addition to the navigationBar title we
     * could add backgroundColor.
     */
+
+  constructor(props){
+    super(props);
+    this.state ={
+      stateList:
+        [
+          {
+            first: "first",
+            second: "second"
+          }
+        ]
+    }
+  }
+
   static route = {
     navigationBar: {
       title: 'Template',
@@ -33,11 +48,43 @@ export default class TemplateScreen extends Component {
     },
   }
 
+  componentWillMount(){
+
+  }
+
+  componentDidMount(){
+    let renderList = [];
+
+    for(let i=0; i<30; i++){
+
+      let listObject ={
+          first: i,
+          second: i*100
+      }
+      renderList.push(listObject)
+    }
+    this.setState({
+      stateList: renderList
+    });
+  }
+
   render() {
+    console.log(this.state.stateList);
+
     return (
       <View style={styles.container}>
         <Text style={styles.title}>Template</Text>
+        <ScrollView>
+          <View>
+              {this.state.stateList.map(function(currentlyIteratingObject){
+                return( <View >
+                    <Text>{currentlyIteratingObject.first}</Text>
+                    <Text>{currentlyIteratingObject.second}</Text>
+                      </View>);
+              })}
+          </View>
 
+        </ScrollView>
         <StatusBar barStyle="light-content" />
       </View>
     );

@@ -5,6 +5,7 @@ import styles from '../../resources/styles.js'
 import {
   View,
   Text,
+  TextInput,
   StyleSheet,
   StatusBar,
   Navigator,

@@ -9,21 +9,34 @@ import ListItem from './ListItem';
 import { Router } from '../MyNavigator';
 import MapViewComponent from './map-component/MapViewComponent';
 import CameraViewComponent from './camera-component/CameraViewComponent';
+import { NavigationActions } from '@exponent/ex-navigation'
+import Store from './utils/Store';
 
 class SearchButton extends Component {
-  _goToScreen = name => () => {
-    console.log("******************************************************_goToScreen name=" , name);
-    this.props.navigator.push(Router.getRoute("searchPage"));
+  constructor(props){
+    super(props);
   }
 
+  testFunction = name => () => {
+    /*You might be using some Redux middleware like saga, thunk, promise, or effex
+    (we recommend effex because we love async/await).
+    Whatever you're using, you no longer have access to this.props.navigator and the like.
+     What to do? Well as long as you include your navigation state inside of your Redux store,
+     you can dispatch a NavigationAction to it
+    -- after all, this is what this.props.navigator.push etc. do behind the scenes.
+
+    In the following example we call getState and dispatch directly on your store
+     -- feel free to change this to whatever the equivalent is for your context
+     (eg: if this was effex, dispatch and getState would be passed in to the goHome function).*/
+    let navigatorUID = Store.getState().navigation.currentNavigatorUID;
+    Store.dispatch(NavigationActions.push(navigatorUID, Router.getRoute('searchPage')))
+    //this.props.navigator.push(Router.getRoute(name));
+  }
 
   render() {
-    let test =Router.getRoute('searchPage');
-    console.log("******************************************************=" , this.props);
-
      return (
        <TouchableOpacity
-       onPress={this._goToScreen('searchPage')}>
+         onPress={this.testFunction('searchPage')}>
          <Text>Search</Text>
        </TouchableOpacity>
      );
@@ -32,19 +45,17 @@ class SearchButton extends Component {
 
 
 export default class HomeScreen extends Component {
-  /**
-    * This is where we can define any route configuration for this
-    * screen. For example, in addition to the navigationBar title we
-    * could add backgroundColor.
-    */
+  constructor(props){
+    super(props);
+  }
+
   static route = {
     navigationBar: {
       title: 'BalticApp',
-      renderRight: (route, props) => <SearchButton
-                                        myProps={props}
-                                        myRoute={route}/>
+      renderRight: (route, props) => <SearchButton/>
     },
   }
+
 
   _goToScreen = name => () => {
     this.props.navigator.push(Router.getRoute(name));
