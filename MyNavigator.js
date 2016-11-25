@@ -7,6 +7,7 @@ import EventEmitterExample from './components/EventEmitterExample';
 import MainDrawerNavigation from './components/MainDrawerNavigation';
 import HomeScreen from './components/HomeScreen';
 
+import SearchPage from './components/search-component/SearchPage';
 import Settings from './components/settings-component/Settings';
 import Help from './components/help-component/Help'
 import TemplateScreen from './components/TemplateScreen';
@@ -15,6 +16,7 @@ import BrowseUploads from './components/browse-uploads-component/BrowseUploads';
 import TestApi from './components/test-api-component/TestApi';
 import SuperUserCreate from './components/super-user-component/SuperUserCreate';
 import TestAuthentication from './components/TestAuthentication';
+
 
 import {
   createRouter,
@@ -40,6 +42,7 @@ export const Router = createRouter(() => ({
   help: () => Help,
   template: () => TemplateScreen,
   settings: () => Settings,
+  searchPage: () => SearchPage,
   eventEmitterExample: () => EventEmitterExample,
   profilePage: () => ProfilePage,
   superUserCreate: () => SuperUserCreate,

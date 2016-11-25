@@ -1,96 +1,72 @@
 'use strict';
 
 import React, { Component } from 'react';
-import Button from 'react-native-button';
 import styles from '../../resources/styles.js'
-
-
-import  {
-  StyleSheet,
+import {
   View,
   Text,
+  StyleSheet,
+  StatusBar,
   Navigator,
-  TextInput,
   TouchableHighlight,
   TouchableOpacity,
 } from 'react-native';
 
-class SearchPage extends Component {
-  constructor(props){
-    super(props)
-    this.onChangeSearchText = this.onChangeSearchText.bind(this);
-
-    this.state = {
-      searchString: ""
-    }
-  }
-
-  onChangeSearchText(searchString){
-    console.log("searching...." , searchString);
-  }
-
+class RightButton extends React.Component {
   render() {
-
-    console.log("this.state is now:" , this.state.searchString);
-
-    return (
-      <Navigator
-          renderScene={this.renderScene.bind(this)}
-          navigator={this.props.navigator}
-          navigationBar={
-            <Navigator.NavigationBar style={styles.navbarParentStyle}
-                routeMapper={NavigationBarRouteMapper} />
-          } />
-    );
-  }
-  renderScene(route, navigator) {
-    return (
-      <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-        <TouchableOpacity
-            onPress={this.gotoNext.bind(this)}>
-          <Text>Show results</Text>
-        </TouchableOpacity>
-      </View>
-    );
-  }
-  gotoNext() {
-    this.props.navigator.push({
-      id: 'NoNavigatorPage',
-      sceneConfig: Navigator.SceneConfigs.FloatFromBottom,
-    });
+     return (
+       <TextInput style={{margin: 10, fontSize: 16, width: 200, backgroundColor: "white"}}
+                   placeholder="Search..."
+                   ></TextInput>
+     );
   }
 }
 
-var NavigationBarRouteMapper = {
-  LeftButton(route, navigator, index, nextState) {
+
+
+export default class SearchPage extends Component {
+  /**
+    * This is where we can define any route configuration for this
+    * screen. For example, in addition to the navigationBar title we
+    * could add backgroundColor.
+    */
+    constructor(props){
+      super(props)
+      this.onChangeSearchText = this.onChangeSearchText.bind(this);
+
+      this.state = {
+        searchString: ""
+      }
+    }
+
+    onChangeSearchText(searchString){
+      console.log("searching...." , searchString);
+    }
+
+
+
+  static route = {
+    navigationBar: {
+      title: 'Search',
+      renderRight: (route, props) => <RightButton />
+    },
+  }
+
+  render() {
     return (
-      <TouchableOpacity style={{flex: 1, justifyContent: 'center'}}
-          onPress={() => navigator.parentNavigator.pop()}>
-        <Text style={{color: 'white', margin: 10,}}>
-           return
-        </Text>
-      </TouchableOpacity>
-    );
-  },
-  RightButton(route, navigator, index, nextState) {
-    return (
-      <TouchableOpacity style={{flex: 1, justifyContent: 'center'}}
-          onPress={() => navigator.parentNavigator.push({id: 'unknown'})}>
-        <Text style={{color: 'white', margin: 10,}}>
-           No route
-        </Text>
-      </TouchableOpacity>
-    );
-  },
-  Title(route, navigator, index, nextState) {
-    return (
-      <TouchableOpacity style={{flex: 1, justifyContent: 'center'}}>
-        <TextInput style={{margin: 10, fontSize: 16, width: 200, backgroundColor: "white"}}
-                    placeholder="Search..."
-                    ></TextInput>
-      </TouchableOpacity>
+      <View style={styles.container}>
+        <Text style={styles.title}>SearchResults</Text>
+
+        <StatusBar barStyle="light-content" />
+      </View>
     );
   }
-};
+}
 
-module.exports = SearchPage;
+
+
+/*<TouchableOpacity style={{flex: 1, justifyContent: 'center'}}>
+  <TextInput style={{margin: 10, fontSize: 16, width: 200, backgroundColor: "white"}}
+              placeholder="Search..."
+              ></TextInput>
+</TouchableOpacity>*/

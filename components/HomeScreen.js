@@ -11,9 +11,19 @@ import MapViewComponent from './map-component/MapViewComponent';
 import CameraViewComponent from './camera-component/CameraViewComponent';
 
 class SearchButton extends Component {
+  _goToScreen = name => () => {
+    console.log("******************************************************_goToScreen name=" , name);
+    this.props.navigator.push(Router.getRoute("searchPage"));
+  }
+
+
   render() {
+    let test =Router.getRoute('searchPage');
+    console.log("******************************************************=" , this.props);
+
      return (
-       <TouchableOpacity>
+       <TouchableOpacity
+       onPress={this._goToScreen('searchPage')}>
          <Text>Search</Text>
        </TouchableOpacity>
      );
@@ -30,7 +40,9 @@ export default class HomeScreen extends Component {
   static route = {
     navigationBar: {
       title: 'BalticApp',
-      renderRight: (route, props) => <SearchButton />
+      renderRight: (route, props) => <SearchButton
+                                        myProps={props}
+                                        myRoute={route}/>
     },
   }
 
