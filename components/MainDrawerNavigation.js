@@ -137,6 +137,23 @@ export default class MainDrawerNavigation extends Component {
         </DrawerNavigationItem>
 
         <DrawerNavigationItem
+          id="browseTags"
+          selectedStyle={styles.selectedItemStyle}
+          renderTitle={isSelected => this._renderTitle('Browse Tags', isSelected)}
+          renderIcon={isSelected => this._renderIcon('md-alert', isSelected)}>
+          <StackNavigation
+            id="browseTags"
+            initialRoute={Router.getRoute('browseTags')}
+            defaultRouteConfig={{
+              navigationBar: {
+                backgroundColor: 'rgb(0, 198, 209)',
+                tintColor: '#fff',
+              },
+            }}
+          />
+        </DrawerNavigationItem>
+
+        <DrawerNavigationItem
           id="settings"
           selectedStyle={styles.selectedItemStyle}
           renderTitle={isSelected => this._renderTitle('Settings', isSelected)}

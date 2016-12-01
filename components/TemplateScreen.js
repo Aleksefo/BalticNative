@@ -58,7 +58,7 @@ export default class TemplateScreen extends Component {
     for(let i=0; i<30; i++){
 
       let listObject ={
-          first: i+'shit',
+          first: i,
           second: i*100
       }
       renderList.push(listObject)

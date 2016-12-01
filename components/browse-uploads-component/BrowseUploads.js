@@ -43,7 +43,7 @@ export default class BrowseUploads extends Component {
                     text: 6,
                     backgroundColor:'#000'
 
-                }], 3),
+                }], 2),
             cellWidth: 0,
             cellHeight: 0
         };
