@@ -1,1 +1,8 @@
-{}
+{
+  "exponentServerPort": 19000,
+  "packagerPort": 19001,
+  "packagerPid": 12819,
+  "exponentServerNgrokUrl": "https://6c-8zc.juhanivl.balticnative.exp.direct",
+  "packagerNgrokUrl": "https://packager.6c-8zc.juhanivl.balticnative.exp.direct",
+  "ngrokPid": 12833
+}

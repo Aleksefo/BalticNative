@@ -9,6 +9,8 @@ import {
 import MapView from 'react-native-maps';
 import styles from '../../resources/styles.js'
 
+//TODO: permissions: https://docs.getexponent.com/versions/v8.0.0/sdk/permissions.html
+
 export default class MapViewComponent extends Component {
 	constructor(props) {
     super(props);
@@ -57,9 +59,9 @@ export default class MapViewComponent extends Component {
 		var options = {
 			enableHighAccuracy: true
 		}
-		console.log("componentWillMount");
 		var currentPosition = Exponent.Location.getCurrentPositionAsync(options);
 		console.log("my currentPosition is : " , currentPosition);
+
 	}
 
 	//When map region is changed update the state

@@ -16,38 +16,19 @@ export default class BrowseUploads extends Component {
   constructor(props) {
     super(props);
 
-    var ds = new GridView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-        this.state = {
-            dataSource: ds.cloneWithCells([
-                {
-                    text: 1,
-                    backgroundColor:'#f00'
-                }
-                , {
-                    text: 2,
-                    backgroundColor:'#0f0'
+    //create ds (dataSource object with two column view)
+    this.ds = new GridView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 
-                }, {
-                    text: 3,
-                    backgroundColor:'#00f'
-
-                }, {
-                    text: 4,
-                    backgroundColor:'#f0f'
-
-                }, {
-                    text: 5,
-                    backgroundColor:'#fff'
-
-                }, {
-                    text: 6,
-                    backgroundColor:'#000'
-
-                }], 2),
-            cellWidth: 0,
-            cellHeight: 0
-        };
-
+    //set to state a dataSource object which will be populated/cloned from previously created ds object
+    this.state = {
+      dataSource: this.ds.cloneWithCells([
+          {
+              text: "Loading...",
+              backgroundColor:'#f00'
+          }], 2),
+      cellWidth: 0,
+      cellHeight: 0
+    };
   }
 
   static route = {
@@ -56,11 +37,21 @@ export default class BrowseUploads extends Component {
     },
   }
 
-  componentWillMount(){
-
-  }
-
   componentDidMount(){
+    let renderList = [];
+
+    for(let i=0; i<30; i++){
+
+      let listObject ={
+        text: i,
+        backgroundColor:'#fafafa'
+      }
+      renderList.push(listObject)
+    }
+
+    this.setState({
+      dataSource: this.ds.cloneWithCells(renderList , 2)
+    });
 
   }
 
@@ -68,6 +59,7 @@ export default class BrowseUploads extends Component {
         return <View onLayout={event => {
           var width = event.nativeEvent.layout.width;
          if(this.state.cellWidth!=width){
+
          this.setState({cellWidth:width})
          }
          if(this.state.cellHeight!=width){
