@@ -30,7 +30,6 @@ export default class TemplateScreen extends Component {
         <Text style={styles.title}>Test Authentication</Text>
         <LoginView/>
 
-        <RegisterView/>
 
         <StatusBar barStyle="light-content" />
       </View>

@@ -102,6 +102,23 @@ export default class MainDrawerNavigation extends Component {
           />
         </DrawerNavigationItem>
 
+          <DrawerNavigationItem
+              id="testAuthentication"
+              selectedStyle={styles.selectedItemStyle}
+              renderTitle={isSelected => this._renderTitle('Test Authentication', isSelected)}
+              renderIcon={isSelected => this._renderIcon('md-alert', isSelected)}>
+              <StackNavigation
+                  id="testAuthentication"
+                  initialRoute={Router.getRoute('testAuthentication')}
+                  defaultRouteConfig={{
+                      navigationBar: {
+                          backgroundColor: 'rgb(0, 198, 209)',
+                          tintColor: '#fff',
+                      },
+                  }}
+              />
+          </DrawerNavigationItem>
+
         <DrawerNavigationItem
           id="profilePage"
           selectedStyle={styles.selectedItemStyle}
@@ -205,22 +222,7 @@ export default class MainDrawerNavigation extends Component {
         </DrawerNavigationItem>
 
 
-        <DrawerNavigationItem
-          id="testAuthentication"
-          selectedStyle={styles.selectedItemStyle}
-          renderTitle={isSelected => this._renderTitle('Test Authentication', isSelected)}
-          renderIcon={isSelected => this._renderIcon('md-alert', isSelected)}>
-          <StackNavigation
-            id="testAuthentication"
-            initialRoute={Router.getRoute('testAuthentication')}
-            defaultRouteConfig={{
-              navigationBar: {
-                backgroundColor: 'rgb(0, 198, 209)',
-                tintColor: '#fff',
-              },
-            }}
-          />
-        </DrawerNavigationItem>
+
 
 
 
