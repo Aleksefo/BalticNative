@@ -26,7 +26,7 @@ export default class TemplateScreen extends Component {
 
   render() {
     return (
-      <View style={styles.container}>
+      <View>
         <LoginView/>
 
 

@@ -58,19 +58,38 @@ export default class LoginView extends Component {
 
 
     render() {
+
+        let authView = <View></View>
+
+        if(this.state.lock !== null){
+          console.log("jeejee!");
+
+          authView = this.state.lock
+
+        }else {
+          console.log("this.state.lock" , this.state.lock);
+
+        }
+
+
         return (
-            <View style={{width: 200}}>
+            <View>
 
-                <Button
-                    style={{fontSize: 20, width: 80, color: 'white', backgroundColor: 'green'}}
-                    styleDisabled={{color: 'red'}}
-                    onPress={this.handleLogin}> parse
-                </Button>
+                <View>
+                  <Button
+                      style={{fontSize: 20, width: 80, color: 'white', backgroundColor: 'green'}}
+                      styleDisabled={{color: 'red'}}
+                      onPress={this.handleLogin}> parse
+                  </Button>
+                </View>
 
 
+
+                <View style={{backgroundColor: '#aaa4a4', width: 300, height: 400}}>
                 <WebView
                   source={{uri: 'https://nikitak.eu.auth0.com/login?client=PiNpdLmpYJrgKllnT7GbLbjAFKjtcAY6&protocol=oauth2&response_type=token%22,%22_bodyInit%22:%22'}}
                   style={{marginTop: 20}}
+                  injectedJavaScript={"https://cdn.auth0.com/js/lock/10.7/lock.min.js"}
                   automaticallyAdjustContentInsets={true}
                   domStorageEnabled={true}
                   javaScriptEnabled={true}
@@ -78,11 +97,26 @@ export default class LoginView extends Component {
                   onLoad={this.onLoad}
                   renderError ={this.renderError}
                   />
+                </View>
 
             </View>
         );
       }
 }
+
+/*
+<WebView
+  source={{uri: 'https://nikitak.eu.auth0.com/login?client=PiNpdLmpYJrgKllnT7GbLbjAFKjtcAY6&protocol=oauth2&response_type=token%22,%22_bodyInit%22:%22'}}
+  style={{marginTop: 20}}
+  injectedJavaScript={"https://cdn.auth0.com/js/lock/10.7/lock.min.js"}
+  automaticallyAdjustContentInsets={true}
+  domStorageEnabled={true}
+  javaScriptEnabled={true}
+  onError={this.onError}
+  onLoad={this.onLoad}
+  renderError ={this.renderError}
+  />
+*/
 
 /*<Text>Login</Text>
  <TextInput placeholder="Username"
