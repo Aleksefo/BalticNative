@@ -14,11 +14,16 @@ import {
 } from 'react-native';
 
 class RightButton extends React.Component {
+
   render() {
+
      return (
-       <TextInput style={{margin: 10, fontSize: 16, width: 200, backgroundColor: "white"}}
-                   placeholder="Search..."
-                   ></TextInput>
+        <View>
+          <TextInput style={{margin: 10, fontSize: 16, width: 200, backgroundColor: "white"}}
+            placeholder="Search...">
+           </TextInput>
+        </View>
+
      );
   }
 }
@@ -44,16 +49,21 @@ export default class SearchPage extends Component {
       console.log("searching...." , searchString);
     }
 
+    componentDidMount(){
+      //this.onChangeSearchText();
+    }
 
 
   static route = {
     navigationBar: {
-      title: 'Search',
-      renderRight: (route, props) => <RightButton />
+      title: '',
+      renderRight: (route, props) => <RightButton
+                                        />
     },
   }
 
   render() {
+    console.log("render: " , this.state);
     return (
       <View style={styles.container}>
         <Text style={styles.title}>SearchResults</Text>

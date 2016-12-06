@@ -239,6 +239,23 @@ export default class MainDrawerNavigation extends Component {
           />
         </DrawerNavigationItem>
 
+        <DrawerNavigationItem
+          id="eventEmitterExample"
+          selectedStyle={styles.selectedItemStyle}
+          renderTitle={isSelected => this._renderTitle('eventEmitterExample', isSelected)}
+          renderIcon={isSelected => this._renderIcon('md-alert', isSelected)}>
+          <StackNavigation
+            id="eventEmitter"
+            initialRoute={Router.getRoute('eventEmitterExample')}
+            defaultRouteConfig={{
+              navigationBar: {
+                backgroundColor: 'rgb(0, 198, 209)',
+                tintColor: '#fff',
+              },
+            }}
+          />
+        </DrawerNavigationItem>
+
 
 
         {superUserButton}

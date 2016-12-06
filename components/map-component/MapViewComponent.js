@@ -46,6 +46,7 @@ export default class MapViewComponent extends Component {
     this.onRegionChange = this.onRegionChange.bind(this);
     this.onPress = this.onPress.bind(this);
     this.onMarkerPress = this.onMarkerPress.bind(this);
+		this.callBack = this.callBack.bind(this);
   }
 
 	static route = {
@@ -54,14 +55,25 @@ export default class MapViewComponent extends Component {
 		},
 	};
 
+	callBack(){
+		console.log("");
+	}
+
 	componentDidMount(){
 
 		var options = {
-			enableHighAccuracy: true
+			enableHighAccuracy: false
 		}
-		var currentPosition = Exponent.Location.getCurrentPositionAsync(options);
+		let currentPosition = Exponent.Location.getCurrentPositionAsync(options);
 		console.log("my currentPosition is : " , currentPosition);
 
+		var secondOptions = {
+			enableHighAccuracy: false,
+			timeInterval: 1000,
+			distanceInterval: 5
+		}
+
+		//Exponent.Location.watchPositionAsync(secondOptions, this.callBack);
 	}
 
 	//When map region is changed update the state
