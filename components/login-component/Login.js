@@ -12,7 +12,7 @@ var loginHandler = {
                 clientID = JSON.parse(response._bodyText).AUTH0_CLIENT_ID;
                 return fetch('https://'+domain+'/authorize?response_type=token&client_id=' + clientID, {method: 'get'}) // return a promise! ..important!
                     .then((response) => {
-                        console.log("response:" , response);
+                        //console.log("response:" , response);
                         return response;
                     }).catch((error) => {
                         console.log(error);

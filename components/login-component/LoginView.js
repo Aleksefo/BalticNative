@@ -1,4 +1,4 @@
-import {Text, View, TextInput, WebView, Dimensions,} from 'react-native';
+import {Text, View, TextInput, WebView, Dimensions,Linking} from 'react-native';
 
 import React, {Component} from 'react';
 import Button from 'react-native-button';
@@ -15,15 +15,15 @@ export default class LoginView extends Component {
             userName: '',
             password: '',
             lock: null,
-            responseStatus: undefined
+            responseStatus: undefined,
+            isRedirected: false,
+            tokens: {}
         };
 
         //this.onError = this.onError.bind(this);
         //this.onLoad = this.onLoad.bind(this);
         this.renderError = this.renderError.bind(this);
-    }
-
-    componentWillMount() {
+        this.parseTokens = this.parseTokens.bind(this);
     }
 
     componentDidMount(){
@@ -42,14 +42,54 @@ export default class LoginView extends Component {
         console.log("onError" );
     }
 
+
     onLoad() {
         console.log("onLoad");
+        /*TODO: not in use currently, but good method to get only the initial url
+        var url = Linking.getInitialURL().then((url) => {
+           console.log("url: " , url);
+
+          if (url) {
+            console.log('Initial url is: ' + url);
+          }
+        }).catch(err => console.error('An error occurred', err));*/
     }
 
     renderError(){
       console.log("renderError");
     }
 
+    _onNavigationStateChange(webViewState){
+      //console.log("webViewState.title_" , webViewState);
+      if(webViewState.title !== "Sign In with Auth0"){
+          this.parseTokens(webViewState.url)
+      }
+    }
+
+     parseTokens(url){
+
+      //Get the hash part of the url
+      var hash = url.substring(url.indexOf('#'));
+      //Create arraylist from the hashparameters
+      var params = hash.substr(1).split("&");
+
+
+      //TODO: _onNavigationStateChange gets called everytime when webview loads and stops loading ->
+      //this causes this method to be fired many times also..
+      //later find a way to distinquish when we're in redirect page versus the original page
+
+      if(params.length == 3){
+        for (i = 0; i < params.length; i++){
+
+          var a = params[i].split("=");
+
+          console.log(a);
+
+        //TODO: Antti jatka tästä a on nyt kahden itemin arraylist, joista ensimmäinen on key ja toinen value
+
+        }
+      }
+    }
 
     render() {
 
@@ -82,7 +122,7 @@ export default class LoginView extends Component {
                 injectedJavaScript={"https://cdn.auth0.com/js/lock/10.7/lock.min.js"}
                 automaticallyAdjustContentInsets={true}
                 domStorageEnabled={true}
-
+                onNavigationStateChange={this._onNavigationStateChange.bind(this)}
                 javaScriptEnabled={true}
                 onMessage={this.onBridgeMessage}
                 onError={this.onError.bind(this)}
