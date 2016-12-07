@@ -9,8 +9,6 @@ import {
 import MapView from 'react-native-maps';
 import styles from '../../resources/styles.js'
 
-//TODO: permissions: https://docs.getexponent.com/versions/v8.0.0/sdk/permissions.html
-
 export default class MapViewComponent extends Component {
 	constructor(props) {
     super(props);

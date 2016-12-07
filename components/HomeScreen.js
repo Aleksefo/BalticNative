@@ -31,11 +31,18 @@ class SearchButton extends Component {
     let navigatorUID = Store.getState().navigation.currentNavigatorUID;
     Store.dispatch(NavigationActions.push(navigatorUID, Router.getRoute('searchPage')))
     //this.props.navigator.push(Router.getRoute(name));
+
+    /*This used to be search-buttons render's return
+    <TouchableOpacity style={{width: 50, height: 40, backgroundColor: "#fafafa"}}
+      onPress={this.testFunction('searchPage')}>
+      <Text>Search</Text>
+    </TouchableOpacity>*/
+
   }
 
   render() {
      return (
-       <TouchableOpacity
+       <TouchableOpacity style={{width: 50, height: 40, backgroundColor: "#fafafa"}}
          onPress={this.testFunction('searchPage')}>
          <Text>Search</Text>
        </TouchableOpacity>

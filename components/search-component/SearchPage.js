@@ -1,79 +1,97 @@
 'use strict';
 
 import React, { Component } from 'react';
-import styles from '../../resources/styles.js'
 import {
   View,
   Text,
   TextInput,
   StyleSheet,
+  ScrollView,
   StatusBar,
   Navigator,
   TouchableHighlight,
+  TouchableWithoutFeedback,
   TouchableOpacity,
+  Dimensions
 } from 'react-native';
 
 class RightButton extends React.Component {
 
-  render() {
+  state = {
+    count: 0,
+    searchString: "",
+    searching: false
+  };
 
-     return (
-        <View>
-          <TextInput style={{margin: 10, fontSize: 16, width: 200, backgroundColor: "white"}}
-            placeholder="Search...">
-           </TextInput>
-        </View>
-
-     );
+  componentWillMount() {
   }
-}
 
 
+  _handlePress = () => {
+    this.props.emitter.emit('reset');
 
-export default class SearchPage extends Component {
-  /**
-    * This is where we can define any route configuration for this
-    * screen. For example, in addition to the navigationBar title we
-    * could add backgroundColor.
-    */
-    constructor(props){
-      super(props)
-      this.onChangeSearchText = this.onChangeSearchText.bind(this);
+  };
 
-      this.state = {
-        searchString: ""
-      }
-    }
+  _handleTextChange = (params) =>{
 
-    onChangeSearchText(searchString){
-      console.log("searching...." , searchString);
-    }
+    this.props.emitter.emit('search', params);
 
-    componentDidMount(){
-      //this.onChangeSearchText();
-    }
-
-
-  static route = {
-    navigationBar: {
-      title: '',
-      renderRight: (route, props) => <RightButton
-                                        />
-    },
   }
 
   render() {
-    console.log("render: " , this.state);
     return (
-      <View style={styles.container}>
-        <Text style={styles.title}>SearchResults</Text>
+      <View>
 
-        <StatusBar barStyle="light-content" />
+
+
+      <TextInput style={{margin: 10, fontSize: 16, width: 200, backgroundColor: "white"}}
+                  placeholder="Search..." onChangeText={(text) => this._handleTextChange({text})}></TextInput>
       </View>
+
     );
   }
 }
 
+export default class SearchPage extends Component {
+  static route = {
+    navigationBar: {
+      title: "Search",
+      renderRight: ({ config: { eventEmitter } }) => (
+        <RightButton emitter={eventEmitter} />
+      ),
+    },
+  };
+
+
+  componentWillMount() {
+    this._subscription = this.props.route.getEventEmitter().addListener('reset', this._handleReset);
+    this._subscription = this.props.route.getEventEmitter().addListener('search' , this._handleSearch)
+  }
+
+  componentWillUnmount() {
+    this._subscription.remove();
+  }
+
+  componentDidUpdate() {
+
+  }
+
+  _handleReset = () => {
+
+  };
+
+  _handleSearch = (searchParam) =>{
+    console.log("_handleSearch: " , searchParam);
+  }
+
+
+  render() {
+    return (
+        <View>
+        </View>
+    );
+  }
+}
 
 
 /*<TouchableOpacity style={{flex: 1, justifyContent: 'center'}}>
