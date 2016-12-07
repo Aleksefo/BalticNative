@@ -3,7 +3,10 @@ import {
   View,
   StyleSheet,
   TouchableOpacity,
-  Text
+  TouchableHighlight,
+  TouchableWithoutFeedback,
+  Text,
+  TextInput
 } from 'react-native';
 import ListItem from './ListItem';
 import { Router } from '../MyNavigator';
@@ -11,6 +14,78 @@ import MapViewComponent from './map-component/MapViewComponent';
 import CameraViewComponent from './camera-component/CameraViewComponent';
 import { NavigationActions } from '@exponent/ex-navigation'
 import Store from './utils/Store';
+
+class RightButton extends React.Component {
+
+  state = {
+    count: 0,
+    searchString: "",
+    searching: false
+  };
+
+  componentWillMount() {
+  }
+
+
+  _handlePress = () => {
+    this.props.emitter.emit('reset');
+
+  };
+
+  _handleTextChange = (params) =>{
+
+    this.props.emitter.emit('search', params);
+
+  }
+
+  changeRightButtonView(){
+    console.log("changeRightButtonView" , this.state.searching);
+
+    this.setState({
+      searching: !this.state.searching
+    })
+  }
+
+  render() {
+
+    let rightButtonView = null;
+
+
+    if(!this.state.searching){
+       rightButtonView =  <View>
+                          <TouchableOpacity style={{width: 50, height: 40, backgroundColor: "#fafafa"}}
+                                            onPress={this.changeRightButtonView.bind(this)}>
+                                <Text>Search</Text>
+                                  </TouchableOpacity>
+                                  </View>
+    }
+
+    else if(this.state.searching){
+       rightButtonView =
+              <View>
+              <TextInput style={{margin: 10, fontSize: 16, width: 250, backgroundColor: "white"}}
+                placeholder="Search..." onChangeText={(text) => this._handleTextChange({text})}></TextInput>
+
+                <TouchableOpacity style={{width: 50, height: 40, backgroundColor: "#fafafa"}}
+                                      onPress={this.changeRightButtonView.bind(this)}>
+                                          <Text>Search</Text>
+                                            </TouchableOpacity>
+              </View>
+
+    }
+
+    return (
+      <View>
+
+
+      {rightButtonView}
+
+      </View>
+
+    );
+  }
+}
+
 
 class SearchButton extends Component {
   constructor(props){
@@ -58,9 +133,32 @@ export default class HomeScreen extends Component {
 
   static route = {
     navigationBar: {
-      title: 'BalticApp',
-      renderRight: (route, props) => <SearchButton/>
+      title: "BAApp",
+      renderRight: ({ config: { eventEmitter } }) => (
+        <RightButton emitter={eventEmitter} />
+      ),
     },
+  };
+
+  componentWillMount() {
+    this._subscription = this.props.route.getEventEmitter().addListener('reset', this._handleReset);
+    this._subscription = this.props.route.getEventEmitter().addListener('search' , this._handleSearch)
+  }
+
+  componentWillUnmount() {
+    this._subscription.remove();
+  }
+
+  componentDidUpdate() {
+
+  }
+
+  _handleReset = () => {
+
+  };
+
+  _handleSearch = (searchParam) =>{
+    console.log("_handleSearch: " , searchParam);
   }
 
 
