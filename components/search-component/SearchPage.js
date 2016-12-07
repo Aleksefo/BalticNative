@@ -38,14 +38,48 @@ class RightButton extends React.Component {
 
   }
 
+  changeRightButtonView(){
+    console.log("changeRightButtonView" , this.state.searching);
+
+    this.setState({
+      searching: !this.state.searching
+    })
+  }
+
   render() {
+
+    let rightButtonView = null;
+
+
+    if(!this.state.searching){
+       rightButtonView =  <View>
+                          <TouchableOpacity style={{width: 50, height: 40, backgroundColor: "#fafafa"}}
+                                            onPress={this.changeRightButtonView.bind(this)}>
+                                <Text>Search</Text>
+                                  </TouchableOpacity>
+                                  </View>
+    }
+
+    else if(this.state.searching){
+       rightButtonView =
+              <View>
+              <TextInput style={{margin: 10, fontSize: 16, width: 250, backgroundColor: "white"}}
+                placeholder="Search..." onChangeText={(text) => this._handleTextChange({text})}></TextInput>
+
+                <TouchableOpacity style={{width: 50, height: 40, backgroundColor: "#fafafa"}}
+                                      onPress={this.changeRightButtonView.bind(this)}>
+                                          <Text>Search</Text>
+                                            </TouchableOpacity>
+              </View>
+
+    }
+
     return (
       <View>
 
 
+      {rightButtonView}
 
-      <TextInput style={{margin: 10, fontSize: 16, width: 200, backgroundColor: "white"}}
-                  placeholder="Search..." onChangeText={(text) => this._handleTextChange({text})}></TextInput>
       </View>
 
     );
@@ -55,7 +89,7 @@ class RightButton extends React.Component {
 export default class SearchPage extends Component {
   static route = {
     navigationBar: {
-      title: "Search",
+      title: "",
       renderRight: ({ config: { eventEmitter } }) => (
         <RightButton emitter={eventEmitter} />
       ),
