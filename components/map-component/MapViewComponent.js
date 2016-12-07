@@ -70,6 +70,15 @@ export default class MapViewComponent extends Component {
 			timeInterval: 1000,
 			distanceInterval: 5
 		}
+        try {
+            const value = AsyncStorage.getItem('access_token');
+            if (value !== null){
+                // We have data!!
+                console.log(value);
+            }
+        } catch (error) {
+            console.log(error);
+        }
 
 		//Exponent.Location.watchPositionAsync(secondOptions, this.callBack);
 	}

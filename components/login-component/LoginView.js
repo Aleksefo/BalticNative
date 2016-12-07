@@ -1,11 +1,13 @@
-import {Text, View, TextInput, WebView, Dimensions,Linking} from 'react-native';
+import {AsyncStorage, Text, View, TextInput, WebView, Dimensions,Linking} from 'react-native';
 
 import React, {Component} from 'react';
 import Button from 'react-native-button';
 import Login from "./Login.js";
 
-let DomParser = require('react-native-html-parser').DOMParser;
-let doc = new DomParser();
+var STORAGE_KEY = '@AsyncStorageExample:key';
+var COLORS = ['red', 'orange', 'yellow', 'green', 'blue'];
+
+
 
 
 export default class LoginView extends Component {
@@ -79,11 +81,14 @@ export default class LoginView extends Component {
       //later find a way to distinquish when we're in redirect page versus the original page
 
       if(params.length == 3){
-        for (i = 0; i < params.length; i++){
+          for (var i = 0; i < params.length; i++){
+              var a = params[i].split("=");
 
-          var a = params[i].split("=");
-
-          console.log(a);
+              try {
+                  AsyncStorage.setItem('access_token', a[1]);
+               } catch (error) {
+                  console.log(error);
+              }
 
         //TODO: Antti jatka tästä a on nyt kahden itemin arraylist, joista ensimmäinen on key ja toinen value
 
