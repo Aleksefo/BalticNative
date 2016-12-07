@@ -1,4 +1,4 @@
-import {Text, View, TextInput, WebView} from 'react-native';
+import {Text, View, TextInput, WebView, Dimensions,} from 'react-native';
 
 import React, {Component} from 'react';
 import Button from 'react-native-button';
@@ -15,12 +15,11 @@ export default class LoginView extends Component {
             userName: '',
             password: '',
             lock: null,
-            url: ""
+            responseStatus: undefined
         };
 
-        this.handleParse = this.handleParse.bind(this);
-        this.onError = this.onError.bind(this);
-        this.onLoad = this.onLoad.bind(this);
+        //this.onError = this.onError.bind(this);
+        //this.onLoad = this.onLoad.bind(this);
         this.renderError = this.renderError.bind(this);
     }
 
@@ -33,19 +32,14 @@ export default class LoginView extends Component {
         Login.getRequest().then((response) => {
             that.setState({
                 lock: response._bodyInit,
-                url: response.url
+                uri: response.url,
+                responseStatus: response.status
             });
         });
     }
 
-    handleParse() {
-        console.log("handleParse" , this.state);
-        //let myAuthView = doc.parseFromString(this.state.lock, 'text/html');
-        //console.log(myAuthView);
-    }
-
     onError() {
-        console.log("onError");
+        console.log("onError" );
     }
 
     onLoad() {
@@ -59,44 +53,42 @@ export default class LoginView extends Component {
 
     render() {
 
-        let authView = <View></View>
+        console.log("this.state.responseStatus:" , this.state.responseStatus);
+        /*TODO: currently not working.. it would be smarter to bind the rendered view to the status of Login.getRequest
+        const webView = <Text>Loading...</Text>
+        if(this.state.responseStatus == 200){
+          const webView = <WebView
+            source={{uri: 'https://nikitak.eu.auth0.com/login?client=PiNpdLmpYJrgKllnT7GbLbjAFKjtcAY6&protocol=oauth2&response_type=token&redirect_uri=http://www.balticapp.fi/lukeB/callback'}}
+            style={{marginTop: 20}}
+            injectedJavaScript={"https://cdn.auth0.com/js/lock/10.7/lock.min.js"}
+            automaticallyAdjustContentInsets={true}
+            domStorageEnabled={true}
 
-        if(this.state.lock !== null){
-          console.log("jeejee!");
-
-          authView = this.state.lock
-
-        }else {
-          console.log("this.state.lock" , this.state.lock);
-
-        }
-
+            javaScriptEnabled={true}
+            onMessage={this.onBridgeMessage}
+            onError={this.onError.bind(this)}
+            onLoad={this.onLoad.bind(this)}
+            renderError ={this.renderError}
+            />
+        }else if(this.state.responseStatus == 404){
+          const webView = <Text>Couldn't connect to servers</Text>
+        }*/
 
         return (
             <View>
+              <View style={{backgroundColor: '#fafafa', width: Dimensions.get('window').width, height: 400}}>
+              <WebView
+                source={{uri: 'https://nikitak.eu.auth0.com/login?client=PiNpdLmpYJrgKllnT7GbLbjAFKjtcAY6&protocol=oauth2&response_type=token&redirect_uri=http://www.balticapp.fi/lukeB/callback'}}
+                injectedJavaScript={"https://cdn.auth0.com/js/lock/10.7/lock.min.js"}
+                automaticallyAdjustContentInsets={true}
+                domStorageEnabled={true}
 
-                <View>
-                  <Button
-                      style={{fontSize: 20, width: 80, color: 'white', backgroundColor: 'green'}}
-                      styleDisabled={{color: 'red'}}
-                      onPress={this.handleLogin}> parse
-                  </Button>
-                </View>
-
-
-
-                <View style={{backgroundColor: '#aaa4a4', width: 300, height: 400}}>
-                <WebView
-                  source={{uri: 'https://nikitak.eu.auth0.com/login?client=PiNpdLmpYJrgKllnT7GbLbjAFKjtcAY6&protocol=oauth2&response_type=token%22,%22_bodyInit%22:%22'}}
-                  style={{marginTop: 20}}
-                  injectedJavaScript={"https://cdn.auth0.com/js/lock/10.7/lock.min.js"}
-                  automaticallyAdjustContentInsets={true}
-                  domStorageEnabled={true}
-                  javaScriptEnabled={true}
-                  onError={this.onError}
-                  onLoad={this.onLoad}
-                  renderError ={this.renderError}
-                  />
+                javaScriptEnabled={true}
+                onMessage={this.onBridgeMessage}
+                onError={this.onError.bind(this)}
+                onLoad={this.onLoad.bind(this)}
+                renderError ={this.renderError}
+                />
                 </View>
 
             </View>
