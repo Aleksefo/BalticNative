@@ -1,11 +1,13 @@
-import {Text, View, TextInput, WebView, Dimensions,Linking} from 'react-native';
+import {AsyncStorage, Text, View, TextInput, WebView, Dimensions,Linking} from 'react-native';
 
 import React, {Component} from 'react';
 import Button from 'react-native-button';
 import Login from "./Login.js";
 
-let DomParser = require('react-native-html-parser').DOMParser;
-let doc = new DomParser();
+var STORAGE_KEY = '@AsyncStorageExample:key';
+var COLORS = ['red', 'orange', 'yellow', 'green', 'blue'];
+
+
 
 
 export default class LoginView extends Component {
@@ -79,26 +81,18 @@ export default class LoginView extends Component {
       //later find a way to distinquish when we're in redirect page versus the original page
        let myList = [];
 
-      let myObject = {
-        access_token: undefined,
-        id_token: undefined,
-        token_type: undefined
-
-      }
-
-     if(params.length == 3){
-       for (i = 0; i < params.length; i++){
-
-         var a = params[i].split("=");
-
-         console.log(a);
-
-         myList.push(a[1])
 
 
-       }
+         if(params.length == 3){
+             for (i = 0; i < params.length; i++){
+                 var a = params[i].split("=");
+                 myList.push(a[1]);
+             }
+             if (myList[2] == "Bearer")
+                 AsyncStorage.setItem("access_token", JSON.stringify(myList[0]));
+                 AsyncStorage.setItem("id_token", JSON.stringify(myList[1]));
+         }
 
-     }
 
     }
 

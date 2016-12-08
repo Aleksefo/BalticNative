@@ -4,7 +4,8 @@ import Exponent from 'exponent';
 import { Components } from 'exponent';
 import {
 	View,
-	StatusBar
+	StatusBar,
+    AsyncStorage
 } from 'react-native';
 import MapView from 'react-native-maps';
 import styles from '../../resources/styles.js'
@@ -70,6 +71,15 @@ export default class MapViewComponent extends Component {
 			timeInterval: 1000,
 			distanceInterval: 5
 		}
+        try {
+            const value = AsyncStorage.getItem('access_token');
+            if (value !== null){
+                // We have data!!
+                console.log(value);
+            }
+        } catch (error) {
+            console.log(error);
+        }
 
 		//Exponent.Location.watchPositionAsync(secondOptions, this.callBack);
 	}
@@ -77,7 +87,10 @@ export default class MapViewComponent extends Component {
 	//When map region is changed update the state
   onRegionChange(region) {
     this.setState({ region });
-    console.log("onRegionChange_" , region);
+    /*console.log("onRegionChange_" , region);*/
+      AsyncStorage.getItem("access_token", (err, result) => {
+          console.log("async tulos:________________" + result);
+	});
   }
 
   onPress(region) {
