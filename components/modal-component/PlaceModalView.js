@@ -9,46 +9,32 @@ import {
   TouchableOpacity,
   AppRegstry,
 } from 'react-native';
-import pak from '@exponent/ex-navigation/package.json';
 import Modal from 'react-native-simple-modal';
 
-class SignOutButton extends React.Component {
-  render() {
-     return (
-       <TouchableOpacity>
-         <Text>Sign out</Text>
-       </TouchableOpacity>
-     );
-  }
-}
 
-export default class TemplateScreen extends Component {
-  /**
-    * This is where we can define any route configuration for this
-    * screen. For example, in addition to the navigationBar title we
-    * could add backgroundColor.
-    */
+export default class PlaceModalView extends Component {
+
 
     constructor() {
       super();
       this.state = {
-         open: false
+         open: true
       };
    }
 
-  static route = {
-    navigationBar: {
-      title: 'Help',
-      renderRight: (route, props) => <SignOutButton />
-    },
-  }
+   componentWillMount(){
+     console.log("prooooops" , this.props);
+     this.setState({
+       open: true
+     })
+   }
 
   render() {
+
+    console.log("this.props" , this.props);
+
     return (
-      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-            <TouchableOpacity onPress={() => this.setState({open: true})}>
-               <Text>Open modal</Text>
-            </TouchableOpacity>
+
             <Modal
                offset={this.state.offset}
                open={this.state.open}
@@ -74,7 +60,6 @@ export default class TemplateScreen extends Component {
                   </TouchableOpacity>
                </View>
             </Modal>
-         </View>
       /*<View style={styles.container}>
         <Text style={styles.title}>Help</Text>
 

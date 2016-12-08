@@ -5,19 +5,24 @@ import { Components } from 'exponent';
 import {
 	View,
 	StatusBar,
-    AsyncStorage
+  AsyncStorage,
+	TouchableOpacity,
+	Dimensions
 } from 'react-native';
 import MapView from 'react-native-maps';
 import styles from '../../resources/styles.js'
+//import PlaceModalView from '../modal-component/PlaceModalView'
+import ModalExample from '../modal-component/ModalExample'
+
 
 export default class MapViewComponent extends Component {
 	constructor(props) {
     super(props);
 
     this.state = {
+			openModal: false,
       initialPosition: 'unknown',
       lastPosition: 'unknown',
-
       region: {
         latitude: 60.78825,
         longitude: 24.4324,
@@ -42,7 +47,6 @@ export default class MapViewComponent extends Component {
         }
       ]
     };
-    this.onPress = this.onPress.bind(this);
     this.onMarkerPress = this.onMarkerPress.bind(this);
 		this.callBack = this.callBack.bind(this);
   }
@@ -84,38 +88,54 @@ export default class MapViewComponent extends Component {
 	}
 
 
-  onPress(region) {
-    console.log("onPress_" , region);
-  }
 
   onMarkerPress(event){
 		console.log("onMarkerPress");
     console.log("parameter " , event.nativeEvent);
+		this.setState({
+			openModal: true
+		})
 
-  }
+	}
+
 
 	render() {
 		return (
-			<MapView
-				style={{flex: 1}}
-				region={this.state.region}
-				//onPress={this.onPress}
-				//onMarkerPress={this.onMarkerPress}
-				loadingEnabled={true}
-				showsUserLocation={true}
-			>
+			<View>
 
-			{this.state.markers.map(marker => (
-				<MapView.Marker
-				 coordinate={marker.latlng}
-				 onPress={this.onMarkerPress}
-				 //onPress={(marker) => this.onMarkerPress({marker})}
-				 title={marker.title}
-				 description={marker.description}
-				 />
-			 ))}
+			<View style={{width: Dimensions.get('window').width, height: Dimensions.get('window').height}}>
+				<MapView
+					style={{flex: 1}}
+					region={this.state.region}
+					//onPress={this.onPress}
+					//onMarkerPress={this.onMarkerPress}
+					//onRegionChange={this.onRegionChange}
+					loadingEnabled={true}
+					showsUserLocation={true}
+				>
 
-			</MapView>
+				{this.state.markers.map(marker => (
+					<MapView.Marker
+					 onPress={this.onMarkerPress}
+					 coordinate={marker.latlng}
+					 onPress={this.onMarkerPress}
+					 title={marker.title}
+					 description={marker.description}
+					 />
+				 ))}
+
+				</MapView>
+
+				<ModalExample
+						openModal={this.state.openModal}/>
+
+			</View>
+
+
+			</View>
+
+
+
 
 		);
 	}

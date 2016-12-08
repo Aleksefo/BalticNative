@@ -8,6 +8,8 @@ import {
   AsyncStorage
 } from 'react-native';
 import api from '../utils/APImanager.js';
+import { Router } from '../../MyNavigator';
+
 
 export default class MyComponent extends Component {
 
