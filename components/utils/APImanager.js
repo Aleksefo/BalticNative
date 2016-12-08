@@ -8,10 +8,22 @@ api.testServerConnection().then(response => {
 api.getSome("category").then(response => {
   console.log("getSome callback category " , response);
 });
+*/
 
-**/
+
+
+import React, { Component } from 'react';
+import Exponent from 'exponent';
+
+import { Components } from 'exponent';
+import {
+	View,
+	StatusBar,
+    AsyncStorage
+} from 'react-native';
 
 var serverCommunicator = {
+
   testServerConnection: function() {
     return fetch('http://www.balticapp.fi/lukeB/callback', {method: 'get'}) // return a promise! ..important!
       .then((response) => {
@@ -19,9 +31,26 @@ var serverCommunicator = {
       })
       .catch((err) => {
       	return err
-        
+
       });
   },
+
+  getAllUsers: function(){
+    return fetch('http://balticapp.fi/lukeB/user/get-all',
+    {
+      method: 'get'
+
+    })
+      .then((response) => {
+          console.log("get all response: " , response);
+         return response
+      })
+      .catch((err) => {
+
+        return err
+      });
+  },
+
 
   getSome: function(param){
     return fetch('http://balticapp.fi/lukeB/'+param,
@@ -37,10 +66,11 @@ var serverCommunicator = {
       });
   },
 
-  createSome: function(destination, param){
+  createSome: function(destination, param, access_token){
+    console.log("apimanager access_token" , access_token);
     return fetch('http://www.balticapp.fi/lukeB/'+destination+'/create' , {
       method: 'post',
-	     body: JSON.stringify({param})
+	    body: JSON.stringify({param}),
     })
     .then((response) => {
        return response

@@ -42,7 +42,6 @@ export default class MapViewComponent extends Component {
         }
       ]
     };
-    this.onRegionChange = this.onRegionChange.bind(this);
     this.onPress = this.onPress.bind(this);
     this.onMarkerPress = this.onMarkerPress.bind(this);
 		this.callBack = this.callBack.bind(this);
@@ -84,21 +83,15 @@ export default class MapViewComponent extends Component {
 		//Exponent.Location.watchPositionAsync(secondOptions, this.callBack);
 	}
 
-	//When map region is changed update the state
-  onRegionChange(region) {
-    this.setState({ region });
-    /*console.log("onRegionChange_" , region);*/
-      AsyncStorage.getItem("access_token", (err, result) => {
-          console.log("async tulos:________________" + result);
-	});
-  }
 
   onPress(region) {
     console.log("onPress_" , region);
   }
 
-  onMarkerPress(marker , region){
-    console.log("onMarkerPress_" , marker);
+  onMarkerPress(event){
+		console.log("onMarkerPress");
+    console.log("parameter " , event.nativeEvent);
+
   }
 
 	render() {
@@ -106,9 +99,8 @@ export default class MapViewComponent extends Component {
 			<MapView
 				style={{flex: 1}}
 				region={this.state.region}
-				onRegionChange={this.onRegionChange}
-				onPress={this.onPress}
-				onMarkerPress={this.onMarkerPress}
+				//onPress={this.onPress}
+				//onMarkerPress={this.onMarkerPress}
 				loadingEnabled={true}
 				showsUserLocation={true}
 			>
@@ -116,6 +108,8 @@ export default class MapViewComponent extends Component {
 			{this.state.markers.map(marker => (
 				<MapView.Marker
 				 coordinate={marker.latlng}
+				 onPress={this.onMarkerPress}
+				 //onPress={(marker) => this.onMarkerPress({marker})}
 				 title={marker.title}
 				 description={marker.description}
 				 />
