@@ -77,18 +77,29 @@ export default class LoginView extends Component {
       //TODO: _onNavigationStateChange gets called everytime when webview loads and stops loading ->
       //this causes this method to be fired many times also..
       //later find a way to distinquish when we're in redirect page versus the original page
+       let myList = [];
 
-      if(params.length == 3){
-        for (i = 0; i < params.length; i++){
+      let myObject = {
+        access_token: undefined,
+        id_token: undefined,
+        token_type: undefined
 
-          var a = params[i].split("=");
-
-          console.log(a);
-
-        //TODO: Antti jatka tästä a on nyt kahden itemin arraylist, joista ensimmäinen on key ja toinen value
-
-        }
       }
+
+     if(params.length == 3){
+       for (i = 0; i < params.length; i++){
+
+         var a = params[i].split("=");
+
+         console.log(a);
+
+         myList.push(a[1])
+
+
+       }
+
+     }
+
     }
 
     render() {
