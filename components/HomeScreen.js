@@ -62,14 +62,14 @@ class RightButton extends React.Component {
 
     else if(this.state.searching){
        rightButtonView =
-              <View>
-              <TextInput style={{margin: 10, fontSize: 16, width: 250, backgroundColor: "white"}}
+              <View style={{flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center'}}>
+              <TextInput style={{margin: 10, fontSize: 16 , height: 50,  width: 250, backgroundColor: "white"}}
                 placeholder="Search..." onChangeText={(text) => this._handleTextChange({text})}></TextInput>
 
-                <TouchableOpacity style={{width: 50, height: 40, backgroundColor: "#fafafa"}}
-                                      onPress={this.changeRightButtonView.bind(this)}>
-                                          <Text>Search</Text>
-                                            </TouchableOpacity>
+                <TouchableOpacity style={{height: 50,width: 50, backgroundColor: "#fafafa"}}
+                                  onPress={this.changeRightButtonView.bind(this)}>
+                                      <Text>Search</Text>
+                </TouchableOpacity>
               </View>
 
     }
