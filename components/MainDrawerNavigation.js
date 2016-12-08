@@ -10,9 +10,9 @@ import {
   DrawerNavigation,
   DrawerNavigationItem,
 } from '@exponent/ex-navigation';
-import { Ionicons } from '@exponent/vector-icons';
+import { Ionicons, MaterialIcons } from '@exponent/vector-icons';
 import { Router } from '../MyNavigator';
-//import styles from '../resources/styles.js';
+import styles from '../resources/styles.js';
 
 export default class MainDrawerNavigation extends Component {
 
@@ -41,7 +41,12 @@ export default class MainDrawerNavigation extends Component {
       extraStyle = {...extraStyle, marginLeft: -3};
     }
     return (
-      <Ionicons
+      /*<Ionicons
+        style={[styles.icon, isSelected ? styles.selectedText : null, extraStyle]}
+        name={name}
+        size={24}
+      />*/
+      <MaterialIcons
         style={[styles.icon, isSelected ? styles.selectedText : null, extraStyle]}
         name={name}
         size={24}
@@ -62,7 +67,7 @@ export default class MainDrawerNavigation extends Component {
         id="superUserCreate"
         selectedStyle={styles.selectedItemStyle}
         renderTitle={isSelected => this._renderTitle('Create', isSelected)}
-        renderIcon={isSelected => this._renderIcon('md-alert', isSelected)}>
+        renderIcon={isSelected => this._renderIcon('settings', isSelected)}>
         <StackNavigation
           id="superUserCreate"
           initialRoute={Router.getRoute('superUserCreate')}
@@ -89,7 +94,7 @@ export default class MainDrawerNavigation extends Component {
           id="home"
           selectedStyle={styles.selectedItemStyle}
           renderTitle={isSelected => this._renderTitle('Home', isSelected)}
-          renderIcon={isSelected => this._renderIcon('md-apps', isSelected)}>
+          renderIcon={isSelected => this._renderIcon('apps', isSelected)}>
           <StackNavigation
             id="root"
             initialRoute={Router.getRoute('home')}
@@ -106,7 +111,7 @@ export default class MainDrawerNavigation extends Component {
               id="testAuthentication"
               selectedStyle={styles.selectedItemStyle}
               renderTitle={isSelected => this._renderTitle('Test Authentication', isSelected)}
-              renderIcon={isSelected => this._renderIcon('md-alert', isSelected)}>
+              renderIcon={isSelected => this._renderIcon('free-breakfast', isSelected)}>
               <StackNavigation
                   id="testAuthentication"
                   initialRoute={Router.getRoute('testAuthentication')}
@@ -123,7 +128,7 @@ export default class MainDrawerNavigation extends Component {
           id="profilePage"
           selectedStyle={styles.selectedItemStyle}
           renderTitle={isSelected => this._renderTitle('Profile', isSelected)}
-          renderIcon={isSelected => this._renderIcon('md-alert', isSelected)}>
+          renderIcon={isSelected => this._renderIcon('account-circle', isSelected)}>
           <StackNavigation
             id="profilePage"
             initialRoute={Router.getRoute('profilePage')}
@@ -140,7 +145,7 @@ export default class MainDrawerNavigation extends Component {
           id="browseUploads"
           selectedStyle={styles.selectedItemStyle}
           renderTitle={isSelected => this._renderTitle('Browse Uploads', isSelected)}
-          renderIcon={isSelected => this._renderIcon('md-alert', isSelected)}>
+          renderIcon={isSelected => this._renderIcon('photo-library', isSelected)}>
           <StackNavigation
             id="browseUploads"
             initialRoute={Router.getRoute('browseUploads')}
@@ -157,7 +162,7 @@ export default class MainDrawerNavigation extends Component {
           id="browseTags"
           selectedStyle={styles.selectedItemStyle}
           renderTitle={isSelected => this._renderTitle('Browse Tags', isSelected)}
-          renderIcon={isSelected => this._renderIcon('md-alert', isSelected)}>
+          renderIcon={isSelected => this._renderIcon('list', isSelected)}>
           <StackNavigation
             id="browseTags"
             initialRoute={Router.getRoute('browseTags')}
@@ -174,7 +179,7 @@ export default class MainDrawerNavigation extends Component {
           id="settings"
           selectedStyle={styles.selectedItemStyle}
           renderTitle={isSelected => this._renderTitle('Settings', isSelected)}
-          renderIcon={isSelected => this._renderIcon('md-alert', isSelected)}>
+          renderIcon={isSelected => this._renderIcon('settings', isSelected)}>
           <StackNavigation
             id="settings"
             initialRoute={Router.getRoute('settings')}
@@ -191,7 +196,7 @@ export default class MainDrawerNavigation extends Component {
           id="help"
           selectedStyle={styles.selectedItemStyle}
           renderTitle={isSelected => this._renderTitle('Help', isSelected)}
-          renderIcon={isSelected => this._renderIcon('md-alert', isSelected)}>
+          renderIcon={isSelected => this._renderIcon('help', isSelected)}>
           <StackNavigation
             id="help"
             initialRoute={Router.getRoute('help')}
@@ -208,7 +213,7 @@ export default class MainDrawerNavigation extends Component {
           id="testApi"
           selectedStyle={styles.selectedItemStyle}
           renderTitle={isSelected => this._renderTitle('Test API', isSelected)}
-          renderIcon={isSelected => this._renderIcon('md-alert', isSelected)}>
+          renderIcon={isSelected => this._renderIcon('free-breakfast', isSelected)}>
           <StackNavigation
             id="testApi"
             initialRoute={Router.getRoute('testApi')}
@@ -225,7 +230,7 @@ export default class MainDrawerNavigation extends Component {
           id="template"
           selectedStyle={styles.selectedItemStyle}
           renderTitle={isSelected => this._renderTitle('Template', isSelected)}
-          renderIcon={isSelected => this._renderIcon('md-alert', isSelected)}>
+          renderIcon={isSelected => this._renderIcon('free-breakfast', isSelected)}>
           <StackNavigation
             id="template"
             initialRoute={Router.getRoute('template')}
@@ -245,7 +250,7 @@ export default class MainDrawerNavigation extends Component {
           id="eventEmitterExample"
           selectedStyle={styles.selectedItemStyle}
           renderTitle={isSelected => this._renderTitle('eventEmitterExample', isSelected)}
-          renderIcon={isSelected => this._renderIcon('md-alert', isSelected)}>
+          renderIcon={isSelected => this._renderIcon('free-breakfast', isSelected)}>
           <StackNavigation
             id="eventEmitter"
             initialRoute={Router.getRoute('eventEmitterExample')}
@@ -267,30 +272,6 @@ export default class MainDrawerNavigation extends Component {
   }
 }
 //    this.props.navigator.push(Router.getRoute(name));
-
-const styles = StyleSheet.create({
-  header: {
-    flex: 1,
-    height: 180,
-    width: null,
-    resizeMode: 'cover',
-  },
-  buttonTitleText: {
-    color: '#222',
-    fontWeight: 'bold',
-    marginLeft: 18,
-  },
-  icon: {
-    color: '#999',
-  },
-  selectedText: {
-    color: '#0084FF',
-  },
-  selectedItemStyle: {
-    backgroundColor: "#E8E8E8",
-  },
-});
-
 /**
 
 _goToScreen = name => () => {

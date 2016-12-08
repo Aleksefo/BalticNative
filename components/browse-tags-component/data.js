@@ -2,7 +2,8 @@
 export default data = [
   {
     "name": {
-      "first": "#hietsu"
+      "first": "#hietsu",
+      "amount": 123
     }
   },
   {
