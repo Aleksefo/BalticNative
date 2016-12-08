@@ -116,10 +116,10 @@ render() {
         style={styles.container}
         dataSource={this.state.dataSource}
         renderRow={(data) => <Row {...data} />}
-        renderSeparator={(sectionId, rowId) => <View key={rowId} style={styles.separator} />}
+        //renderSeparator={(sectionId, rowId) => <View key={rowId} style={styles.separator} />}
         //renderHeader={() => <Header />}
         //renderFooter={() => <Footer />}
-        renderSectionHeader={(sectionData) => <SectionHeader {...sectionData} />}
+        //renderSectionHeader={(sectionData) => <SectionHeader {...sectionData} />}
       />
     </View>
   );
@@ -129,7 +129,7 @@ render() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: 20,
+    //marginTop: 20,
   },
   separator: {
     flex: 1,

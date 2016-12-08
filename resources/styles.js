@@ -2,23 +2,15 @@ import React, { Component, PropTypes } from 'react';
 import { StyleSheet, NavigationExperimental, PixelRatio, ScrollView, Text, TouchableHighlight  } from 'react-native';
 
 /*
-color: 'blue',
-backgroundColor: 'powderblue',
-fontWeight: 'bold',
-fontSize: 30,
-width: 50,
-height: 50,
-flex: 1,
-flexDirection: 'column', or "row"
-justifyContent: 'space-between', center
-alignItems: 'center', flex-start' , 'flex-end'
+READ ME IMPORTANT:
+When making a new style remember to check
+first if a style with the simiilar properties exist.
+Then when creating a new style add it below
+the last one. Always remeber to comment it!
 */
 
 var styles = StyleSheet.create({
-  navbar: {
-    tintColor: '#fff',
-    backgroundColor: 'rgb(0, 198, 209)',
-  },
+  //MainDrawerNavigation STYLES
   header: {
     flex: 1,
     height: 180,
@@ -38,20 +30,8 @@ var styles = StyleSheet.create({
   },
   selectedItemStyle: {
     backgroundColor: "#E8E8E8",
-  },//TÄHÄN ASTI KAIKKI KÄYTÖSSÄ
-  navbarStyle: {
-    justifyContent: 'center'
   },
-  navbarHeader:{
-    color: 'white',
-    margin: 10,
-    fontSize: 16
-  },
-
-  headerStyle: {
-    color: 'white',
-    fontSize: 32
-  },
+  //REGISTER VIEW STYLE
   registerViewContainer: {
     alignItems: 'center',
     justifyContent: 'center',
@@ -59,7 +39,64 @@ var styles = StyleSheet.create({
   registerViewStyle: {
     width: 300,
     padding: 25
-  }, //UNTIL NOW ALL ARE USED
+  },
+  //BIG LIT YELLOW BUTTON ON PROFILE PAGE
+  buttonsContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 24,
+  },
+  button: {
+    height: 60,
+    width: 220,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+    borderRadius: 5,
+    backgroundColor: '#FFC107',
+    margin: 6,
+  },
+  buttonText: {
+    color: '#FFF',
+    fontSize: 20,
+    fontWeight: 'bold',
+  },
+  //THE MAIN WHITE AND GREY COLORS USED IN PROFILE PAGE USER STATS
+  profilePageMainWhite: {
+    backgroundColor: '#FFFFFF',
+    flex: 2,
+  },
+  profilePageMainGrey: {
+    backgroundColor: '#BDBDBD',
+    flex: 2,
+  },
+  //STYLE TO PROFILE PAGE LOG OUT BUTTON VIEW
+  profilePageLogOutButtonView: {
+    backgroundColor: '#FFFFFF',
+    flex: 4,
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+  },
+  //PROFILE INFO VIEW STYLE
+  profileInfoStyle: {
+    backgroundColor: '#FFC107',
+    flex: 4,
+  },
+  //PROFILE INFO TEXT STYLE
+  profileInfoTextStyle: {
+    flex: 1,
+    justifyContent: 'flex-end',
+  },
+  //BROWSE UPLOADS CELL TEXT STYLE
+  browseUploadsCellTextStyle :{
+    backgroundColor: '#0004',
+    textAlign: 'center',
+    color: '#fff',
+    fontSize: 24,
+  },
 });
 
 module.exports = styles;

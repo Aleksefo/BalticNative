@@ -10,6 +10,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import GridView from "react-native-easy-grid-view";
+import styles from '../../resources/styles.js';
 
 export default class BrowseUploads extends Component {
 
@@ -69,7 +70,7 @@ export default class BrowseUploads extends Component {
             <View style={{width:this.state.cellWidth,height:this.state.cellHeight,justifyContent:'center',backgroundColor:cell.backgroundColor}}
                    //resizeMode={Image.resizeMode.stretch} source={cell.image}
                    >
-                <Text style={{backgroundColor:'#0004',textAlign:'center',color:'#fff',fontSize:24}}>{cell.text}</Text>
+                <Text style={styles.browseUploadsCellTextStyle}>{cell.text}</Text>
             </View>
         </View>
     }
