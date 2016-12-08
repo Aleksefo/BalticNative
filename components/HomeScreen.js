@@ -15,6 +15,7 @@ import CameraViewComponent from './camera-component/CameraViewComponent';
 import { NavigationActions } from '@exponent/ex-navigation'
 import Store from './utils/Store';
 import { MaterialIcons } from '@exponent/vector-icons';
+import styles from '../resources/styles.js';
 
 class RightButton extends React.Component {
 
@@ -51,13 +52,12 @@ class RightButton extends React.Component {
 
     let rightButtonView = null;
 
-//style={{marginTop: 10 ,flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center'}}
-//style={{marginTop: 10 ,flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center'}}
+
     if(!this.state.searching){
-       rightButtonView =  <View style={{marginTop:5}} >
-                          <TouchableOpacity style={{width: 28, height: 28, backgroundColor: 'rgb(0, 198, 209)'}}
+       rightButtonView =  <View>
+                          <TouchableOpacity style={styles.searchButton}
                                             onPress={this.changeRightButtonView.bind(this)}>
-                                            <MaterialIcons name="search" size={28} color="white"  />
+                                            <MaterialIcons name="search" size={28} color="white"/>
 
                                   </TouchableOpacity>
                                   </View>
@@ -66,10 +66,10 @@ class RightButton extends React.Component {
     else if(this.state.searching){
        rightButtonView =
               <View style={{flexDirection: 'row'}}>
-              <TextInput style={{fontSize: 16 , height: 35,  width: 250, backgroundColor: "white", marginRight: 5}}
+              <TextInput style={styles.searchBar}
                 placeholder="Search..." onChangeText={(text) => this._handleTextChange({text})}></TextInput>
 
-                <TouchableOpacity style={{height: 28,width: 28, backgroundColor: 'rgb(0, 198, 209)', marginTop: 5}}
+                <TouchableOpacity style={styles.searchButton}
                                   onPress={this.changeRightButtonView.bind(this)}>
                                   <MaterialIcons name="search" size={28} color="white" />
 
@@ -173,7 +173,7 @@ export default class HomeScreen extends Component {
 
   render() {
     return (
-      <View style={styles.container}>
+      <View style={styles.homeScreenContainer}>
         <View style={{flex: 12}}>
         <MapViewComponent/>
         </View>
@@ -187,12 +187,7 @@ export default class HomeScreen extends Component {
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fafafa',
-  },
-});
+
 
 /*  <ListItem
     title="Alert Bars"

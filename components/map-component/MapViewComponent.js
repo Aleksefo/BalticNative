@@ -4,7 +4,8 @@ import Exponent from 'exponent';
 import { Components } from 'exponent';
 import {
 	View,
-	StatusBar
+	StatusBar,
+	TouchableOpacity,
 } from 'react-native';
 import MapView from 'react-native-maps';
 import styles from '../../resources/styles.js'
@@ -42,7 +43,7 @@ export default class MapViewComponent extends Component {
       ]
     };
     this.onRegionChange = this.onRegionChange.bind(this);
-    this.onPress = this.onPress.bind(this);
+    this.onOmaPress = this.onOmaPress.bind(this);
     this.onMarkerPress = this.onMarkerPress.bind(this);
 		this.callBack = this.callBack.bind(this);
   }
@@ -76,16 +77,16 @@ export default class MapViewComponent extends Component {
 
 	//When map region is changed update the state
   onRegionChange(region) {
-    this.setState({ region });
-    console.log("onRegionChange_" , region);
+    //this.setState({ region });
+    //console.log("onRegionChange_" , region);
   }
 
-  onPress(region) {
-    console.log("onPress_" , region);
+  onOmaPress(onPress) {
+    console.log("onPress_" );
   }
 
   onMarkerPress(marker , region){
-    console.log("onMarkerPress_" , marker);
+    console.log("onMarkerPress_" );
   }
 
 	render() {
@@ -94,7 +95,7 @@ export default class MapViewComponent extends Component {
 				style={{flex: 1}}
 				region={this.state.region}
 				onRegionChange={this.onRegionChange}
-				onPress={this.onPress}
+				//onPress={this.onOmaPress}
 				onMarkerPress={this.onMarkerPress}
 				loadingEnabled={true}
 				showsUserLocation={true}
@@ -102,6 +103,7 @@ export default class MapViewComponent extends Component {
 
 			{this.state.markers.map(marker => (
 				<MapView.Marker
+				 onPress={this.onPress}
 				 coordinate={marker.latlng}
 				 title={marker.title}
 				 description={marker.description}
