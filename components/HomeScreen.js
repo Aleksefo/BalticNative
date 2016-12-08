@@ -14,6 +14,7 @@ import MapViewComponent from './map-component/MapViewComponent';
 import CameraViewComponent from './camera-component/CameraViewComponent';
 import { NavigationActions } from '@exponent/ex-navigation'
 import Store from './utils/Store';
+import { MaterialIcons } from '@exponent/vector-icons';
 
 class RightButton extends React.Component {
 
@@ -52,23 +53,26 @@ class RightButton extends React.Component {
 
 
     if(!this.state.searching){
-       rightButtonView =  <View>
-                          <TouchableOpacity style={{width: 50, height: 40, backgroundColor: "#fafafa"}}
+       rightButtonView =  <View style={{marginTop: 10 ,flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center'}}>
+                          <TouchableOpacity style={{width: 32, height: 32, backgroundColor: "green"}}
                                             onPress={this.changeRightButtonView.bind(this)}>
-                                <Text>Search</Text>
+                                            <MaterialIcons name="search" size={32} color="white"  />
+
                                   </TouchableOpacity>
                                   </View>
     }
 
     else if(this.state.searching){
        rightButtonView =
-              <View style={{flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center'}}>
-              <TextInput style={{margin: 10, fontSize: 16 , height: 50,  width: 250, backgroundColor: "white"}}
+              <View style={{marginTop: 10 ,flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center'}}>
+              <TextInput style={{fontSize: 16 , height: 35,  width: 250, backgroundColor: "green"}}
                 placeholder="Search..." onChangeText={(text) => this._handleTextChange({text})}></TextInput>
 
-                <TouchableOpacity style={{height: 50,width: 50, backgroundColor: "#fafafa"}}
+                <TouchableOpacity style={{height: 32,width: 32, backgroundColor: "green"}}
                                   onPress={this.changeRightButtonView.bind(this)}>
-                                      <Text>Search</Text>
+                                  <MaterialIcons name="search" size={32} color="white"
+                                  style={{alignItems: 'center'}} />
+
                 </TouchableOpacity>
               </View>
 
