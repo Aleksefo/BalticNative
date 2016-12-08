@@ -80,20 +80,23 @@ export default class LoginView extends Component {
       //this causes this method to be fired many times also..
       //later find a way to distinquish when we're in redirect page versus the original page
 
-      if(params.length == 3){
-          for (var i = 0; i < params.length; i++){
-              var a = params[i].split("=");
+         let myList = []
 
-              try {
-                  AsyncStorage.setItem('access_token', a[1]);
-               } catch (error) {
-                  console.log(error);
-              }
+         if(params.length == 3){
+             for (i = 0; i < params.length; i++){
 
-        //TODO: Antti jatka tästä a on nyt kahden itemin arraylist, joista ensimmäinen on key ja toinen value
+                 var a = params[i].split("=");
 
-        }
-      }
+
+                 myList.push(a[1]);
+
+             }
+             if (myList[2] == "Bearer")
+                 AsyncStorage.setItem({"acces_token": myList[0]});
+                 AsyncStorage.setItem({"id_token": myList[1]});
+         }
+
+
     }
 
     render() {
