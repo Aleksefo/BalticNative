@@ -31,7 +31,7 @@ export default class PlaceModalView extends Component {
           visible={this.props.openModal}
           onRequestClose={() => {alert("Modal has been closed.")}}
           >
-         <View tyle={{marginTop: 22 , width: 300, height: 300, backgroundColor: "#d6d2d2"}}>
+         <View style={{alignItems: 'center', marginTop: 22 , width: 300, height: 300, backgroundColor: "#eda7a7"}}>
           <View>
             <Text>Hello World!</Text>
 
