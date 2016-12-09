@@ -1,87 +1,49 @@
 import React, { Component } from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  StatusBar,
-  Navigator,
-  TouchableHighlight,
-  TouchableOpacity,
-  AppRegstry,
-} from 'react-native';
-import Modal from 'react-native-simple-modal';
-
+import { Modal, Text, TouchableHighlight, View } from 'react-native';
 
 export default class PlaceModalView extends Component {
 
+  state = {
+    modalVisible: false,
+  }
 
-    constructor() {
-      super();
-      this.state = {
-         open: true
-      };
-   }
+  setModalVisible(visible) {
+    this.props.callBack();
+  }
 
-   componentWillMount(){
-     console.log("prooooops" , this.props);
-     this.setState({
-       open: true
-     })
-   }
+  componentDidMount(){
+    console.log("this.props.componentDidMount:" , this.props.openModal);
+    this.setState({
+      modalVisible: this.props.openModal
+    })
+  }
+
+
 
   render() {
 
-    console.log("this.props" , this.props);
+    console.log("this.props.example: " , this.props);
 
     return (
+        <Modal
+          animationType={"fade"}
+          transparent={true}
+          visible={this.props.openModal}
+          onRequestClose={() => {alert("Modal has been closed.")}}
+          >
+         <View tyle={{marginTop: 22 , width: 300, height: 300, backgroundColor: "#d6d2d2"}}>
+          <View>
+            <Text>Hello World!</Text>
 
-            <Modal
-               offset={this.state.offset}
-               open={this.state.open}
-               modalDidOpen={() => console.log('modal did open')}
-               modalDidClose={() => this.setState({open: false})}
-               style={{alignItems: 'center'}}>
-               <View>
-                  <Text style={{fontSize: 20, marginBottom: 10}}>Hello world!</Text>
-                  <TouchableOpacity
-                     style={{margin: 5}}
-                     onPress={() => this.setState({offset: -100})}>
-                     <Text>Move modal up</Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                     style={{margin: 5}}
-                     onPress={() => this.setState({offset: 0})}>
-                     <Text>Reset modal position</Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                     style={{margin: 5}}
-                     onPress={() => this.setState({open: false})}>
-                     <Text>Close modal</Text>
-                  </TouchableOpacity>
-               </View>
-            </Modal>
-      /*<View style={styles.container}>
-        <Text style={styles.title}>Help</Text>
+            <TouchableHighlight onPress={() => {
+              this.setModalVisible(!this.state.modalVisible)
+            }}>
+              <Text>Hide Modal</Text>
+            </TouchableHighlight>
 
-        <StatusBar barStyle="light-content" />
-      </View>*/
+          </View>
+         </View>
+        </Modal>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fafafa',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  title: {
-    fontWeight: 'bold',
-    fontSize: 32,
-    margin: 8,
-  },
-  version: {
-    fontSize: 18,
-  },
-});

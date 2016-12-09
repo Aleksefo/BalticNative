@@ -12,7 +12,7 @@ import {
 import MapView from 'react-native-maps';
 import styles from '../../resources/styles.js'
 //import PlaceModalView from '../modal-component/PlaceModalView'
-import ModalExample from '../modal-component/ModalExample'
+import PlaceModalView from '../modal-component/PlaceModalView'
 
 
 export default class MapViewComponent extends Component {
@@ -49,6 +49,7 @@ export default class MapViewComponent extends Component {
     };
     this.onMarkerPress = this.onMarkerPress.bind(this);
 		this.callBack = this.callBack.bind(this);
+		this.handleOpenModal = this.handleOpenModal.bind(this);
   }
 
 	static route = {
@@ -58,7 +59,10 @@ export default class MapViewComponent extends Component {
 	};
 
 	callBack(){
-		console.log("");
+		console.log("callBack");
+		this.setState({
+			openModal: false
+		})
 	}
 
 	componentDidMount(){
@@ -87,6 +91,9 @@ export default class MapViewComponent extends Component {
 		//Exponent.Location.watchPositionAsync(secondOptions, this.callBack);
 	}
 
+	handleOpenModal(){
+
+	}
 
 
   onMarkerPress(event){
@@ -126,8 +133,9 @@ export default class MapViewComponent extends Component {
 
 				</MapView>
 
-				<ModalExample
-						openModal={this.state.openModal}/>
+				<PlaceModalView
+						openModal={this.state.openModal}
+						callBack={this.callBack}/>
 
 			</View>
 

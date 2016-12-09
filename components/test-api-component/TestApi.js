@@ -17,7 +17,8 @@ export default class MyComponent extends Component {
     super(props);
 
     this.state ={
-      access_token: undefined
+      access_token: undefined,
+      id_token: undefined
     }
     this.handleCreatePlace = this.handleCreatePlace.bind(this);
     this.handleGetPlaces = this.handleGetPlaces.bind(this);
@@ -43,6 +44,11 @@ export default class MyComponent extends Component {
         console.log("access_token:________________" + result);
         this.setState({access_token: result})
     });
+    AsyncStorage.getItem("id_token", (err, result) => {
+        console.log("id_token:________________" + result);
+        this.setState({id_token: result})
+    });
+
 
 
   }
