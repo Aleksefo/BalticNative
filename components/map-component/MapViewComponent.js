@@ -21,8 +21,6 @@ export default class MapViewComponent extends Component {
 
     this.state = {
 			openModal: false,
-      initialPosition: 'unknown',
-      lastPosition: 'unknown',
       region: {
         latitude: 60.78825,
         longitude: 24.4324,
@@ -50,6 +48,7 @@ export default class MapViewComponent extends Component {
     this.onMarkerPress = this.onMarkerPress.bind(this);
 		this.callBack = this.callBack.bind(this);
 		this.handleOpenModal = this.handleOpenModal.bind(this);
+		this.handleOnRegionChangeComplete = this.handleOnRegionChangeComplete.bind(this);
   }
 
 	static route = {
@@ -78,16 +77,6 @@ export default class MapViewComponent extends Component {
 			timeInterval: 1000,
 			distanceInterval: 5
 		}
-        try {
-            const value = AsyncStorage.getItem('access_token');
-            if (value !== null){
-                // We have data!!
-                console.log(value);
-            }
-        } catch (error) {
-            console.log(error);
-        }
-
 		//Exponent.Location.watchPositionAsync(secondOptions, this.callBack);
 	}
 
@@ -95,6 +84,13 @@ export default class MapViewComponent extends Component {
 
 	}
 
+	handleOnRegionChangeComplete(region){
+		console.log("handleOnRegionChangeComplete" , region);
+
+		this.setState({
+			region: region
+		});
+	}
 
   onMarkerPress(event){
 		console.log("onMarkerPress");
@@ -102,11 +98,13 @@ export default class MapViewComponent extends Component {
 		this.setState({
 			openModal: true
 		})
-
 	}
 
 
 	render() {
+
+		console.log("render:");
+
 		return (
 			<View>
 
@@ -116,7 +114,7 @@ export default class MapViewComponent extends Component {
 					region={this.state.region}
 					//onPress={this.onPress}
 					//onMarkerPress={this.onMarkerPress}
-					//onRegionChange={this.onRegionChange}
+					onRegionChangeComplete={this.handleOnRegionChangeComplete}
 					loadingEnabled={true}
 					showsUserLocation={true}
 				>
@@ -125,7 +123,7 @@ export default class MapViewComponent extends Component {
 					<MapView.Marker
 					 onPress={this.onMarkerPress}
 					 coordinate={marker.latlng}
-					 onPress={this.onMarkerPress}
+					 onSelect={this.onMarkerPress}
 					 title={marker.title}
 					 description={marker.description}
 					 />
@@ -136,7 +134,6 @@ export default class MapViewComponent extends Component {
 				<PlaceModalView
 						openModal={this.state.openModal}
 						callBack={this.callBack}/>
-
 			</View>
 
 
