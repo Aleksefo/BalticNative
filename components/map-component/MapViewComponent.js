@@ -123,13 +123,15 @@ export default class MapViewComponent extends Component {
 	}
 
 	flyToMyLoc(){
-		console.log("flyToMyLoc", MapView)
+		console.log("flyToMyLoc")
 
-		/*var options = {
+		var options = {
 			enableHighAccuracy: false
 		}
 
 		let currentPosition = Exponent.Location.getCurrentPositionAsync(options);
+
+		console.log('currentPosition', currentPosition.coords);
 
 		var coordinate = {
 			latitude: 60.173465,
@@ -137,7 +139,18 @@ export default class MapViewComponent extends Component {
 
 		}
 
-		MapView.animateToCoordinate(coordinate,1000);*/
+		let currentRegionState = this.state.region;
+
+		console.log('currentRegionState1', currentRegionState);
+/*
+		currentRegionState.latitude = currentPosition.coords.latitude;
+		currentRegionState.longitude = currentPosition.coords.longitude;
+*/
+		this.setState({
+			region: currentRegionState
+		});
+
+		console.log('currentRegionState2', currentRegionState);
 
 		/*navigator.geolocation.getCurrentPosition(
     (position) => {
