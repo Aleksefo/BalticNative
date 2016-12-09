@@ -33,7 +33,8 @@ export default class PlaceModalView extends Component {
           >
          <View style={{alignItems: 'center', marginTop: 22 , width: 300, height: 300, backgroundColor: "#eda7a7"}}>
           <View>
-            <Text>Hello World!</Text>
+            <Text>{this.props.popupTitle}</Text>
+            <Text>{this.props.popupDescription}</Text>
 
             <TouchableHighlight onPress={() => {
               this.setModalVisible(!this.state.modalVisible)

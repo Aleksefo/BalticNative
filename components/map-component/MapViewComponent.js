@@ -21,6 +21,8 @@ export default class MapViewComponent extends Component {
 
     this.state = {
 			openModal: false,
+			popupTitle: undefined,
+			popupDescription: undefined,
       region: {
         latitude: 60.78825,
         longitude: 24.4324,
@@ -29,17 +31,17 @@ export default class MapViewComponent extends Component {
       },
       markers: [
         {
-        latlng: {latitude: 60.153771, longitude: 24.956810},
+        latlng: {longitude: 24.956810, latitude: 60.153771},
         title: "Marker1",
         description: "Des1"
         },
         {
-        latlng: {latitude: 60.173465, longitude: 24.903800},
+        latlng: {longitude: 24.903800, latitude: 60.173465},
         title: "Marker2",
         description: "Des2"
         },
         {
-        latlng: {latitude: 60.173626, longitude: 24.968719},
+        latlng: {longitude: 24.968719, latitude: 60.173626},
         title: "Marker3",
         description: "Des3"
         }
@@ -49,6 +51,7 @@ export default class MapViewComponent extends Component {
 		this.callBack = this.callBack.bind(this);
 		this.handleOpenModal = this.handleOpenModal.bind(this);
 		this.handleOnRegionChangeComplete = this.handleOnRegionChangeComplete.bind(this);
+		this.findMarkerFromState = this.findMarkerFromState.bind(this);
   }
 
 	static route = {
@@ -80,8 +83,13 @@ export default class MapViewComponent extends Component {
 		//Exponent.Location.watchPositionAsync(secondOptions, this.callBack);
 	}
 
-	handleOpenModal(){
-
+	handleOpenModal(modalData){
+		console.log("handleOpenModal " , modalData);
+		this.setState({
+			openModal: true,
+			popupTitle: modalData.title,
+			popupDescription: modalData.description
+		})
 	}
 
 	handleOnRegionChangeComplete(region){
@@ -92,12 +100,20 @@ export default class MapViewComponent extends Component {
 		});
 	}
 
+	findMarkerFromState(coordinate){
+		console.log("findMarkerFromState: " ,coordinate);
+		for(var i =0; i<this.state.markers.length; i++){
+			if(JSON.stringify(this.state.markers[i].latlng) === JSON.stringify(coordinate)){
+				console.log("FOUND MATCH IN:" , this.state.markers[i].title, this.state.markers[i].description);
+				this.handleOpenModal(this.state.markers[i])
+			}
+		}
+	}
+
+	//{"dispatchConfig":null,"_targetInst":null,"isDefaultPrevented":null,"isPropagationStopped":null,"_dispatchListeners":null,"_dispatchInstances":null,"type":null,"target":null,"eventPhase":null,"bubbles":null,"cancelable":null,"defaultPrevented":null,"isTrusted":null,"nativeEvent":null}
   onMarkerPress(event){
-		console.log("onMarkerPress");
-    console.log("parameter " , event.nativeEvent);
-		this.setState({
-			openModal: true
-		})
+		//console.log("onMarkerPress", event.nativeEvent);
+		this.findMarkerFromState(event.nativeEvent.coordinate);
 	}
 
 
@@ -112,8 +128,8 @@ export default class MapViewComponent extends Component {
 				<MapView
 					style={{flex: 1}}
 					region={this.state.region}
-					//onPress={this.onPress}
 					//onMarkerPress={this.onMarkerPress}
+					moveOnMarkerPress={false}
 					onRegionChangeComplete={this.handleOnRegionChangeComplete}
 					loadingEnabled={true}
 					showsUserLocation={true}
@@ -122,10 +138,12 @@ export default class MapViewComponent extends Component {
 				{this.state.markers.map(marker => (
 					<MapView.Marker
 					 onPress={this.onMarkerPress}
+					 //onPress={(marker.title) => this._handleTextChange({})}
 					 coordinate={marker.latlng}
-					 onSelect={this.onMarkerPress}
+					 onPress={this.onMarkerPress}
 					 title={marker.title}
 					 description={marker.description}
+					 identifier={marker.title}
 					 />
 				 ))}
 
@@ -133,7 +151,9 @@ export default class MapViewComponent extends Component {
 
 				<PlaceModalView
 						openModal={this.state.openModal}
-						callBack={this.callBack}/>
+						callBack={this.callBack}
+						popupTitle={this.state.popupTitle}
+						popupDescription={this.state.popupDescription}/>
 			</View>
 
 
