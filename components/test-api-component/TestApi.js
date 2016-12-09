@@ -5,7 +5,8 @@ import {
   StyleSheet,
   TouchableOpacity,
   StatusBar,
-  AsyncStorage
+  AsyncStorage,
+  TouchableHighlight,
 } from 'react-native';
 import api from '../utils/APImanager.js';
 import { Router } from '../../MyNavigator';
@@ -23,11 +24,12 @@ export default class MyComponent extends Component {
     this.handleCreatePlace = this.handleCreatePlace.bind(this);
     this.handleGetPlaces = this.handleGetPlaces.bind(this);
   }
+
   static route = {
     navigationBar: {
       title: 'Test API',
     },
-  }
+  };
 
 
   componentDidMount(){
@@ -49,31 +51,27 @@ export default class MyComponent extends Component {
         this.setState({id_token: result})
     });
 
-
-
   }
 
 
   handleCreatePlace(){
+    var id_token = this.state.id_token;
 
     var testPlace ={
-        title: "title",
+        title: "Ruissalo",
         location: {
-          longitude: "longitude",
-          latitude: "latitude",
+            long: "22.122759",
+            lat: "60.425572",
         },
         type: "type",
-        description:"description",
-        radius: "radius"
+        description:"",
+        radius: "200"
+    };
 
-    }
+    console.log("before api" , id_token );
 
-    var access_token = this.state.access_token;
-
-    console.log("before api" , access_token);
-
-    api.createSome('place' , testPlace, access_token).then(response => {
-      console.log("createSome callback " , response.status , response.type , response.ok);
+    api.createSome('place' , testPlace, id_token).then(response => {
+      console.log("createSome callback " , response);
     });
   }
 
@@ -103,6 +101,7 @@ export default class MyComponent extends Component {
                             onPress={this.handleGetPlaces.bind(this)}>
                                 <Text>Get</Text>
                                   </TouchableOpacity>
+        <Text style={styles.title}>Test API</Text>
 
         <StatusBar barStyle="light-content" />
       </View>
