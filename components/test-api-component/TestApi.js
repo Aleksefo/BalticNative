@@ -4,6 +4,7 @@ import {
   Text,
   StyleSheet,
   StatusBar,
+    TouchableHighlight,
 } from 'react-native';
 import api from '../utils/APImanager.js';
 
@@ -17,7 +18,16 @@ export default class MyComponent extends Component {
     navigationBar: {
       title: 'Test API',
     },
-  }
+  };
+    testPlace ={
+        title: "Metropolia AMK",
+        location: {
+            longitude: 24.804469,
+            latitude: 60.221853,
+        },
+        type: "type",
+        description:"description",
+    };
 
 
   componentDidMount(){
@@ -33,27 +43,17 @@ export default class MyComponent extends Component {
       console.log("createPlace callback " , response);
     });
 
-    var testPlace ={
-        title: "title",
-        location: {
-          longitude: "longitude",
-          latitude: "latitude",
-        },
-        type: "type",
-        description:"description",
-        radius: "radius"
 
-    }
-
-    api.createSome('place' , testPlace).then(response => {
-      console.log("createSome callback " , response);
-    });
   }
 
   render() {
     return (
       <View style={styles.container}>
         <Text style={styles.title}>Test API</Text>
+        <TouchableHighlight
+            onPress={api.createSome('place', this.testPlace)}>
+          <Text>Uus paikka</Text>
+        </TouchableHighlight>
 
         <StatusBar barStyle="light-content" />
       </View>
