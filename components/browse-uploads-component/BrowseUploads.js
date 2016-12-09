@@ -38,6 +38,7 @@ export default class BrowseUploads extends Component {
     },
   }
 
+  // Create renderList and populate it with listObject's
   componentDidMount(){
     let renderList = [];
 
@@ -50,12 +51,14 @@ export default class BrowseUploads extends Component {
       renderList.push(listObject)
     }
 
+    // Set dataSource state with previously created renderList and then update this.ds
     this.setState({
       dataSource: this.ds.cloneWithCells(renderList , 2)
     });
 
   }
 
+  //Give width and height to a cell and render
   _renderCell(cell) {
         return <View onLayout={event => {
           var width = event.nativeEvent.layout.width;
@@ -75,6 +78,7 @@ export default class BrowseUploads extends Component {
         </View>
     }
 
+  // Render the GridView component and show the dataSource that we updated in componentDidMount
   render() {
         return <View>
             <GridView dataSource={this.state.dataSource}

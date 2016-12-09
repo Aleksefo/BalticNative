@@ -7,7 +7,8 @@ import {
 	StatusBar,
   AsyncStorage,
 	TouchableOpacity,
-	Dimensions
+	Dimensions,
+	Platform
 } from 'react-native';
 import MapView from 'react-native-maps';
 import styles from '../../resources/styles.js'
@@ -23,6 +24,7 @@ export default class MapViewComponent extends Component {
 			openModal: false,
 			popupTitle: undefined,
 			popupDescription: undefined,
+			OS: Platform.OS,
       region: {
         latitude: 60.78825,
         longitude: 24.4324,
@@ -52,6 +54,7 @@ export default class MapViewComponent extends Component {
 		this.handleOpenModal = this.handleOpenModal.bind(this);
 		this.handleOnRegionChangeComplete = this.handleOnRegionChangeComplete.bind(this);
 		this.findMarkerFromState = this.findMarkerFromState.bind(this);
+		this.flyToMyLoc = this.flyToMyLoc.bind(this);
   }
 
 	static route = {
@@ -81,6 +84,7 @@ export default class MapViewComponent extends Component {
 			distanceInterval: 5
 		}
 		//Exponent.Location.watchPositionAsync(secondOptions, this.callBack);
+		console.log("Platform.OS", this.state.OS);
 	}
 
 	handleOpenModal(modalData){
@@ -91,6 +95,8 @@ export default class MapViewComponent extends Component {
 			popupDescription: modalData.description
 		})
 	}
+
+
 
 	handleOnRegionChangeComplete(region){
 		console.log("handleOnRegionChangeComplete" , region);
@@ -116,15 +122,59 @@ export default class MapViewComponent extends Component {
 		this.findMarkerFromState(event.nativeEvent.coordinate);
 	}
 
+	flyToMyLoc(){
+		console.log("flyToMyLoc", MapView)
+
+		/*var options = {
+			enableHighAccuracy: false
+		}
+
+		let currentPosition = Exponent.Location.getCurrentPositionAsync(options);
+
+		var coordinate = {
+			latitude: 60.173465,
+			longitude: 24.903800,
+
+		}
+
+		MapView.animateToCoordinate(coordinate,1000);*/
+
+		/*navigator.geolocation.getCurrentPosition(
+    (position) => {
+      this.refs.map.refs.node.animateToCoordinate(position.coords)
+	}*/
+}
+
 
 	render() {
+
+		let flyMeToIosButton = null
+
+		if (this.state.OS == 'ios') {
+
+			flyMeToIosButton = <View style={{height:50, width: 50, backgroundColor: 'yellow', top: 10, right: 10, position: 'absolute'}}>
+				<TouchableOpacity
+				style={{height:50, width: 50, backgroundColor: 'green'}}
+				onPress={this.flyToMyLoc}>
+
+				</TouchableOpacity>
+			</View>
+
+		}else {
+
+			flyMeToIosButton = <View></View>
+
+		}
 
 		console.log("render:");
 
 		return (
 			<View>
 
+
+
 			<View style={{width: Dimensions.get('window').width, height: Dimensions.get('window').height}}>
+
 				<MapView
 					style={{flex: 1}}
 					region={this.state.region}
@@ -148,7 +198,7 @@ export default class MapViewComponent extends Component {
 				 ))}
 
 				</MapView>
-
+				{flyMeToIosButton}
 				<PlaceModalView
 						openModal={this.state.openModal}
 						callBack={this.callBack}

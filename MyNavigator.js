@@ -33,12 +33,7 @@ const navigationContext = new NavigationContext({
 })
 
 const assets = [
-  require('./assets/beetle.jpg'),
-  require('./assets/cat.gif'),
-  require('./assets/colorful-windows.jpg'),
-  require('./assets/paintbrush.jpg'),
-  require('./assets/space.jpg'),
-  require('./assets/sparkles.jpg'),
+  require('./assets/maxresdefault.jpg')
 ];
 
 /**

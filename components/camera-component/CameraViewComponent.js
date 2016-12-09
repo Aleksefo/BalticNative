@@ -22,7 +22,7 @@ class CameraTakePhoto extends React.Component {
 			<View style={styles.viewStyle}>
 				<TouchableOpacity onPress={this.showCamera}>
 					<Components.LinearGradient
-						colors={['#DDD', '#DDD', '#DDD']}
+						colors={['#FFC107', '#FFC107', '#FFC107']}
 						style={styles.linearGradient}
 					>
 						<Foundation
@@ -42,15 +42,15 @@ CameraTakePhoto.propTypes = {
 
 const styles = StyleSheet.create({
 	viewStyle: {
-		backgroundColor: '#DDD'
+		backgroundColor: '#FFC107'
 	},
 
 	linearGradient: {
-		alignItems: 'center'
+		alignItems: 'center',
 	},
 
 	iconContainer: {
-		backgroundColor: '#DDD',
+		backgroundColor: '#FFC107',
 		justifyContent: 'center',
 		alignItems: 'center'
 	},
