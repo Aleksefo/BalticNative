@@ -57,16 +57,19 @@ export default class TemplateScreen extends Component {
                style={{alignItems: 'center'}}>
                <View>
                   <Text style={{fontSize: 20, marginBottom: 10}}>Hello world!</Text>
+
                   <TouchableOpacity
                      style={{margin: 5}}
                      onPress={() => this.setState({offset: -100})}>
                      <Text>Move modal up</Text>
                   </TouchableOpacity>
+
                   <TouchableOpacity
                      style={{margin: 5}}
                      onPress={() => this.setState({offset: 0})}>
                      <Text>Reset modal position</Text>
                   </TouchableOpacity>
+
                   <TouchableOpacity
                      style={{margin: 5}}
                      onPress={() => this.setState({open: false})}>
