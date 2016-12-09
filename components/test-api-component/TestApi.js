@@ -3,17 +3,27 @@ import {
   View,
   Text,
   StyleSheet,
+  TouchableOpacity,
   StatusBar,
     TouchableHighlight,
+  AsyncStorage
 } from 'react-native';
 import api from '../utils/APImanager.js';
+import { Router } from '../../MyNavigator';
+
 
 export default class MyComponent extends Component {
-  /**
-    * This is where we can define any route configuration for this
-    * screen. For example, in addition to the navigationBar title we
-    * could add backgroundColor.
-    */
+
+  constructor(props){
+    super(props);
+
+    this.state ={
+      access_token: undefined,
+      id_token: undefined
+    }
+    this.handleCreatePlace = this.handleCreatePlace.bind(this);
+    this.handleGetPlaces = this.handleGetPlaces.bind(this);
+  }
   static route = {
     navigationBar: {
       title: 'Test API',
@@ -35,14 +45,45 @@ export default class MyComponent extends Component {
       console.log("testServerConnection callback " , response.status , response.type , response.ok);
     });
 
+    /*
+    api.createPlace("title", "longitude", "latitude", "type", "description", "radius").then(response => {
+      console.log("createPlace callback " , response.status, response.type, response.ok);
+    });*/
+
+    AsyncStorage.getItem("access_token", (err, result) => {
+        console.log("access_token:________________" + result);
+        this.setState({access_token: result})
+    });
+    AsyncStorage.getItem("id_token", (err, result) => {
+        console.log("id_token:________________" + result);
+        this.setState({id_token: result})
+    });
+
+
+
+  }
+
+
+  handleCreatePlace(){
+
+    var access_token = this.state.access_token;
+
+    console.log("before api" , access_token);
+
+    api.createSome('place' , testPlace, access_token).then(response => {
+      console.log("createSome callback " , response.status , response.type , response.ok);
+    });
+  }
+
+  handleGetPlaces(){
+
     api.getSome("place").then(response => {
       console.log("getSome callback place " , response);
     });
 
-    api.createPlace("title", "longitude", "latitude", "type", "description", "radius").then(response => {
-      console.log("createPlace callback " , response);
+    api.getAllUsers().then(response =>{
+      console.log("getAllUSers  response: " , response);
     });
-
 
   }
 
@@ -54,6 +95,17 @@ export default class MyComponent extends Component {
             onPress={api.createSome('place', this.testPlace)}>
           <Text>Uus paikka</Text>
         </TouchableHighlight>
+        <Text style={styles.title}>Test api</Text>
+
+        <TouchableOpacity style={{width: 50, height: 40, backgroundColor: "#adeccc"}}
+                              onPress={this.handleCreatePlace.bind(this)}>
+                                  <Text>Create</Text>
+                                    </TouchableOpacity>
+
+      <TouchableOpacity style={{width: 50, height: 40, backgroundColor: "#adeccc"}}
+                            onPress={this.handleGetPlaces.bind(this)}>
+                                <Text>Get</Text>
+                                  </TouchableOpacity>
 
         <StatusBar barStyle="light-content" />
       </View>

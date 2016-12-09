@@ -97,6 +97,26 @@ var styles = StyleSheet.create({
     color: '#fff',
     fontSize: 24,
   },
+  //SEARCH BUTTON
+  searchButton: {
+    width: 28,
+    height: 28,
+    backgroundColor: 'rgb(0, 198, 209)',
+    marginTop:5,
+  },
+  //SEARCH BAR
+  searchBar: {
+    fontSize: 16,
+    height: 35,
+    width: 250,
+    backgroundColor: "white",
+    marginRight: 5
+  },
+  //HOME SCREEN container
+  homeScreenContainer: {
+    flex: 1,
+    backgroundColor: '#fafafa',
+  },
 });
 
 module.exports = styles;

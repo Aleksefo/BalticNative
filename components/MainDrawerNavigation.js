@@ -23,10 +23,12 @@ export default class MainDrawerNavigation extends Component {
       }
   }
 
+  // Render the header image for the main drawer
   _renderHeader = () => {
-    return <Image source={require('../assets/sparkles.jpg')} style={styles.header} />;
+    return <Image source={require('../assets/maxresdefault.jpg')} style={styles.header} />;
   };
 
+  // Renders the titles in the main drawer
   _renderTitle = (text: string, isSelected: bool) => {
     return (
       <Text style={[styles.buttonTitleText, isSelected ? styles.selectedText : null]}>
@@ -35,17 +37,13 @@ export default class MainDrawerNavigation extends Component {
     );
   };
 
+  // Renders the icons in the main drawer
   _renderIcon = (name: string, isSelected: bool) => {
     let extraStyle = {marginTop: 2};
     if (name === 'md-alert') {
       extraStyle = {...extraStyle, marginLeft: -3};
     }
     return (
-      /*<Ionicons
-        style={[styles.icon, isSelected ? styles.selectedText : null, extraStyle]}
-        name={name}
-        size={24}
-      />*/
       <MaterialIcons
         style={[styles.icon, isSelected ? styles.selectedText : null, extraStyle]}
         name={name}
@@ -54,6 +52,7 @@ export default class MainDrawerNavigation extends Component {
     );
   };
 
+  // Renders the main drawer with all its components
   render() {
 
     console.log("this.state.isSuperUser"  , this.state.isSuperUser);
@@ -61,8 +60,10 @@ export default class MainDrawerNavigation extends Component {
 
     let superUserButton = null;
 
+    // Check if the user is an 'superUser'
     if (this.state.isSuperUser) {
 
+      // DrawerNavigationItem for superUser
       superUserButton = <DrawerNavigationItem
         id="superUserCreate"
         selectedStyle={styles.selectedItemStyle}
@@ -83,7 +84,7 @@ export default class MainDrawerNavigation extends Component {
       superUserButton = <DrawerNavigationItem></DrawerNavigationItem>
     }
 
-
+    // Return all the DrawerNavigationItem's with icons, title and StackNavigation to their corresponding components
     return (
       <DrawerNavigation
         drawerPosition="left"
@@ -273,7 +274,7 @@ export default class MainDrawerNavigation extends Component {
 }
 //    this.props.navigator.push(Router.getRoute(name));
 /**
-
+// TODO Remove 
 _goToScreen = name => () => {
   this.props.navigator.push(Router.getRoute(name));
 }
