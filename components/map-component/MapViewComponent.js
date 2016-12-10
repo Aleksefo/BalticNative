@@ -12,7 +12,7 @@ import {
 } from 'react-native';
 import MapView from 'react-native-maps';
 import styles from '../../resources/styles.js'
-//import PlaceModalView from '../modal-component/PlaceModalView'
+import api from '../utils/APImanager.js';
 import PlaceModalView from '../modal-component/PlaceModalView'
 
 
@@ -32,22 +32,22 @@ export default class MapViewComponent extends Component {
         longitudeDelta: 7.0421
       },
       markers: [
-        {
-        latlng: {longitude: 24.956810, latitude: 60.153771},
-        title: "Marker1",
-        description: "Des1"
-        },
-        {
-        latlng: {longitude: 24.903800, latitude: 60.173465},
-        title: "Marker2",
-        description: "Des2"
-        },
-        {
-        latlng: {longitude: 24.968719, latitude: 60.173626},
-        title: "Marker3",
-        description: "Des3"
-        }
-      ]
+				{
+				latlng: {longitude: 24.956810, latitude: 60.153771},
+				title: "Marker1",
+				description: "Des1"
+				},
+				{
+				latlng: {longitude: 24.903800, latitude: 60.173465},
+				title: "Marker2",
+				description: "Des2"
+				},
+				{
+				latlng: {longitude: 24.968719, latitude: 60.173626},
+				title: "Marker3",
+				description: "Des3"
+				}
+			]
     };
     this.onMarkerPress = this.onMarkerPress.bind(this);
 		this.callBack = this.callBack.bind(this);
@@ -55,6 +55,7 @@ export default class MapViewComponent extends Component {
 		this.handleOnRegionChangeComplete = this.handleOnRegionChangeComplete.bind(this);
 		this.findMarkerFromState = this.findMarkerFromState.bind(this);
 		this.flyToMyLoc = this.flyToMyLoc.bind(this);
+		this.updateMarkerState = this.updateMarkerState.bind(this);
   }
 
 	static route = {
@@ -84,7 +85,21 @@ export default class MapViewComponent extends Component {
 			distanceInterval: 5
 		}
 		//Exponent.Location.watchPositionAsync(secondOptions, this.callBack);
-		console.log("Platform.OS", this.state.OS);
+
+		api.getSome("place").then(response => {
+      console.log("getSome callback place response._bodyInit" , response._bodyInit);
+			updateMarkerState(response._bodyInit);
+    });
+
+	}
+
+	updateMarkerState(placesList){
+		var markerList = [];
+		var markerObject = {};
+
+		for(var i=0; i<placesList.length; i++){
+			console.log("currently at:" , placesList[i]);
+		}
 	}
 
 	handleOpenModal(modalData){

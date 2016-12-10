@@ -37,24 +37,8 @@ var serverCommunicator = {
 	    });
     },
 
-		getAllUsers: function(){
-	   return fetch('http://balticapp.fi/lukeB/user/get-all',
-	   {
-	     method: 'get'
-
-	   })
-	     .then((response) => {
-	         console.log("get all response: " , response);
-	        return response
-	     })
-	     .catch((err) => {
-
-	       return err
-	     });
-	 },
-
 	 getSome: function(param){
-	   return fetch('http://balticapp.fi/lukeB/'+param,
+	   return fetch('http://www.balticapp.fi/lukeB/'+param,
 	   {
 	     method: 'get'
 
@@ -68,9 +52,6 @@ var serverCommunicator = {
 	 },
 
   createSome: function(destination, param, id_token){
-
-		console.log("CREATE SOME: param_____" , param ,  "id_token_______" , id_token);
-
 		return fetch('http://www.balticapp.fi/lukeB/'+destination+'/create' , {
       method: 'post',
 	    body: JSON.stringify(param),

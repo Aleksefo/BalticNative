@@ -80,11 +80,6 @@ export default class MyComponent extends Component {
     api.getSome("place").then(response => {
       console.log("getSome callback place " , response);
     });
-
-    api.getAllUsers().then(response =>{
-      console.log("getAllUSers  response: " , response);
-    });
-
   }
 
   render() {
