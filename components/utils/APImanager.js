@@ -5,11 +5,18 @@
  console.log("testServerConnection callback " , response.status , response.type , response.ok);
  });
 
+<<<<<<< HEAD
  api.getSome("category").then(response => {
  console.log("getSome callback category " , response);
  });
+=======
+api.getSome("category").then(response => {
+  console.log("getSome callback category " , response);
+});
+*/
 
- **/
+
+
 import {AsyncStorage} from 'react-native';
 import React, { Component } from 'react';
 import Exponent from 'exponent';
@@ -21,61 +28,43 @@ import {
     AsyncStorage
 } from 'react-native';
 
+
+
 var serverCommunicator = {
 
-  testServerConnection: function() {
-    return fetch('http://www.balticapp.fi/lukeB/callback', {method: 'get'}) // return a promise! ..important!
-      .then((response) => {
-         return response
-      })
-      .catch((err) => {
-      	return err
+    testServerConnection: function () {
+	    return fetch('http://www.balticapp.fi/lukeB/callback', {method: 'get'}) // return a promise! ..important!
+	        .then((response) => {
+	            return response
+	        })
+	        .catch((err) => {
+	            return err
 
-      });
-  },
-
-  getAllUsers: function(){
-    return fetch('http://balticapp.fi/lukeB/user/get-all',
-    {
-      method: 'get'
-
-    })
-      .then((response) => {
-          console.log("get all response: " , response);
-         return response
-      })
-      .catch((err) => {
-
-        return err
-      });
-  },
-
-
-  getSome: function(param){
-    return fetch('http://balticapp.fi/lukeB/'+param,
-        {
-            method: 'get'
-        });
-  },
-
-    getSome: function (param) {
-        return fetch('http://balticapp.fi/lukeB/' + param,
-            {
-                method: 'get'
-
-            })
-            .then((response) => {
-                return response
-            })
-            .catch((err) => {
-                return err
-            });
+	    });
     },
-  createSome: function(destination, param, access_token){
-    console.log("apimanager access_token" , access_token);
-    return fetch('http://www.balticapp.fi/lukeB/'+destination+'/create' , {
+
+	 getSome: function(param){
+	   return fetch('http://www.balticapp.fi/lukeB/'+param,
+	   {
+	     method: 'get'
+
+	   })
+	     .then((response) => {
+	        return response
+	     })
+	     .catch((err) => {
+	         return err
+	     });
+	 },
+
+  createSome: function(destination, param, id_token){
+		return fetch('http://www.balticapp.fi/lukeB/'+destination+'/create' , {
       method: 'post',
-	    body: JSON.stringify({param}),
+	    body: JSON.stringify(param),
+			headers: new Headers({
+					'Authorization': 'Bearer ' + id_token,
+					'Content-Type': 'application/json',
+			})
     })
     .then((response) => {
        return response
@@ -85,7 +74,7 @@ var serverCommunicator = {
     });
   },
 
-    createSome: function (destination, param) {
+    /*createSome: function (destination, param) {
             AsyncStorage.getItem("id_token", (err, id_token) => {
                 console.log("async tulos:________________" + id_token);
                 console.log("async error:_________________" + err);
@@ -112,8 +101,8 @@ var serverCommunicator = {
             }
         });
 
-    },
-
+    },*/
+		/*
     createPlace: function (title, longitude, latitude, type, description, radius) {
         return fetch('http://www.balticapp.fi/lukeB/place/create', {
             method: 'post',
@@ -134,7 +123,7 @@ var serverCommunicator = {
             .catch((err) => {
                 return err
             });
-    },
+    },*/
 
     createReport: function (title, longitude, latitude, type, description, date, categoryId) {
         return fetch('http://www.balticapp.fi/lukeA/report/create', {
