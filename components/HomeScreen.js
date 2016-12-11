@@ -11,7 +11,7 @@ import {
 import ListItem from './ListItem';
 import { Router } from '../MyNavigator';
 import MapViewComponent from './map-component/MapViewComponent';
-import CameraViewComponent from './camera-component/CameraViewComponent';
+import CameraScreen from './camera-component/CameraScreen';
 import { NavigationActions } from '@exponent/ex-navigation'
 import Store from './utils/Store';
 import { MaterialIcons } from '@exponent/vector-icons';
@@ -180,7 +180,7 @@ export default class HomeScreen extends Component {
         </View>
 
         <View style={{flex: 3, backgroundColor: 'powderblue'}}>
-					<CameraViewComponent  setPhoto={this.setPhoto} />
+					<CameraScreen />
 				</View>
 
       </View>

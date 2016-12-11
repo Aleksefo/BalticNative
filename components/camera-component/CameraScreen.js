@@ -1,11 +1,8 @@
 import React from 'react';
 import { View, ScrollView, Text, StyleSheet } from 'react-native';
 import { SegmentedControls } from 'react-native-radio-buttons';
-import Colors from '../constants/Colors';
-import Header from '../components/Header';
-import ImageForm from '../components/ImageForm';
-import CameraOpenRoll from '../components/CameraOpenRoll';
-import CameraTakePhoto from '../components/CameraTakePhoto';
+import ImageForm from './ImageForm';
+import CameraTakePhoto from './CameraTakePhoto';
 
 class CameraScreen extends React.Component {
   constructor(props) {
@@ -58,16 +55,16 @@ class CameraScreen extends React.Component {
     );
   }
 }
-
+/*
 CameraScreen.route = {
   navigationBar: {
     visible: true,
     renderTitle: () => <Header headerText={'Camera'} />,
-    backgroundColor: Colors.rmotrB,
-    tintColor: Colors.rmotrC
+    backgroundColor: '#242134',
+    tintColor: '#f1edd2'
   }
 };
-
+*/
 const styles = StyleSheet.create({
   container: {
     flex: 1,
