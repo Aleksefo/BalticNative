@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import { View, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, TouchableOpacity, StyleSheet, Image } from 'react-native';
 import { Foundation } from '@exponent/vector-icons';
 import { ImagePicker, Components } from 'exponent';
 
@@ -18,6 +18,11 @@ class CameraTakePhoto extends React.Component {
 	}
 
 	render() {
+
+		let pic = {
+			uri: 'https://upload.wikimedia.org/wikipedia/commons/d/de/Bananavarieties.jpg'
+		};
+
 		return (
 			<View style={styles.viewStyle}>
 				<TouchableOpacity onPress={this.showCamera}>
@@ -31,6 +36,7 @@ class CameraTakePhoto extends React.Component {
 						/>
 					</Components.LinearGradient>
 				</TouchableOpacity>
+				<Image source={pic} style={{width: 193, height: 110}}/>
 			</View>
 		);
 	}

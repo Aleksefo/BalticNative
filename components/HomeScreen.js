@@ -24,13 +24,18 @@ class RightButton extends React.Component {
     searching: false
   };
 
+  componentWillMount() {
+  }
 
-  //callback function to our HomeScreen component with searchString as parameters
-  _handleTextChange = (searchString) =>{
-    this.props.emitter.emit('search', searchString);
+  _handleTextChange = (params) =>{
+
+    this.props.emitter.emit('search', params);
+
   }
 
   changeRightButtonView(){
+    console.log("changeRightButtonView" , this.state.searching);
+
     this.setState({
       searching: !this.state.searching
     })
@@ -40,6 +45,8 @@ class RightButton extends React.Component {
 
     let rightButtonView = null;
 
+//style={{marginTop: 10 ,flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center'}}
+//style={{marginTop: 10 ,flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center'}}
     if(!this.state.searching){
        rightButtonView =  <View style={{marginTop:5}} >
                           <TouchableOpacity style={{width: 28, height: 28, backgroundColor: 'rgb(0, 198, 209)'}}
@@ -135,6 +142,7 @@ export default class HomeScreen extends Component {
   };
 
   componentWillMount() {
+    this._subscription = this.props.route.getEventEmitter().addListener('reset', this._handleReset);
     this._subscription = this.props.route.getEventEmitter().addListener('search' , this._handleSearch)
   }
 
@@ -142,8 +150,16 @@ export default class HomeScreen extends Component {
     this._subscription.remove();
   }
 
+  componentDidUpdate() {
+
+  }
+
+  _handleReset = () => {
+
+  };
+
   _handleSearch = (searchParam) =>{
-    console.log("_handleSearch " , searchParam);
+    console.log("_handleSearch: " , searchParam.text);
     this.setState({
       searchString: searchParam.text
     })
@@ -163,8 +179,8 @@ export default class HomeScreen extends Component {
           searchString={this.state.searchString}/>
         </View>
 
-        <View style={{flex: 1, backgroundColor: 'powderblue'}}>
-					<CameraViewComponent/>
+        <View style={{flex: 3, backgroundColor: 'powderblue'}}>
+					<CameraViewComponent  setPhoto={this.setPhoto} />
 				</View>
 
       </View>
