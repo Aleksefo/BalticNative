@@ -27,12 +27,6 @@ class RightButton extends React.Component {
   componentWillMount() {
   }
 
-
-  _handlePress = () => {
-    this.props.emitter.emit('reset');
-
-  };
-
   _handleTextChange = (params) =>{
 
     this.props.emitter.emit('search', params);
@@ -133,6 +127,9 @@ class SearchButton extends Component {
 export default class HomeScreen extends Component {
   constructor(props){
     super(props);
+    this.state = {
+      searchString: ""
+    }
   }
 
   static route = {
@@ -162,7 +159,10 @@ export default class HomeScreen extends Component {
   };
 
   _handleSearch = (searchParam) =>{
-    console.log("_handleSearch: " , searchParam);
+    console.log("_handleSearch: " , searchParam.text);
+    this.setState({
+      searchString: searchParam.text
+    })
   }
 
 
@@ -175,7 +175,8 @@ export default class HomeScreen extends Component {
     return (
       <View style={styles.container}>
         <View style={{flex: 12}}>
-        <MapViewComponent/>
+        <MapViewComponent
+          searchString={this.state.searchString}/>
         </View>
 
         <View style={{flex: 1, backgroundColor: 'powderblue'}}>

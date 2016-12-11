@@ -31,23 +31,7 @@ export default class MapViewComponent extends Component {
         latitudeDelta: 20.0922,
         longitudeDelta: 7.0421
       },
-      markers: [
-				{
-				latlng: {longitude: 24.956810, latitude: 60.153771},
-				title: "Marker1",
-				description: "Des1"
-				},
-				{
-				latlng: {longitude: 24.903800, latitude: 60.173465},
-				title: "Marker2",
-				description: "Des2"
-				},
-				{
-				latlng: {longitude: 24.968719, latitude: 60.173626},
-				title: "Marker3",
-				description: "Des3"
-				}
-			]
+      markers: []
     };
     this.onMarkerPress = this.onMarkerPress.bind(this);
 		this.callBack = this.callBack.bind(this);
@@ -86,20 +70,39 @@ export default class MapViewComponent extends Component {
 		}
 		//Exponent.Location.watchPositionAsync(secondOptions, this.callBack);
 
+
 		api.getSome("place").then(response => {
       console.log("getSome callback place response._bodyInit" , response._bodyInit);
-			updateMarkerState(response._bodyInit);
+			this.updateMarkerState(response._bodyInit);
     });
+	}
 
+	componentWillReceiveProps(){
+		console.log("this.proooops:" , this.props);
 	}
 
 	updateMarkerState(placesList){
 		var markerList = [];
 		var markerObject = {};
 
+		var placesList = JSON.parse(placesList);
+
 		for(var i=0; i<placesList.length; i++){
 			console.log("currently at:" , placesList[i]);
+
+			markerObject ={
+				latlng: {longitude: Number(placesList[i].location.long), latitude: Number(placesList[i].location.lat)},
+				title: placesList[i].title,
+				description: placesList[i].description
+			}
+			markerList.push(markerObject);
 		}
+
+		console.log("markerList:" , markerList , "this.state.markerList: " , this.state.markers);
+
+		this.setState({
+			markers: markerList
+		})
 	}
 
 	handleOpenModal(modalData){
@@ -181,11 +184,10 @@ export default class MapViewComponent extends Component {
 
 		}
 
-		console.log("render:");
+		console.log("render:" , this.state.markerList);
 
 		return (
 			<View>
-
 
 
 			<View style={{width: Dimensions.get('window').width, height: Dimensions.get('window').height}}>
