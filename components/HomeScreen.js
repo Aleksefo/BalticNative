@@ -12,6 +12,7 @@ import ListItem from './ListItem';
 import { Router } from '../MyNavigator';
 import MapViewComponent from './map-component/MapViewComponent';
 import CameraScreen from './camera-component/CameraScreen';
+import NewReviewModal from './camera-component/NewReviewModal';
 import { NavigationActions } from '@exponent/ex-navigation'
 import Store from './utils/Store';
 import { MaterialIcons } from '@exponent/vector-icons';
@@ -174,14 +175,12 @@ export default class HomeScreen extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <View style={{flex: 12}}>
+        <View style={{flex: 13}}>
         <MapViewComponent
           searchString={this.state.searchString}/>
-        </View>
 
-        <View style={{flex: 3, backgroundColor: 'powderblue'}}>
-					<CameraScreen />
-				</View>
+        </View>
+		  <CameraScreen />
 
       </View>
     );
