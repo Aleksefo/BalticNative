@@ -1,6 +1,5 @@
 import React from 'react';
 import { View, ScrollView, Text, StyleSheet } from 'react-native';
-import { SegmentedControls } from 'react-native-radio-buttons';
 import ImageForm from './ImageForm';
 import CameraTakePhoto from './CameraTakePhoto';
 
@@ -69,14 +68,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#EEE'
-  },
-
-  segmentedControls: {
-    backgroundColor: '#FFF',
-    paddingTop: 10,
-    paddingBottom: 10,
-    paddingLeft: 5,
-    paddingRight: 5
   }
 });
 
