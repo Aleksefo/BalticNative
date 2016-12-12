@@ -138,13 +138,8 @@ export default class MapViewComponent extends Component {
 		});
 	}
 
-	flyToMyLoc(){
-		console.log("flyToMyLoc")
-
-
+	flyToMyLoc(){		
 		let currentRegionState = this.state.region;
-
-		console.log('currentRegionState1', currentRegionState);
 
 		currentRegionState.latitude = this.state.myCurrentPosition.latitude;
 		currentRegionState.longitude = this.state.myCurrentPosition.longitude;
@@ -152,22 +147,10 @@ export default class MapViewComponent extends Component {
 		this.setState({
 			region: currentRegionState
 		});
-
-		console.log('currentRegionState2', currentRegionState);
-
-		/*navigator.geolocation.getCurrentPosition(
-    (position) => {
-      this.refs.map.refs.node.animateToCoordinate(position.coords)
-	}*/
 	}
 
 
 	render() {
-
-		if(this.state.myCurrentPosition !== undefined){
-			console.log("renderrrrrrrr: " ,  this.state.myCurrentPosition.latitude);
-		}
-
 
 		let flyMeToIosButton = null
 
@@ -200,9 +183,8 @@ export default class MapViewComponent extends Component {
 
 					{this.state.markers.map(marker => (
 						<MapView.Marker
-						 onPress={this.onMarkerPress}
-						 //onPress={(marker.title) => this._handleTextChange({})}
 						 coordinate={marker.latlng}
+						 onSelect={this.onMarkerPress}
 						 onPress={this.onMarkerPress}
 						 title={marker.title}
 						 description={marker.description}

@@ -19,11 +19,23 @@ import  {
 import TextField from 'react-native-md-textinput';
 
 export default class ProfilePage extends Component {
+  constructor(props){
+    super(props);
 
+    this.state = {
+      userName: "userName",
+      userAge: "userAge",
+      userGender: "userGender",
+      userBio: "userBio",
+      editUser: false
+    }
+
+    this.handleEditUser = this.handleEditUser.bind(this);
+  }
 
   static route = {
     navigationBar: {
-      title: 'Profile',
+      title: 'Profile'
     },
   }
 
@@ -34,19 +46,32 @@ export default class ProfilePage extends Component {
   componentDidMount(){
 
     api.getSome("user").then(response => {
-      console.log("getSome callback category " , response);
+      console.log("getSome callback user " , response);
     });
 
   }
+  handleEditUser(){
+    this.setState({
+      editUser: !this.state.editUser
+    })
+  }
 
   render() {
+    if(this.state.editUser){
+      console.log("TIME TO EDIT USER");
+
+    }else {
+      console.log("Don't edit user");
+    }
+
     return (
       <View style={{flex:1}}>
           <View style={{flex: 1}}>
                 <View style={styles.profileInfoStyle}>
                   <View style={{width:50, height:50, backgroundColor:'red', marginTop:10, marginLeft: 10, borderRadius:30}}></View>
                   <View style={styles.profileInfoTextStyle}>
-                  <Text style={{fontSize:35, color: 'white', marginLeft: 10}}>User Name</Text>
+                  <TouchableOpacity onPress={this.handleEditUser}><Text>Edit</Text></TouchableOpacity>
+                  <TextInput editable={this.state.editUser} style={{fontSize:35, color: 'white', marginLeft: 10}}>User Name</TextInput>
                   <Text style={{marginLeft:10, marginTop:2, color:'white'}}>Profile Info</Text>
                   <Text style={{textAlign: 'right', fontSize:20, marginBottom: 2, marginRight:5, color:'white' }}>age, gender</Text>
                   </View>
