@@ -152,6 +152,8 @@ export default class MapViewComponent extends Component {
 
 
 	render() {
+		console.log("renderrrr: " , this.state);
+
 		let flyMeToIosButton = null
 
 		//if OS is ios create flyMeToIosButton in the view
