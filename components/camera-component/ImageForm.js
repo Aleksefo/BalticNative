@@ -4,7 +4,10 @@ import Image from 'react-native-image-progress';
 import moment from 'moment';
 import Button from './Button';
 import api from '../utils/APImanager';
-import {Base64} from "js-base64";
+import FileUpload from 'react-native-file-upload';
+
+//import {Base64} from "js-base64"
+
 
 class ImageForm extends React.Component {
 	constructor(props) {
@@ -12,6 +15,15 @@ class ImageForm extends React.Component {
 
 		this.savingAttempt = this.savingAttempt.bind(this);
 		// it's not necessary to bind savePhoto
+		this.state = {
+			id_token: ""
+		}
+	}
+
+	componentDidMount(){
+		AsyncStorage.getItem("id_token", (err, result) => {
+        this.setState({id_token: result})
+    });
 	}
 
 	updateTextCaptionValue = caption => this.props.setCaption(caption);
@@ -35,12 +47,9 @@ class ImageForm extends React.Component {
 		const imageToSave = {
 			uri: this.props.photo.uri,
 			caption: this.props.caption,
-
 		};
 
-		let photo = {
-			uri: uriFromCameraRoll,
-		};
+		/*
 		let body = new FormData();
 		body.append('title', 'A beautiful photo!');
 		body.append('location', location);
@@ -48,10 +57,71 @@ class ImageForm extends React.Component {
 		body.append('description', 'some text');
 		body.append('date', '12-12-16');
 		body.append('categoryId', 'something');
+		headers.append();
+		xhr.setRequestHeader('Authorization', 'Bearer '+ this.state.id_token);
 
-		xhr.open('POST', http://www.balticapp.fi/lukeA/report/create);
+		xhr.open('POST', 'http://www.balticapp.fi/lukeA/report/create');
 		xhr.send(body);
+		*/
+		var id_token = this.state.id_token;
 
+
+
+		var photo = {
+				uri: this.props.photo.uri,
+				type: 'image/jpeg',
+				name: 'myphoto.jpg',
+			};
+
+			var obj = {
+	        uploadUrl: 'http://www.balticapp.fi/lukeA/report/create',
+	        method: 'POST', // default 'POST',support 'POST' and 'PUT'
+	        headers: {
+						'Authorization': 'Bearer ' + id_token,
+						'Content-Type': 'application/json',	        },
+	        fields: {
+						title: "My Photo",
+						location: {
+								long: "22.122759",
+								lat: "60.425572",
+						},
+						description:"beautiful image",
+						date: "",
+						categoryId: ""
+	        },
+	        files: [
+	          {
+	            name: 'one', // optional, if none then `filename` is used instead
+	            filename: 'testFileNape', // require, file name
+	            filepath: this.props.photo.uri, // require, file absoluete path
+	            filetype: '', // options, if none, will get mimetype from `filepath` extension
+	          },
+	        ]
+	    };
+	    FileUpload.upload(obj, function(err, result) {
+	      console.log('upload:', err, result);
+	    })
+
+
+	/*
+    var reportForm ={
+        title: "My Photo",
+        location: {
+            long: "22.122759",
+            lat: "60.425572",
+        },
+        image: this.props.photo,
+        description:"beautiful image",
+        date: "",
+				categoryId: ""
+    };
+
+    console.log("before api" , id_token );
+
+    api.createSome('report' , reportForm, id_token).then(response => {
+      console.log("createSome report callback " , response);
+    });
+*/
 		AsyncStorage.setItem(
 			imageKey,
 			JSON.stringify(imageToSave),

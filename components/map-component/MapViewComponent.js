@@ -73,6 +73,7 @@ export default class MapViewComponent extends Component {
 	getMyCurrentPosition(){
 		navigator.geolocation.getCurrentPosition(
 		 (position) => {
+			 console.log("position " , JSON.stringify(position));
 			 this.setState({myCurrentPosition: position.coords});
 		 },
 		 (error) => alert(JSON.stringify(error)),
@@ -138,7 +139,7 @@ export default class MapViewComponent extends Component {
 		});
 	}
 
-	flyToMyLoc(){		
+	flyToMyLoc(){
 		let currentRegionState = this.state.region;
 
 		currentRegionState.latitude = this.state.myCurrentPosition.latitude;
@@ -151,7 +152,6 @@ export default class MapViewComponent extends Component {
 
 
 	render() {
-
 		let flyMeToIosButton = null
 
 		//if OS is ios create flyMeToIosButton in the view

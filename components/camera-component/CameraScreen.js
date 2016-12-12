@@ -102,7 +102,11 @@ class CameraScreen extends React.Component {
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		backgroundColor: '#EEE'
+		backgroundColor: '#EEE',
+		position: 'absolute',
+		bottom: 0,
+		left:0
+
 	}
 });
 
