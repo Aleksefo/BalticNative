@@ -25,7 +25,7 @@ export default class MainDrawerNavigation extends Component {
 
   // Render the header image for the main drawer
   _renderHeader = () => {
-    return <Image source={require('../assets/maxresdefault.jpg')} style={styles.header} />;
+    return <Image style={styles.header} />;
   };
 
   // Renders the titles in the main drawer
@@ -274,7 +274,7 @@ export default class MainDrawerNavigation extends Component {
 }
 //    this.props.navigator.push(Router.getRoute(name));
 /**
-// TODO Remove 
+// TODO Remove
 _goToScreen = name => () => {
   this.props.navigator.push(Router.getRoute(name));
 }

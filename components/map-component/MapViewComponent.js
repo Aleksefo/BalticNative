@@ -14,6 +14,7 @@ import MapView from 'react-native-maps';
 import styles from '../../resources/styles.js'
 import api from '../utils/APImanager.js';
 import PlaceModalView from '../modal-component/PlaceModalView'
+import { MaterialIcons } from '@exponent/vector-icons';
 
 
 export default class MapViewComponent extends Component {
@@ -128,6 +129,7 @@ export default class MapViewComponent extends Component {
 
 	//{"dispatchConfig":null,"_targetInst":null,"isDefaultPrevented":null,"isPropagationStopped":null,"_dispatchListeners":null,"_dispatchInstances":null,"type":null,"target":null,"eventPhase":null,"bubbles":null,"cancelable":null,"defaultPrevented":null,"isTrusted":null,"nativeEvent":null}
   onMarkerPress(event){
+		console.log("EVENT!!!!!");
 		this.findMarkerFromState(event.nativeEvent.coordinate);
 	}
 
@@ -138,13 +140,10 @@ export default class MapViewComponent extends Component {
 		});
 	}
 
+	//first copy default region attributes to currentRegionState,
+	//then setting myCurrentPosition attributes to currentRegionState and update region
 	flyToMyLoc(){
-		console.log("flyToMyLoc")
-
-
 		let currentRegionState = this.state.region;
-
-		console.log('currentRegionState1', currentRegionState);
 
 		currentRegionState.latitude = this.state.myCurrentPosition.latitude;
 		currentRegionState.longitude = this.state.myCurrentPosition.longitude;
@@ -152,31 +151,20 @@ export default class MapViewComponent extends Component {
 		this.setState({
 			region: currentRegionState
 		});
-
-		console.log('currentRegionState2', currentRegionState);
-
-		/*navigator.geolocation.getCurrentPosition(
-    (position) => {
-      this.refs.map.refs.node.animateToCoordinate(position.coords)
-	}*/
 	}
 
 
 	render() {
-
-		if(this.state.myCurrentPosition !== undefined){
-			console.log("renderrrrrrrr: " ,  this.state.myCurrentPosition.latitude);
-		}
-
-
 		let flyMeToIosButton = null
 
 		//if OS is ios create flyMeToIosButton in the view
 		if (this.state.OS == 'ios') {
-			flyMeToIosButton = <View style={{height:50, width: 50, backgroundColor: 'yellow', top: 10, right: 10, position: 'absolute'}}>
+			flyMeToIosButton = <View style={{height:40, width: 40, top: 45, right: 5, position: 'absolute'}}>
 				<TouchableOpacity
-				style={{height:50, width: 50, backgroundColor: 'green'}}
+				style={{height:40, width: 40, backgroundColor: 'rgb(0, 198, 209)'}}
 				onPress={this.flyToMyLoc}>
+				<MaterialIcons name="my-location" size={32} color="white" style={{padding: 5}}  />
+
 
 				</TouchableOpacity>
 			</View>
@@ -191,7 +179,7 @@ export default class MapViewComponent extends Component {
 					<MapView
 						style={{flex: 1}}
 						region={this.state.region}
-						//onMarkerPress={this.onMarkerPress}
+						onMarkerPress={this.onMarkerPress}
 						moveOnMarkerPress={false}
 						onRegionChangeComplete={this.handleOnRegionChangeComplete}
 						loadingEnabled={true}
@@ -200,10 +188,10 @@ export default class MapViewComponent extends Component {
 
 					{this.state.markers.map(marker => (
 						<MapView.Marker
-						 onPress={this.onMarkerPress}
+						 //onPress={this.onMarkerPress}
 						 //onPress={(marker.title) => this._handleTextChange({})}
 						 coordinate={marker.latlng}
-						 onPress={this.onMarkerPress}
+						 onSelect={this.onMarkerPress}
 						 title={marker.title}
 						 description={marker.description}
 						 identifier={marker.title}
