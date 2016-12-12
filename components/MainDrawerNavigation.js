@@ -4,6 +4,7 @@ import {
   View,
   Text,
   Image,
+  AsyncStorage,
 } from 'react-native';
 import {
   StackNavigation,
@@ -19,7 +20,8 @@ export default class MainDrawerNavigation extends Component {
   constructor(props){
       super(props);
       this.state ={
-        isSuperUser: false
+        isSuperUser: false,
+        isLoggedIn: false
       }
   }
 
@@ -51,14 +53,38 @@ export default class MainDrawerNavigation extends Component {
       />
     );
   };
+    componentDidUpdate() {
+        AsyncStorage.getItem("id_token", (err, result) => {
+            if (result) {
+                this.setState({isLoggedIn: true});
+                return true;
+            } else {
+                this.setState({isLoggedIn: false});
+                return false;
+            }
+        });
+    }
+
+    componentDidMount() {
+        AsyncStorage.getItem("id_token", (err, result) => {
+            if (result) {
+                this.setState({isLoggedIn: true});
+                return true;
+            } else {
+                this.setState({isLoggedIn: false});
+                return false;
+            }
+        });
+    }
 
   // Renders the main drawer with all its components
   render() {
-
-    console.log("this.state.isSuperUser"  , this.state.isSuperUser);
+      AsyncStorage.getItem("id_token", (err, result) => {
+      });
 
 
     let superUserButton = null;
+    let loggedInButton = null;
 
     // Check if the user is an 'superUser'
     if (this.state.isSuperUser) {
@@ -82,6 +108,26 @@ export default class MainDrawerNavigation extends Component {
       </DrawerNavigationItem>
     } else {
       superUserButton = <DrawerNavigationItem></DrawerNavigationItem>
+    }
+    if (this.state.isLoggedIn) {
+        loggedInButton = <DrawerNavigationItem></DrawerNavigationItem>
+    } else {
+        loggedInButton = <DrawerNavigationItem
+            id="testAuthentication"
+            selectedStyle={styles.selectedItemStyle}
+            renderTitle={isSelected => this._renderTitle('Login or register', isSelected)}
+            renderIcon={isSelected => this._renderIcon('free-breakfast', isSelected)}>
+            <StackNavigation
+                id="testAuthentication"
+                initialRoute={Router.getRoute('testAuthentication')}
+                defaultRouteConfig={{
+                    navigationBar: {
+                        backgroundColor: 'rgb(0, 198, 209)',
+                        tintColor: '#fff',
+                    },
+                }}
+            />
+        </DrawerNavigationItem>
     }
 
     // Return all the DrawerNavigationItem's with icons, title and StackNavigation to their corresponding components
@@ -108,22 +154,7 @@ export default class MainDrawerNavigation extends Component {
           />
         </DrawerNavigationItem>
 
-          <DrawerNavigationItem
-              id="testAuthentication"
-              selectedStyle={styles.selectedItemStyle}
-              renderTitle={isSelected => this._renderTitle('Test Authentication', isSelected)}
-              renderIcon={isSelected => this._renderIcon('free-breakfast', isSelected)}>
-              <StackNavigation
-                  id="testAuthentication"
-                  initialRoute={Router.getRoute('testAuthentication')}
-                  defaultRouteConfig={{
-                      navigationBar: {
-                          backgroundColor: 'rgb(0, 198, 209)',
-                          tintColor: '#fff',
-                      },
-                  }}
-              />
-          </DrawerNavigationItem>
+          {loggedInButton}
 
         <DrawerNavigationItem
           id="profilePage"

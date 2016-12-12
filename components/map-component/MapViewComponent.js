@@ -77,6 +77,7 @@ export default class MapViewComponent extends Component {
 		var markerList = [];
 		var markerObject = {};
 		var placesList = JSON.parse(placesList);
+	//When map region is changed update the state
 
 
 		for(var i=0; i<placesList.length; i++){

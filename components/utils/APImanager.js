@@ -17,7 +17,6 @@ api.getSome("category").then(response => {
 
 
 
-import {AsyncStorage} from 'react-native';
 import React, { Component } from 'react';
 import Exponent from 'exponent';
 
