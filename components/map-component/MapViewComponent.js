@@ -24,6 +24,7 @@ export default class MapViewComponent extends Component {
 			openModal: false,
 			popupTitle: undefined,
 			popupDescription: undefined,
+			myCurrentPosition: undefined,
 			OS: Platform.OS,
       region: {
         latitude: 60.78825,
@@ -40,6 +41,7 @@ export default class MapViewComponent extends Component {
 		this.findMarkerFromState = this.findMarkerFromState.bind(this);
 		this.flyToMyLoc = this.flyToMyLoc.bind(this);
 		this.updateMarkerState = this.updateMarkerState.bind(this);
+		this.getMyCurrentPosition = this.getMyCurrentPosition.bind(this);
   }
 
 	static route = {
@@ -50,17 +52,12 @@ export default class MapViewComponent extends Component {
 
 	componentDidMount(){
 
-		var options = {
-			enableHighAccuracy: false
-		}
-		let currentPosition = Exponent.Location.getCurrentPositionAsync(options);
-		console.log("my currentPosition is : " , currentPosition);
-
-
 		//Get list of places and create markers from that list
 		api.getSome("place").then(response => {
 			this.updateMarkerState(response._bodyInit);
     });
+
+		this.getMyCurrentPosition();
 	}
 
 	//when user types in the search bar check if that string is found in markers title and fly to that markers location
@@ -70,6 +67,17 @@ export default class MapViewComponent extends Component {
 				console.log("FOUND MATCH!!!!" , this.state.markers[i].title);
 			}
 		}
+	}
+
+	//Called from component did mount. get users current position and set it as state.
+	getMyCurrentPosition(){
+		navigator.geolocation.getCurrentPosition(
+		 (position) => {
+			 this.setState({myCurrentPosition: position.coords});
+		 },
+		 (error) => alert(JSON.stringify(error)),
+		 {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
+	 );
 	}
 
 	//run through list of places and create marker objects from that list
@@ -130,27 +138,15 @@ export default class MapViewComponent extends Component {
 		});
 	}
 
-	flyToMyLoc(){
-		console.log("flyToMyLoc", MapView)
+	flyToMyLoc(){		
+		let currentRegionState = this.state.region;
 
-		/*var options = {
-			enableHighAccuracy: false
-		}
+		currentRegionState.latitude = this.state.myCurrentPosition.latitude;
+		currentRegionState.longitude = this.state.myCurrentPosition.longitude;
 
-		let currentPosition = Exponent.Location.getCurrentPositionAsync(options);
-
-		var coordinate = {
-			latitude: 60.173465,
-			longitude: 24.903800,
-
-		}
-
-		MapView.animateToCoordinate(coordinate,1000);*/
-
-		/*navigator.geolocation.getCurrentPosition(
-    (position) => {
-      this.refs.map.refs.node.animateToCoordinate(position.coords)
-	}*/
+		this.setState({
+			region: currentRegionState
+		});
 	}
 
 
@@ -187,9 +183,8 @@ export default class MapViewComponent extends Component {
 
 					{this.state.markers.map(marker => (
 						<MapView.Marker
-						 onPress={this.onMarkerPress}
-						 //onPress={(marker.title) => this._handleTextChange({})}
 						 coordinate={marker.latlng}
+						 onSelect={this.onMarkerPress}
 						 onPress={this.onMarkerPress}
 						 title={marker.title}
 						 description={marker.description}
