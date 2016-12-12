@@ -12,7 +12,6 @@ import ListItem from './ListItem';
 import { Router } from '../MyNavigator';
 import MapViewComponent from './map-component/MapViewComponent';
 import CameraScreen from './camera-component/CameraScreen';
-import NewReviewModal from './camera-component/NewReviewModal';
 import { NavigationActions } from '@exponent/ex-navigation'
 import Store from './utils/Store';
 import { MaterialIcons } from '@exponent/vector-icons';

@@ -2,7 +2,6 @@ import React from 'react';
 import {View, ScrollView, Text, StyleSheet, Modal, TouchableHighlight} from 'react-native';
 import ImageForm from './ImageForm';
 import CameraTakePhoto from './CameraTakePhoto';
-import NewReviewModal from './NewReviewModal';
 
 class CameraScreen extends React.Component {
 	constructor(props) {
