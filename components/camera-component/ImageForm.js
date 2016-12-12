@@ -1,8 +1,10 @@
 import React, { PropTypes } from 'react';
-import { View, TextInput, Alert, AsyncStorage, StyleSheet } from 'react-native';
+import { View, TextInput, Alert, AsyncStorage, StyleSheet, NativeModules } from 'react-native';
 import Image from 'react-native-image-progress';
 import moment from 'moment';
 import Button from './Button';
+import api from '../utils/APImanager';
+import {Base64} from "js-base64";
 
 class ImageForm extends React.Component {
 	constructor(props) {
@@ -32,12 +34,28 @@ class ImageForm extends React.Component {
 		const imageKey = moment().format();
 		const imageToSave = {
 			uri: this.props.photo.uri,
-			caption: this.props.caption
+			caption: this.props.caption,
+
 		};
+
+		let photo = {
+			uri: uriFromCameraRoll,
+		};
+		let body = new FormData();
+		body.append('title', 'A beautiful photo!');
+		body.append('location', location);
+		body.append('image', photo);
+		body.append('description', 'some text');
+		body.append('date', '12-12-16');
+		body.append('categoryId', 'something');
+
+		xhr.open('POST', http://www.balticapp.fi/lukeA/report/create);
+		xhr.send(body);
 
 		AsyncStorage.setItem(
 			imageKey,
 			JSON.stringify(imageToSave),
+
 			(err) => {
 				if (err) {
 					// console.log('ERROR: ', err);
@@ -57,6 +75,7 @@ class ImageForm extends React.Component {
 			}
 		);
 	}
+
   /*
    goToGallery() {
    this.props.navigation.performAction(({ tabs }) => {
