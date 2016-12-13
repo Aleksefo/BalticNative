@@ -39,8 +39,6 @@ class RightButton extends React.Component {
   }
 
   changeRightButtonView(){
-    console.log("changeRightButtonView" , this.state.searching);
-
     this.setState({
       searching: !this.state.searching
     })
@@ -115,7 +113,6 @@ export default class SearchPage extends Component {
   };
 
   _handleSearch = (searchParam) =>{
-    console.log("_handleSearch: " , searchParam);
   }
 
 

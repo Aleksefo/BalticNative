@@ -134,7 +134,7 @@ export default class HomeScreen extends Component {
 
   static route = {
     navigationBar: {
-      title: "BAApp",
+      title: "Bonus Baltic App",
       renderRight: ({ config: { eventEmitter } }) => (
         <RightButton emitter={eventEmitter} />
       ),

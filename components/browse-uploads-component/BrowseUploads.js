@@ -8,9 +8,11 @@ import {
   ListView,
   TouchableHighlight,
   TouchableOpacity,
+  Image
 } from 'react-native';
 import GridView from "react-native-easy-grid-view";
 import styles from '../../resources/styles.js';
+import api from '../utils/APImanager.js';
 
 export default class BrowseUploads extends Component {
 
@@ -25,7 +27,7 @@ export default class BrowseUploads extends Component {
       dataSource: this.ds.cloneWithCells([
           {
               text: "Loading...",
-              backgroundColor:'#f00'
+              backgroundColor:'#fafafa'
           }], 2),
       cellWidth: 0,
       cellHeight: 0
@@ -41,21 +43,26 @@ export default class BrowseUploads extends Component {
   // Create renderList and populate it with listObject's
   componentDidMount(){
     let renderList = [];
+    let uploadList = []
 
-    for(let i=0; i<30; i++){
+    //Get list of reports and update the state based on them
+    api.getSome("report").then(response => {
+      var response = JSON.parse(response._bodyInit)
 
-      let listObject ={
-        text: i,
-        backgroundColor:'#fafafa'
+      for(var i=0; i<response.length; i++){
+        let reportObject = {
+          title: response[i].title,
+          imageUrl: response[i].image_url,
+          backgroundColor:'#fafafa'
+        }
+        uploadList.push(reportObject);
       }
-      renderList.push(listObject)
-    }
 
-    // Set dataSource state with previously created renderList and then update this.ds
-    this.setState({
-      dataSource: this.ds.cloneWithCells(renderList , 2)
+      this.setState({
+        dataSource: this.ds.cloneWithCells(uploadList , 2)
+      });
+
     });
-
   }
 
   //Give width and height to a cell and render
@@ -73,7 +80,9 @@ export default class BrowseUploads extends Component {
             <View style={{width:this.state.cellWidth,height:this.state.cellHeight,justifyContent:'center',backgroundColor:cell.backgroundColor}}
                    //resizeMode={Image.resizeMode.stretch} source={cell.image}
                    >
-                <Text style={styles.browseUploadsCellTextStyle}>{cell.text}</Text>
+                <Image
+                  style={{width:this.state.cellWidth,height:this.state.cellHeight}}
+                    source={{uri: cell.imageUrl}}/>
             </View>
         </View>
     }

@@ -117,6 +117,76 @@ var styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fafafa',
   },
+  //MAIN PLACE MODAL container
+  mainPlaceModalContainer: {
+    alignItems: 'center',
+    elevation: 2,
+    marginLeft: 50,
+    borderBottomColor: '#BDBDBD',
+    borderBottomWidth: 1,
+    borderRightWidth:1,
+    borderRightColor:'#BDBDBD',
+    marginRight: 50,
+    marginTop: 70,
+    width: 300,
+    height: 500,
+    backgroundColor: "white",
+  },
+  //PLACE INFORMATION container
+  placeInfoContainer: {
+    backgroundColor: '#FFC107',
+    width: 300,
+    height:250,
+    alignItems:'center',
+    borderBottomColor: '#BDBDBD',
+    borderBottomWidth: 1,
+    borderRightWidth:1,
+    borderRightColor:'#BDBDBD',
+  },
+  //PLACE TITLE
+  placeTitle: {
+    fontSize: 30,
+    color: 'white',
+  },
+  //PLACE DESCRIPTION
+  placeDescription: {
+    fontSize: 16,
+    marginTop: 10,
+    color: 'white',
+  },
+  //PLACE VOTING container
+  placeVotingContainer: {
+    width: 300,
+    height: 100,
+    backgroundColor:'white',
+    borderBottomColor: '#BDBDBD',
+    borderBottomWidth: 1,
+    borderRightWidth:1,
+    borderRightColor:'#BDBDBD',
+    flexDirection:'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  //VOTE CONTAINER
+  voteContainer: {
+    width:100,
+    height:50,
+    flexDirection: 'row',
+  },
+  //VOTE TouchableOpacity LAYOUT
+  voteLayout: {
+    width:50,
+    height: 50,
+  },
+  //VOTE Text
+  voteText: {
+    fontSize:35,
+  },
+  //WEATHER DATA
+  weatherData: {
+    fontSize: 20,
+    color: 'white',
+  },
 });
 
 module.exports = styles;
