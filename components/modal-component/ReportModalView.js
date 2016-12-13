@@ -9,7 +9,10 @@ export default class ReportModalView extends Component {
     super(props);
     this.state = {
       modalVisible: this.props.openModal,
-      reportData: {},
+        imageUrl: undefined,
+        date: undefined,
+        description: undefined,
+        flagged: undefined,
       dataReceived: false
     }
     this.setModalVisible = this.setModalVisible.bind(this);
@@ -27,42 +30,62 @@ export default class ReportModalView extends Component {
   }
 
   componentDidUpdate(){
-    /*
+
     if(this.props.popupId !== undefined && this.state.dataReceived == false){
       //first get the weather data for the place
-      api.getSome("place?id="+this.props.popupId).then(response => {
+      api.getSome("report?id="+this.props.popupId).then(response => {
         //var result = response._bodyInit;
         //var placeInfo = JSON.parse(response_bodyInit)
         var responseObject = JSON.parse(response._bodyInit);
-        console.log("wearherdata: " , responseObject);
+        console.log("api.getSome(report?id=" , responseObject[0]);
 
+        /* [{"image_url":"http://www.balticapp.fi/images/lukeB/report/585028a37d84f1094cc1a1c0.jpeg",
+        "flagged":false,
+        "approved":true,
+        "profileId":"auth0|58501262b95c657144e74369",
+        "id":"585028a37d84f1094cc1a1c0",
+        "title":"My Photo",
+        "description":"Anonymous",
+        "date":"2016-12-13T18:58:11.475Z",
+        "categoryId":[],
+        "location":{"long":24.4324,"lat":60.78825}}]*/
 
-          var upVoteCount =0;
-          var downVoteCount =0;
+        this.setState({
+            imageUrl: responseObject[0].image_url,
+            date: responseObject[0].date,
+            description: responseObject[0].description,
+            flagged: responseObject[0].flagged,
+          dataReceived: true
+        })
 
-           for(var i=0; i<responseObject.votes.length; i++){
-             if(responseObject.votes[i].vote === true){
-               console.log("UP");
-               upVoteCount ++;
-             }else if(responseObject.votes[i].vote === false) {
-               console.log("DOWN");
-               downVoteCount ++
-             }
-           }
-
-           this.setState({
-             weatherData: responseObject.weatherData,
-             upVoteCount: upVoteCount,
-             downVoteCount: downVoteCount,
-             dataReceived: true
-           })
       });
 
     }
-    */
+
   }
 
   render() {
+    /*this.state
+    {"modalVisible":true,
+    "imageUrl":"http://www.balticapp.fi/images/lukeB/report/585028a37d84f1094cc1a1c0.jpeg",
+    "date":"2016-12-13T18:58:11.475Z",
+    "description":"Anonymous",
+    "flagged":false,
+    "dataReceived":true,
+    */
+
+
+    let reportImageView = null;
+
+    if(this.state.imageUrl !== undefined){
+      reportImageView = <View>
+
+                        </View>
+    }else{
+      reportImageView = <View>
+
+                          </View>
+    }
 
     return (
         <Modal
@@ -70,17 +93,20 @@ export default class ReportModalView extends Component {
           transparent={true}
           visible={this.props.openModal}
           >
-         <View style={{alignItems: 'center', marginLeft: 50, marginRight: 50,marginTop: 70, width: 300, height: 500, backgroundColor: "white"}}>
-         <Image  source={{uri: null}}
-          style={{ backgroundColor: '#000', width: 300, height:250}}/>
-          <View style={{flex:2}}>
-            <View style={{flex: 3, justifyContent: 'flex-end', alignItems: 'center', marginBottom: 5}}>
-            <TouchableHighlight onPress={this.setModalVisible}>
-              <Text>Close</Text>
-            </TouchableHighlight>
-            </View>
+
+          <View style={{alignItems: 'center', marginLeft: 50, marginRight: 50,marginTop: 70, width: 300, height: 500, backgroundColor: "white"}}>
+          <View>
+             <View style={{flex:2}}>
+               <View style={{flex: 3, justifyContent: 'flex-end', alignItems: 'center', marginBottom: 5}}>
+               <TouchableHighlight onPress={this.setModalVisible}>
+                 <Text>Close</Text>
+               </TouchableHighlight>
+               </View>
+             </View>
           </View>
-         </View>
+          </View>
+
+
         </Modal>
     );
   }
