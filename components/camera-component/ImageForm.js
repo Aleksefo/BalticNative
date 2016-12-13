@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import { View, TextInput, Alert, AsyncStorage, StyleSheet, NativeModules } from 'react-native';
+import { View, TextInput, Alert, AsyncStorage, StyleSheet, NativeModules, ImageStore  } from 'react-native';
 import Image from 'react-native-image-progress';
 import moment from 'moment';
 import Button from './Button';
@@ -17,6 +17,8 @@ class ImageForm extends React.Component {
 		this.state = {
 			id_token: ""
 		}
+		this.convertImage = this.convertImage.bind(this);
+		this.readerCallback = this.readerCallback.bind(this);
 	}
 
 	componentDidMount(){
@@ -64,6 +66,7 @@ class ImageForm extends React.Component {
 		*/
 		var id_token = this.state.id_token;
 
+<<<<<<< HEAD
 
 /*
 		var photo = {
@@ -102,6 +105,10 @@ class ImageForm extends React.Component {
 	    })
 
 */
+=======
+		console.log("image url:" , this.props.photo.uri);
+		this.convertImage(this.props.photo.uri);
+>>>>>>> refs/remotes/origin/juhani
 	/*
     var reportForm ={
         title: "My Photo",
@@ -144,6 +151,16 @@ class ImageForm extends React.Component {
 			}
 		);
 	}
+	convertImage(dataUrl){
+		console.log("dataUrl in convertImage " , dataUrl);
+		ImageStore.getBase64ForTag(dataUrl, this.readerCallback, this.readerCallback);
+	}
+
+	readerCallback(result){
+		console.log("readerCallback result:" , result);
+		//TODO: fetch
+	}
+
 
   /*
    goToGallery() {
@@ -220,7 +237,7 @@ const styles = StyleSheet.create({
 	},
 
 	inputContainer: {
-		padding: 10
+		padding: 10,
 	}
 });
 

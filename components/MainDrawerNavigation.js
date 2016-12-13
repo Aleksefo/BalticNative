@@ -25,7 +25,7 @@ export default class MainDrawerNavigation extends Component {
 
   // Render the header image for the main drawer
   _renderHeader = () => {
-    return <Image source={require('../assets/maxresdefault.jpg')} style={styles.header} />;
+    return <Image source={require('../assets/bonuslogo.png')} style={styles.header} />;
   };
 
   // Renders the titles in the main drawer
@@ -54,35 +54,6 @@ export default class MainDrawerNavigation extends Component {
 
   // Renders the main drawer with all its components
   render() {
-
-    console.log("this.state.isSuperUser"  , this.state.isSuperUser);
-
-
-    let superUserButton = null;
-
-    // Check if the user is an 'superUser'
-    if (this.state.isSuperUser) {
-
-      // DrawerNavigationItem for superUser
-      superUserButton = <DrawerNavigationItem
-        id="superUserCreate"
-        selectedStyle={styles.selectedItemStyle}
-        renderTitle={isSelected => this._renderTitle('Create', isSelected)}
-        renderIcon={isSelected => this._renderIcon('settings', isSelected)}>
-        <StackNavigation
-          id="superUserCreate"
-          initialRoute={Router.getRoute('superUserCreate')}
-          defaultRouteConfig={{
-            navigationBar: {
-              backgroundColor: 'rgb(0, 198, 209)',
-              tintColor: '#fff',
-            },
-          }}
-        />
-      </DrawerNavigationItem>
-    } else {
-      superUserButton = <DrawerNavigationItem></DrawerNavigationItem>
-    }
 
     // Return all the DrawerNavigationItem's with icons, title and StackNavigation to their corresponding components
     return (
@@ -210,71 +181,13 @@ export default class MainDrawerNavigation extends Component {
           />
         </DrawerNavigationItem>
 
-        <DrawerNavigationItem
-          id="testApi"
-          selectedStyle={styles.selectedItemStyle}
-          renderTitle={isSelected => this._renderTitle('Test API', isSelected)}
-          renderIcon={isSelected => this._renderIcon('free-breakfast', isSelected)}>
-          <StackNavigation
-            id="testApi"
-            initialRoute={Router.getRoute('testApi')}
-            defaultRouteConfig={{
-              navigationBar: {
-                backgroundColor: 'rgb(0, 198, 209)',
-                tintColor: '#fff',
-              },
-            }}
-          />
-        </DrawerNavigationItem>
-
-        <DrawerNavigationItem
-          id="template"
-          selectedStyle={styles.selectedItemStyle}
-          renderTitle={isSelected => this._renderTitle('Template', isSelected)}
-          renderIcon={isSelected => this._renderIcon('free-breakfast', isSelected)}>
-          <StackNavigation
-            id="template"
-            initialRoute={Router.getRoute('template')}
-            defaultRouteConfig={{
-              navigationBar: {
-                backgroundColor: 'rgb(0, 198, 209)',
-                tintColor: '#fff',
-              },
-            }}
-          />
-        </DrawerNavigationItem>
-
-
-
-
-        <DrawerNavigationItem
-          id="eventEmitterExample"
-          selectedStyle={styles.selectedItemStyle}
-          renderTitle={isSelected => this._renderTitle('eventEmitterExample', isSelected)}
-          renderIcon={isSelected => this._renderIcon('free-breakfast', isSelected)}>
-          <StackNavigation
-            id="eventEmitter"
-            initialRoute={Router.getRoute('eventEmitterExample')}
-            defaultRouteConfig={{
-              navigationBar: {
-                backgroundColor: 'rgb(0, 198, 209)',
-                tintColor: '#fff',
-              },
-            }}
-          />
-        </DrawerNavigationItem>
-
-
-
-        {superUserButton}
-
       </DrawerNavigation>
     );
   }
 }
 //    this.props.navigator.push(Router.getRoute(name));
 /**
-// TODO Remove 
+// TODO Remove
 _goToScreen = name => () => {
   this.props.navigator.push(Router.getRoute(name));
 }
