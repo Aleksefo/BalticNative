@@ -68,22 +68,6 @@ export default class PlaceModalView extends Component {
 
   }
 
-  /*
-"votes":[
-{"profileId":"auth0|5846bc895d3ccb985cf4fa7c",
-"date":"2016-12-13T15:36:09.424Z",
-"vote":true},
-
-{"profileId":"google-oauth2|105185586303115555386",
-"date":"2016-12-13T16:11:44.972Z",
-"vote":false},
-
-{"profileId":"google-oauth2|105185586303115555386",
-"date":"2016-12-13T16:11:44.972Z",
-"vote":false}
-]
-  */
-
   upVote(){
     console.log("UPVOTE PRESSED!" , this.props , this.state.id_token);
     var id_token = this.state.id_token;
@@ -118,9 +102,8 @@ export default class PlaceModalView extends Component {
 
     if(this.state.weatherData){
     weatherDataView =  <View style={{paddingTop:40}}>
-
-                          <Text style={{fontSize: 20, color: 'white'}}>Temperature: {this.state.weatherData.temperature.toFixed(1)}°C</Text>
-                          <Text style={{fontSize: 20, color: 'white'}}>Wind speed:  {this.state.weatherData.wind}m/s</Text>
+                          <Text style={styles.weatherData}>Temperature: {this.state.weatherData.temperature.toFixed(1)}°C</Text>
+                          <Text style={styles.weatherData}>Wind speed:  {this.state.weatherData.wind}m/s</Text>
                         </View>
     }else {
       weatherDataView = <View></View>
@@ -134,47 +117,41 @@ export default class PlaceModalView extends Component {
           transparent={true}
           visible={this.props.openModal}
           >
-         <View style={{alignItems: 'center', elevation: 2, marginLeft: 50,borderBottomColor: '#BDBDBD', borderBottomWidth: 1,borderRightWidth:1, borderRightColor:'#BDBDBD', marginRight: 50,marginTop: 70, width: 300, height: 500, backgroundColor: "white"}}>
-         <View style={{ backgroundColor: '#FFC107', width: 300, height:250, alignItems:'center',borderBottomColor: '#BDBDBD', borderBottomWidth: 1,borderRightWidth:1, borderRightColor:'#BDBDBD'}}>
-           <Text style={{fontSize: 30, color: 'white'}}>{this.props.popupTitle}</Text>
-           <Text style={{fontSize: 16, marginTop: 10, color: 'white'}}>{this.props.popupDescription}</Text>
+         <View style={styles.mainPlaceModalContainer}>
+         <View style={styles.placeInfoContainer}>
+           <Text style={styles.placeTitle}>{this.props.popupTitle}</Text>
+           <Text style={styles.placeDescription}>{this.props.popupDescription}</Text>
            {weatherDataView}
          </View>
           <View style={{flex:2}}>
 
-            <View style={{width: 300, height: 100, backgroundColor:'white',borderBottomColor: '#BDBDBD', borderBottomWidth: 1,borderRightWidth:1, borderRightColor:'#BDBDBD', flexDirection:'row', justifyContent: 'center', alignItems: 'center'}}>
-            <View style={{width:100, height:50, flexDirection: 'row',justifyContent: 'center', }}>
-              <View>
-                <TouchableOpacity
-                style={{width:50, height: 50,}}
-                onPress={this.upVote}>
-                  <MaterialIcons name="favorite" size={32} color="#FFC107" style={{padding: 5, paddingTop:5}}/>
-                </TouchableOpacity>
+            <View style={styles.placeVotingContainer}>
+              <View style={styles.voteContainer}>
+                <View>
+                  <TouchableOpacity
+                  style={styles.voteLayout}
+                  onPress={this.upVote}>
+                    <MaterialIcons name="favorite" size={32} color="#FFC107" style={{padding: 5, paddingTop:5}}/>
+                  </TouchableOpacity>
 
-              </View>
-              <Text style={{fontSize:35, paddingRight:5}}>{this.state.upVoteCount}</Text>
-              </View>
-
-              <View style={{width:100, height:50, flexDirection: 'row'}}>
-              <View>
-                <TouchableOpacity
-                style={{width:50, height: 50, }}
-                onPress={this.downVote}>
-                  <MaterialIcons name="flag" size={32} color="#E91E63" style={{padding: 5, alignItems: 'center'}}/>
-                </TouchableOpacity>
-              </View>
-
-              <Text style={{fontSize:35}}>{this.state.downVoteCount}</Text>
-              </View>
-
+                </View>
+              <Text style={styles.voteText}>{this.state.upVoteCount}</Text>
+                </View>
+                <View style={styles.voteContainer}>
+                  <View>
+                    <TouchableOpacity
+                    style={styles.voteLayout}
+                    onPress={this.downVote}>
+                      <MaterialIcons name="flag" size={32} color="#E91E63" style={{padding: 5, alignItems: 'center'}}/>
+                    </TouchableOpacity>
+                  </View>
+                <Text style={styles.voteText}>{this.state.downVoteCount}</Text>
+                </View>
             </View>
-
             <View style={{flex: 3, justifyContent: 'flex-end', alignItems: 'center', paddingBottom: 5}}>
-
-            <TouchableOpacity onPress={this.setModalVisible} style={styles.button}>
-              <Text style={styles.buttonText}>Close</Text>
-
-            </TouchableOpacity>
+              <TouchableOpacity onPress={this.setModalVisible} style={styles.button}>
+                <Text style={styles.buttonText}>Close</Text>
+              </TouchableOpacity>
             </View>
           </View>
          </View>
