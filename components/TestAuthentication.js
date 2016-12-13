@@ -19,14 +19,14 @@ export default class TemplateScreen extends Component {
     */
   static route = {
     navigationBar: {
-      title: 'Test Authentication',
+      title: 'Login or register',
     },
   }
 
   render() {
     return (
       <View>
-        <LoginView/>
+        <LoginView style={styles.container}/>
 
 
         <StatusBar barStyle="light-content" />

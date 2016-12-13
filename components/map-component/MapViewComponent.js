@@ -62,7 +62,7 @@ export default class MapViewComponent extends Component {
 		this.getMyCurrentPosition();
 	}
 
-	//when user types in the search bar check if that string is found in markers title and fly to that markers location
+	//when user types in the search bar check if that string is found in markers title and TODO fly to that markers location
 	componentDidUpdate(){
 		for(var i=0; i<this.state.markers.length; i++){
 			if(this.props.searchString.toUpperCase() == this.state.markers[i].title.toUpperCase()){
@@ -75,7 +75,7 @@ export default class MapViewComponent extends Component {
 	getMyCurrentPosition(){
 		navigator.geolocation.getCurrentPosition(
 		 (position) => {
-			 console.log("position " , JSON.stringify(position));
+			 //console.log("position " , JSON.stringify(position));
 			 this.setState({myCurrentPosition: position.coords});
 		 },
 		 (error) => alert(JSON.stringify(error)),
@@ -88,6 +88,7 @@ export default class MapViewComponent extends Component {
 		var markerList = [];
 		var markerObject = {};
 		var placesList = JSON.parse(placesList);
+	//When map region is changed update the state
 
 
 		for(var i=0; i<placesList.length; i++){
@@ -107,7 +108,6 @@ export default class MapViewComponent extends Component {
 	}
 
 	handleOpenModal(modalData){
-		console.log("modalData:" , modalData);
 		this.setState({
 			openModal: true,
 			popupTitle: modalData.title,
@@ -122,7 +122,7 @@ export default class MapViewComponent extends Component {
 		})
 	}
 
-	//compare the coordinates of the pressed marker to existing ones in the state and call handleOpenModal with those parameters
+	//compare the coordinates of the pressed marker to existing ones in the state and call handleOpenModal with that markers parameters
 	findMarkerFromState(coordinate){
 		for(var i =0; i<this.state.markers.length; i++){
 			if(JSON.stringify(this.state.markers[i].latlng) === JSON.stringify(coordinate)){
@@ -158,7 +158,8 @@ export default class MapViewComponent extends Component {
 
 
 	render() {
-		let flyMeToIosButton = null
+		
+		let flyMeToIosButton = null;
 
 		//if OS is ios create flyMeToIosButton in the view
 		if (this.state.OS == 'ios') {
@@ -177,6 +178,7 @@ export default class MapViewComponent extends Component {
 
 		return (
 			<View>
+
 				<View style={{width: Dimensions.get('window').width, height: Dimensions.get('window').height}}>
 
 					<MapView

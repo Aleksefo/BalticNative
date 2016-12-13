@@ -3,11 +3,16 @@ import {AsyncStorage, Text, View, TextInput, WebView, Dimensions, Linking} from 
 import React, {Component} from 'react';
 import Button from 'react-native-button';
 import Login from "./Login.js";
+import Store from '../../components/utils/Store';
+import { NavigationActions, createRouter } from '@exponent/ex-navigation';
 
-
+const Router = createRouter(() => ({
+    map: () => MapView,
+}));
 export default class LoginView extends Component {
     constructor(props) {
         super(props);
+        let navigatorUID = Store.getState().navigation.currentNavigatorUID;
         this.state = {
             userName: '',
             password: '',
@@ -81,15 +86,11 @@ export default class LoginView extends Component {
         if (params.length == 3) {
             for (let i = 0; i < params.length; i++) {
                 var a = params[i].split("=");
-                console.log("a /");
-                console.log(a);
                 myList.push(a[1]);
             }
             if (myList[2] == "Bearer") {
                 AsyncStorage.setItem("access_token", myList[0]);
                 AsyncStorage.setItem("id_token", myList[1]);
-                console.log(myList[0]);
-                console.log(myList[1]);
                 fetch('http://www.balticapp.fi/lukeB/login', {
                     method: 'get',
                     headers:new Headers({
@@ -97,16 +98,23 @@ export default class LoginView extends Component {
                     })
                 })
                     .then((response) => {
-                        console.log("response" , response);
-                        return response
+                    console.log("redirection should happen");
+                    this.props.navigator.pop();
+
+/*                    var asd = Router.getRoute('map');
+                    console.log("homeroute " + asd);
+                    let navigatorUID = Store.getState().navigation.currentNavigatorUID;
+                    Store.dispatch(NavigationActions.push(navigatorUID), Router.getRoute('map'));
+                    this.props.navigator.push(Router.MapView);*/
+                    return response
                     })
                     .catch((err) => {
-                        console.log("err" ,err);
                         return err
                     });
             }
         }
     }
+
 
     render() {
 
@@ -133,7 +141,7 @@ export default class LoginView extends Component {
 
         return (
             <View>
-                <View style={{backgroundColor: '#fafafa', width: Dimensions.get('window').width, height: 400}}>
+                <View style={{backgroundColor: '#fafafa', width: Dimensions.get('window').width, height: 600}}>
                     <WebView
                         source={{uri: 'https://nikitak.eu.auth0.com/login?client=PiNpdLmpYJrgKllnT7GbLbjAFKjtcAY6&protocol=oauth2&response_type=token&redirect_uri=http://www.balticapp.fi/lukeB/callback'}}
                         injectedJavaScript={"https://cdn.auth0.com/js/lock/10.7/lock.min.js"}

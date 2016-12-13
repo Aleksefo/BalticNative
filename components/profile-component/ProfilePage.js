@@ -1,5 +1,6 @@
 'use strict';
 
+
 import React, { Component } from 'react';
 import Button from 'react-native-button';
 import styles from '../../resources/styles.js';
@@ -32,12 +33,34 @@ export default class ProfilePage extends Component {
 
     this.handleEditUser = this.handleEditUser.bind(this);
   }
-
   static route = {
     navigationBar: {
       title: 'Profile'
     },
-  }
+  };
+    state = {
+        isLoggedIn: false
+    };
+    changelogOutButtonView(){
+        console.log("change logOutButtonView" , this.state.logout);
+
+        this.setState({
+            logout: !this.state.logout
+        })
+    }
+    componentDidMount() {
+        AsyncStorage.getItem("id_token", (err, result) => {
+            console.log("async tulos:________________" + result);
+            console.log("async error:_________________" + err);
+            if (result == null) {
+                console.log("ei kirjautunu");
+                this.setState({isLoggedIn: false});
+            }else{
+                console.log("kirjautunu");
+                this.setState({isLoggedIn: true});
+            }
+        });
+    }
 
   componentWillMount(){
 
@@ -57,13 +80,32 @@ export default class ProfilePage extends Component {
   }
 
   render() {
-    if(this.state.editUser){
-      console.log("TIME TO EDIT USER");
+        console.log("render");
+        console.log("kirjautunu state " + this.state.isLoggedIn);
+      let logOutButtonView = null;
+      if(this.state.isLoggedIn){
+          logOutButtonView = <View style={styles.profilePageLogOutButtonView}>
 
-    }else {
-      console.log("Don't edit user");
-    }
+              <View style={styles.buttonsContainer}>
+                  <TouchableOpacity style={styles.button} onPress={this.logOut.bind(this)}>
+                      <Text style={styles.buttonText}>Logout</Text>
+                  </TouchableOpacity>
 
+              </View>
+
+              <TouchableHighlight
+                  onPress={this.deleteAccount.bind(this)}>
+                  <Text>Delete Account</Text>
+              </TouchableHighlight>
+          </View>
+      }
+      else if(!this.state.isLoggedIn){
+          logOutButtonView = <View style={styles.profilePageLogOutButtonView}>
+
+              <View style={styles.buttonsContainer}>
+              </View>
+              </View>
+          }
     return (
       <View style={{flex:1}}>
           <View style={{flex: 1}}>
@@ -96,29 +138,28 @@ export default class ProfilePage extends Component {
                   <Text>Statistics</Text>
                 </View>
 
-                <View style={styles.profilePageLogOutButtonView}>
+              {logOutButtonView}
 
-                <View style={styles.buttonsContainer}>
-                  <TouchableOpacity style={styles.button} onPress={this.logOut.bind(this)}>
-                    <Text style={styles.buttonText}>Logout</Text>
-                  </TouchableOpacity>
-
-                </View>
-
-                  <TouchableHighlight
-                  onPress={this.deleteAccount.bind(this)}>
-                    <Text>Delete Account</Text>
-                  </TouchableHighlight>
                 </View>
           </View>
-      </View>
     );
   }
 
   logOut() {
-    console.log("<------------LOGOUT PUSHED------------->");
-  }
+      console.log("asdasdasd");
+      this.setState({isLoggedIn: false});
+      AsyncStorage.removeItem("id_token", null);
+/*    navigator or navigation actions should work but they dont --antti
 
+this.props.navigator.push({
+          name: 'map', // Matches route.name
+      });
+      this.props.navigator.replace(Router.map());
+      this.props.navigator.push(Router.getRoute('home'));
+      this.props.navigator.resetTo(Router.getRoute('home'));
+      let navigatorUID = Store.getState().navigation.currentNavigatorUID;
+      Store.dispatch(NavigationActions.pop(navigatorUID))*/
+  }
   deleteAccount() {
     console.log("<------------DELETE ACCOUNT PUSHED------------->");
   }
