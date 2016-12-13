@@ -77,6 +77,7 @@ export default class PlaceModalView extends Component {
           animationType={"fade"}
           transparent={true}
           visible={this.props.openModal}
+          onRequestClose={() => {}}
           >
          <View style={{alignItems: 'center', marginLeft: 50, marginRight: 50,marginTop: 70, width: 300, height: 500, backgroundColor: "white"}}>
          <View style={{ backgroundColor: 'red', width: 300, height:250}}></View>

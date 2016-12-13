@@ -57,11 +57,12 @@ class CameraScreen extends React.Component {
 
 					{ cameraComponent }
 				</ScrollView>
-				<View style={{marginTop: 22}}>
+				<View >
 					<Modal
 						animationType={"fade"}
 						transparent={true}
 						visible={this.state.modalVisible}
+						onRequestClose={() => {}}
 					>
 						<View style={{flex: 1,
 							justifyContent: 'center',
@@ -79,11 +80,11 @@ class CameraScreen extends React.Component {
 }
 const styles = StyleSheet.create({
 	container: {
-		flex: 1,
-		backgroundColor: '#EEE',
-		position: 'absolute',
-		bottom: 0,
-		left:0
+		backgroundColor: 'transparent',
+		//justifyContent: 'center',
+		marginBottom: 50,
+		alignItems: 'center',
+
 
 	}
 });
