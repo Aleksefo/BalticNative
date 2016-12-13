@@ -66,8 +66,6 @@ class ImageForm extends React.Component {
 		*/
 		var id_token = this.state.id_token;
 
-<<<<<<< HEAD
-
 /*
 		var photo = {
 				uri: this.props.photo.uri,
@@ -105,10 +103,8 @@ class ImageForm extends React.Component {
 	    })
 
 */
-=======
 		console.log("image url:" , this.props.photo.uri);
 		this.convertImage(this.props.photo.uri);
->>>>>>> refs/remotes/origin/juhani
 	/*
     var reportForm ={
         title: "My Photo",
