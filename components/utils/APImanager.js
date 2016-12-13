@@ -56,6 +56,26 @@ var serverCommunicator = {
 	     });
 	 },
 
+	 getSomeAsUser: function(destination , id_token){
+		 console.log("httpGET: " , destination , id_token);
+		 //http://balticapp.fi/lukeB/place/upvote?id=28h2e82818210u
+		 //place/upvote?id=584ab3f4fbd9d66ff57479a8
+		 return fetch('http://www.balticapp.fi/lukeB/'+destination,
+	   {
+			method: 'get',
+    	headers: new Headers({
+        'Authorization': 'Bearer ' + id_token,
+        'Content-Type': 'application/json',
+    	})
+	   })
+	     .then((response) => {
+	        return response
+	     })
+	     .catch((err) => {
+	         return err
+	     });
+	 },
+
   createSome: function(destination, postBody, id_token){
 		console.log("createsome: " , destination, postBody, id_token);
 
