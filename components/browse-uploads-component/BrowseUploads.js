@@ -8,9 +8,11 @@ import {
   ListView,
   TouchableHighlight,
   TouchableOpacity,
+  Image
 } from 'react-native';
 import GridView from "react-native-easy-grid-view";
 import styles from '../../resources/styles.js';
+import api from '../utils/APImanager.js';
 
 export default class BrowseUploads extends Component {
 
@@ -41,7 +43,29 @@ export default class BrowseUploads extends Component {
   // Create renderList and populate it with listObject's
   componentDidMount(){
     let renderList = [];
+    let uploadList = []
 
+    //Get list of places and create markers from that list
+    api.getSome("report").then(response => {
+      var response = JSON.parse(response._bodyInit)
+
+      console.log("response: " , response);
+
+      for(var i=0; i<response.length; i++){
+        let reportObject = {
+          title: response[i].title,
+          imageUrl: response[i].image_url,
+          backgroundColor:'#fafafa'
+        }
+        uploadList.push(reportObject);
+      }
+
+      this.setState({
+        dataSource: this.ds.cloneWithCells(uploadList , 2)
+      });
+
+    });
+    /*
     for(let i=0; i<30; i++){
 
       let listObject ={
@@ -54,7 +78,7 @@ export default class BrowseUploads extends Component {
     // Set dataSource state with previously created renderList and then update this.ds
     this.setState({
       dataSource: this.ds.cloneWithCells(renderList , 2)
-    });
+    });*/
 
   }
 
@@ -73,7 +97,9 @@ export default class BrowseUploads extends Component {
             <View style={{width:this.state.cellWidth,height:this.state.cellHeight,justifyContent:'center',backgroundColor:cell.backgroundColor}}
                    //resizeMode={Image.resizeMode.stretch} source={cell.image}
                    >
-                <Text style={styles.browseUploadsCellTextStyle}>{cell.text}</Text>
+                <Image
+                  style={{width:this.state.cellWidth,height:this.state.cellHeight}}
+                    source={{uri: cell.imageUrl}}/>
             </View>
         </View>
     }

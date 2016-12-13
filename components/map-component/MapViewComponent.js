@@ -15,7 +15,7 @@ import styles from '../../resources/styles.js'
 import api from '../utils/APImanager.js';
 import PlaceModalView from '../modal-component/PlaceModalView'
 import { MaterialIcons } from '@exponent/vector-icons';
-import placeMarker from '../../assets/placemarker.png';
+import placeMarker from '../../assets/place-marker-100.png';
 
 
 export default class MapViewComponent extends Component {
@@ -76,11 +76,11 @@ export default class MapViewComponent extends Component {
 	getMyCurrentPosition(){
 		navigator.geolocation.getCurrentPosition(
 		 (position) => {
-			 //console.log("position " , JSON.stringify(position));
+			 console.log("position " , JSON.stringify(position));
 			 this.setState({myCurrentPosition: position.coords});
 		 },
 		 (error) => alert(JSON.stringify(error)),
-		 {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
+		 {enableHighAccuracy: false, timeout: 20000, maximumAge: 1000}
 	 );
 	}
 
