@@ -117,6 +117,7 @@ export default class MapViewComponent extends Component {
 	}
 
 	handleCloseModal(){
+		console.log("handleCloseModalhandleCloseModalhandleCloseModalhandleCloseModal");
 		this.setState({
 			openModal: false
 		})
@@ -158,8 +159,19 @@ export default class MapViewComponent extends Component {
 
 
 	render() {
-		
+		let placeModalView = null;
 		let flyMeToIosButton = null;
+
+		if(this.state.openModal){
+			placeModalView = <PlaceModalView
+					openModal={this.state.openModal}
+					callBack={this.handleCloseModal}
+					popupTitle={this.state.popupTitle}
+					popupDescription={this.state.popupDescription}
+					popupId={this.state.popupId}/>
+		}else {
+			placeModalView = <View></View>
+		}
 
 		//if OS is ios create flyMeToIosButton in the view
 		if (this.state.OS == 'ios') {
@@ -207,12 +219,7 @@ export default class MapViewComponent extends Component {
 
 					</MapView>
 					{flyMeToIosButton}
-					<PlaceModalView
-							openModal={this.state.openModal}
-							callBack={this.handleCloseModal}
-							popupTitle={this.state.popupTitle}
-							popupDescription={this.state.popupDescription}
-							popupId={this.state.popupId}/>
+					{placeModalView}
 				</View>
 
 			</View>

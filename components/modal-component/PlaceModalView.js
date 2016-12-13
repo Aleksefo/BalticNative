@@ -7,19 +7,21 @@ import { MaterialIcons } from '@exponent/vector-icons';
 export default class PlaceModalView extends Component {
   constructor(props){
     super(props);
-    state = {
+    this.state = {
       modalVisible: this.props.openModal,
       placeData: {},
-      upVoteCount: 'loadingUpVoteCount....',
-      downVoteCount: 'loading downVoteCount.....'
+      upVoteCount: undefined,
+      downVoteCount: undefined,
+      dataReceived: false
     }
     this.upVote = this.upVote.bind(this);
     this.downVote = this.downVote.bind(this);
+    this.setModalVisible = this.setModalVisible.bind(this);
 
   }
 
-
-  setModalVisible(visible) {
+  setModalVisible() {
+    console.log("akmslkdndsaklasnkjads");
     this.props.callBack();
   }
 
@@ -27,16 +29,13 @@ export default class PlaceModalView extends Component {
     AsyncStorage.getItem("id_token", (err, result) => {
         this.setState({id_token: result})
     });
-
-    this.setState({
-      modalVisible: this.props.openModal
-    });
-
-
   }
 
   componentDidUpdate(){
-    if(this.props.popupId !== undefined && this.props.openModal == true){
+    console.log("componentDidUpdate PROPS:" , this.props , "this.state*****" , this.state);
+
+    if(this.props.popupId !== undefined && this.state.dataReceived == false){
+      console.log("MENTIINKÖ TÄNNE KOSKAAAN?");
       //first get the weather data for the place
       api.getSome("place?id="+this.props.popupId).then(response => {
         //var result = response._bodyInit;
@@ -61,7 +60,8 @@ export default class PlaceModalView extends Component {
            this.setState({
              weatherData: responseObject.weatherData,
              upVoteCount: upVoteCount,
-             downVoteCount: downVoteCount
+             downVoteCount: downVoteCount,
+             dataReceived: true
            })
       });
 
@@ -115,8 +115,18 @@ export default class PlaceModalView extends Component {
   }
 
   render() {
+    let weatherDataView = null;
 
-    console.log("this.state:" , this.state)
+    if(this.state.weatherData){
+    weatherDataView =  <View>
+                        <Text>{this.state.weatherData.temperature}</Text>
+                        <Text>{this.state.weatherData.wind}</Text>
+                        </View>
+    }else {
+      weatherDataView = <View></View>
+    }
+
+    console.log("this.state:" , this.state.weatherData)
 
     return (
         <Modal
@@ -130,7 +140,7 @@ export default class PlaceModalView extends Component {
           <View style={{flex:2}}>
             <Text style={{fontSize: 30}}>{this.props.popupTitle}</Text>
             <Text>{this.props.popupDescription}</Text>
-
+            {weatherDataView}
             <View style={{width: 300, height: 100, backgroundColor:'yellow', flexDirection:'row', justifyContent: 'center', alignItems: 'center'}}>
               <View>
                 <TouchableOpacity
@@ -140,6 +150,7 @@ export default class PlaceModalView extends Component {
                 </TouchableOpacity>
               </View>
               <Text>UpVote</Text>
+              <Text>{this.state.upVoteCount}</Text>
               <View>
                 <TouchableOpacity
                 style={{width:50, height: 50, backgroundColor: 'green'}}
@@ -148,13 +159,12 @@ export default class PlaceModalView extends Component {
                 </TouchableOpacity>
               </View>
               <Text>Downvote</Text>
+              <Text>{this.state.downVoteCount}</Text>
 
             </View>
 
             <View style={{flex: 3, justifyContent: 'flex-end', alignItems: 'center', marginBottom: 5}}>
-            <TouchableHighlight onPress={() => {
-              this.setModalVisible(!this.state.modalVisible)
-            }}>
+            <TouchableHighlight onPress={this.setModalVisible}>
               <Text>Close</Text>
             </TouchableHighlight>
             </View>
