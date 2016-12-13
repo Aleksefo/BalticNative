@@ -7,6 +7,7 @@ class CameraScreen extends React.Component {
 	constructor(props) {
 		super(props);
 
+		this.setModalVisible = this.setModalVisible.bind(this);
 		this.setPhoto = this.setPhoto.bind(this);
 		this.setCaption = this.setCaption.bind(this);
 		this.state = {
@@ -34,7 +35,9 @@ class CameraScreen extends React.Component {
 		let cameraComponent;
 		let imageForm;
 
-		cameraComponent = <CameraTakePhoto setPhoto={this.setPhoto}/>;
+		cameraComponent = (<CameraTakePhoto setPhoto={this.setPhoto}
+										   setModalVisible={this.setModalVisible}
+		/>);
 
 
 		if (this.state.photo.uri) {
@@ -44,7 +47,7 @@ class CameraScreen extends React.Component {
 				setCaption={this.setCaption}
 				setPhoto={this.setPhoto}
 			/>)
-			this.setModalVisible(true)
+
 		}
 
 		return (
@@ -90,16 +93,6 @@ class CameraScreen extends React.Component {
 		);
 	}
 }
-/*
- CameraScreen.route = {
- navigationBar: {
- visible: true,
- renderTitle: () => <Header headerText={'Camera'} />,
- backgroundColor: '#242134',
- tintColor: '#f1edd2'
- }
- };
- */
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
