@@ -22,7 +22,7 @@ class RightButton extends React.Component {
   render() {
      return (
        <TouchableOpacity>
-         <Text>Right button</Text>
+         
        </TouchableOpacity>
      );
   }

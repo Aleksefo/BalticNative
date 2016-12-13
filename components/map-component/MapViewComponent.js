@@ -14,6 +14,7 @@ import MapView from 'react-native-maps';
 import styles from '../../resources/styles.js'
 import api from '../utils/APImanager.js';
 import PlaceModalView from '../modal-component/PlaceModalView'
+import { MaterialIcons } from '@exponent/vector-icons';
 
 
 export default class MapViewComponent extends Component {
@@ -24,6 +25,7 @@ export default class MapViewComponent extends Component {
 			openModal: false,
 			popupTitle: undefined,
 			popupDescription: undefined,
+			popupId: undefined,
 			myCurrentPosition: undefined,
 			OS: Platform.OS,
       region: {
@@ -92,7 +94,8 @@ export default class MapViewComponent extends Component {
 			markerObject ={
 				latlng: {longitude: Number(placesList[i].location.long), latitude: Number(placesList[i].location.lat)},
 				title: placesList[i].title,
-				description: placesList[i].description
+				description: placesList[i].description,
+				identifier: placesList[i].id
 			}
 			markerList.push(markerObject);
 		}
@@ -104,10 +107,12 @@ export default class MapViewComponent extends Component {
 	}
 
 	handleOpenModal(modalData){
+		console.log("modalData:" , modalData);
 		this.setState({
 			openModal: true,
 			popupTitle: modalData.title,
-			popupDescription: modalData.description
+			popupDescription: modalData.description,
+			popupId: modalData.identifier
 		})
 	}
 
@@ -121,7 +126,6 @@ export default class MapViewComponent extends Component {
 	findMarkerFromState(coordinate){
 		for(var i =0; i<this.state.markers.length; i++){
 			if(JSON.stringify(this.state.markers[i].latlng) === JSON.stringify(coordinate)){
-				console.log("FOUND MATCH IN:" , this.state.markers[i].title, this.state.markers[i].description);
 				this.handleOpenModal(this.state.markers[i])
 			}
 		}
@@ -139,6 +143,8 @@ export default class MapViewComponent extends Component {
 		});
 	}
 
+	//first copy default region attributes to currentRegionState,
+	//then setting myCurrentPosition attributes to currentRegionState and update region
 	flyToMyLoc(){
 		let currentRegionState = this.state.region;
 
@@ -152,16 +158,16 @@ export default class MapViewComponent extends Component {
 
 
 	render() {
-		console.log("renderrrr: " , this.state);
-
 		let flyMeToIosButton = null
 
 		//if OS is ios create flyMeToIosButton in the view
 		if (this.state.OS == 'ios') {
-			flyMeToIosButton = <View style={{height:50, width: 50, backgroundColor: 'yellow', top: 10, right: 10, position: 'absolute'}}>
+			flyMeToIosButton = <View style={{height:40, width: 40, top: 45, right: 5, position: 'absolute'}}>
 				<TouchableOpacity
-				style={{height:50, width: 50, backgroundColor: 'green'}}
+				style={{height:40, width: 40, backgroundColor: 'rgb(0, 198, 209)'}}
 				onPress={this.flyToMyLoc}>
+				<MaterialIcons name="my-location" size={32} color="white" style={{padding: 5}}  />
+
 
 				</TouchableOpacity>
 			</View>
@@ -176,7 +182,7 @@ export default class MapViewComponent extends Component {
 					<MapView
 						style={{flex: 1}}
 						region={this.state.region}
-						//onMarkerPress={this.onMarkerPress}
+						onMarkerPress={this.onMarkerPress}
 						moveOnMarkerPress={false}
 						onRegionChangeComplete={this.handleOnRegionChangeComplete}
 						loadingEnabled={true}
@@ -188,9 +194,12 @@ export default class MapViewComponent extends Component {
 						 coordinate={marker.latlng}
 						 onSelect={this.onMarkerPress}
 						 onPress={this.onMarkerPress}
+						 //onPress={this.onMarkerPress}
+						 //onPress={(marker.title) => this._handleTextChange({})}
+						 coordinate={marker.latlng}
 						 title={marker.title}
 						 description={marker.description}
-						 identifier={marker.title}
+						 identifier={marker.id}
 						 />
 					 ))}
 
@@ -200,7 +209,8 @@ export default class MapViewComponent extends Component {
 							openModal={this.state.openModal}
 							callBack={this.handleCloseModal}
 							popupTitle={this.state.popupTitle}
-							popupDescription={this.state.popupDescription}/>
+							popupDescription={this.state.popupDescription}
+							popupId={this.state.popupId}/>
 				</View>
 
 			</View>

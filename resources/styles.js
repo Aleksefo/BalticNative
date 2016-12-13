@@ -14,7 +14,8 @@ var styles = StyleSheet.create({
   header: {
     flex: 1,
     height: 180,
-    width: null,
+    width: 40,
+    backgroundColor: 'rgb(0, 198, 209)',
     resizeMode: 'cover',
   },
   buttonTitleText: {
