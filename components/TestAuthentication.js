@@ -10,7 +10,6 @@ import {
 } from 'react-native';
 
 import LoginView from './login-component/LoginView'
-import RegisterView from './register-component/RegisterView'
 
 export default class TemplateScreen extends Component {
   /**

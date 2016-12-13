@@ -56,10 +56,12 @@ var serverCommunicator = {
 	     });
 	 },
 
-  createSome: function(destination, param, id_token){
+  createSome: function(destination, postBody, id_token){
+		console.log("createsome: " , destination, postBody, id_token);
+
 		return fetch('http://www.balticapp.fi/lukeB/'+destination+'/create' , {
       method: 'post',
-	    body: JSON.stringify(param),
+	    body: JSON.stringify(postBody),
 			headers: new Headers({
 					'Authorization': 'Bearer ' + id_token,
 					'Content-Type': 'application/json',

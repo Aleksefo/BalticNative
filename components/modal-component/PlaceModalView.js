@@ -12,7 +12,6 @@ export default class PlaceModalView extends Component {
   }
 
   componentDidMount(){
-    console.log("this.props.componentDidMount:" , this.props.openModal);
     this.setState({
       modalVisible: this.props.openModal
     })
@@ -21,9 +20,6 @@ export default class PlaceModalView extends Component {
 
 
   render() {
-
-    console.log("this.props.example: " , this.props);
-
     return (
         <Modal
           animationType={"fade"}

@@ -113,16 +113,16 @@ export default class ProfilePage extends Component {
                   <View style={{width:50, height:50, backgroundColor:'red', marginTop:10, marginLeft: 10, borderRadius:30}}></View>
                   <View style={styles.profileInfoTextStyle}>
                   <TouchableOpacity onPress={this.handleEditUser}><Text>Edit</Text></TouchableOpacity>
-                  <TextInput editable={this.state.editUser} style={{fontSize:35, color: 'white', marginLeft: 10}}>User Name</TextInput>
+                  <TextInput placeholder="User Name" editable={this.state.editUser} style={{fontSize:35, color: 'white', marginLeft: 10}}>{this.state.userName}</TextInput>
                   <Text style={{marginLeft:10, marginTop:2, color:'white'}}>Profile Info</Text>
-                  <Text style={{textAlign: 'right', fontSize:20, marginBottom: 2, marginRight:5, color:'white' }}>age, gender</Text>
+                  <TextInput placeholder="Your Gender" editable={this.state.editUser} style={{textAlign: 'right', fontSize:20, marginBottom: 2, marginRight:5, color:'white' }}>{this.state.userGender}</TextInput>
                   </View>
                 </View>
 
                 <View style={styles.profilePageMainWhite}>
                   <Text>Biography</Text>
                   <ScrollView>
-                    <TextField label={'Bio'} highlightColor={'#00BCD4'} />
+                    <TextInput label={'Bio'} highlightColor={'#00BCD4'}></TextInput>
                   </ScrollView>
                 </View>
 
