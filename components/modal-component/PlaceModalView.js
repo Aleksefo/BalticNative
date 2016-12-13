@@ -100,6 +100,7 @@ export default class PlaceModalView extends Component {
           animationType={"fade"}
           transparent={true}
           visible={this.props.openModal}
+          onRequestClose={() => {}}
           >
          <View style={styles.mainPlaceModalContainer}>
          <View style={styles.placeInfoContainer}>
