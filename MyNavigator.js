@@ -17,7 +17,6 @@ import ProfilePage from './components/profile-component/ProfilePage';
 import BrowseUploads from './components/browse-uploads-component/BrowseUploads';
 import BrowseTags from './components/browse-tags-component/BrowseTags';
 import TestApi from './components/test-api-component/TestApi';
-import SuperUserCreate from './components/super-user-component/SuperUserCreate';
 import TestAuthentication from './components/TestAuthentication';
 
 
@@ -44,15 +43,9 @@ const assets = [
 export const Router = createRouter(() => ({
   home: () => HomeScreen,
   help: () => Help,
-  template: () => TemplateScreen,
   settings: () => Settings,
-  searchPage: () => SearchPage,
-  eventEmitterExample: () => EventEmitterExample,
   profilePage: () => ProfilePage,
-  superUserCreate: () => SuperUserCreate,
   browseUploads: ()=> BrowseUploads,
-  browseTags: ()=> BrowseTags,
-  testApi: () => TestApi,
   testAuthentication: () => TestAuthentication
 }));
 

@@ -27,7 +27,7 @@ export default class BrowseUploads extends Component {
       dataSource: this.ds.cloneWithCells([
           {
               text: "Loading...",
-              backgroundColor:'#f00'
+              backgroundColor:'#fafafa'
           }], 2),
       cellWidth: 0,
       cellHeight: 0

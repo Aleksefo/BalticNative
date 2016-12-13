@@ -99,7 +99,9 @@ export default class MapViewComponent extends Component {
 			 console.log("position " , JSON.stringify(position));
 			 this.setState({myCurrentPosition: position.coords});
 		 },
-		 (error) => alert(JSON.stringify(error)),
+		 (error) => {
+			 console.log("getMyCurrentPosition error" , error);
+		 },
 		 {enableHighAccuracy: false, timeout: 20000, maximumAge: 1000}
 	 );
 	}
@@ -236,6 +238,7 @@ export default class MapViewComponent extends Component {
 		let flyMeToIosButton = null;
 		let reportModalView = null;
 
+		//check the state whether or not modal should be opened
 		if(this.state.openModal){
 			placeModalView = <PlaceModalView
 					openModal={this.state.openModal}

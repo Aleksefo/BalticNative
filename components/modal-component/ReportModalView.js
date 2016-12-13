@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { Modal, Text, TouchableHighlight, View, TouchableOpacity, AsyncStorage, Image} from 'react-native';
 import api from '../utils/APImanager.js';
 import { MaterialIcons } from '@exponent/vector-icons';
+import styles from '../../resources/styles.js';
+
 
 
 export default class ReportModalView extends Component {
@@ -32,23 +34,9 @@ export default class ReportModalView extends Component {
   componentDidUpdate(){
 
     if(this.props.popupId !== undefined && this.state.dataReceived == false){
-      //first get the weather data for the place
       api.getSome("report?id="+this.props.popupId).then(response => {
-        //var result = response._bodyInit;
-        //var placeInfo = JSON.parse(response_bodyInit)
         var responseObject = JSON.parse(response._bodyInit);
         //console.log("api.getSome(report?id=" , responseObject[0]);
-
-        /* [{"image_url":"http://www.balticapp.fi/images/lukeB/report/585028a37d84f1094cc1a1c0.jpeg",
-        "flagged":false,
-        "approved":true,
-        "profileId":"auth0|58501262b95c657144e74369",
-        "id":"585028a37d84f1094cc1a1c0",
-        "title":"My Photo",
-        "description":"Anonymous",
-        "date":"2016-12-13T18:58:11.475Z",
-        "categoryId":[],
-        "location":{"long":24.4324,"lat":60.78825}}]*/
 
         this.setState({
             imageUrl: responseObject[0].image_url,
@@ -65,26 +53,19 @@ export default class ReportModalView extends Component {
   }
 
   render() {
-    /*this.state
-    {"modalVisible":true,
-    "imageUrl":"http://www.balticapp.fi/images/lukeB/report/585028a37d84f1094cc1a1c0.jpeg",
-    "date":"2016-12-13T18:58:11.475Z",
-    "description":"Anonymous",
-    "flagged":false,
-    "dataReceived":true,
-    */
-
-
     let reportImageView = null;
 
     if(this.state.imageUrl !== undefined){
       reportImageView = <View>
-
+                          <Image
+                            style={{width: 300, height: 250}}
+                            source={{uri: this.state.imageUrl}}/>
                         </View>
     }else{
       reportImageView = <View>
+                            <Text style={{fontSize: 16, marginTop: 10, color: 'white'}}>Loading...</Text>
+                        </View>
 
-                          </View>
     }
 
     return (
@@ -93,19 +74,32 @@ export default class ReportModalView extends Component {
           transparent={true}
           visible={this.props.openModal}
           >
+          <View style={{alignItems: 'center', elevation: 2, marginLeft: 50,borderBottomColor: '#BDBDBD', borderBottomWidth: 1,borderRightWidth:1, borderRightColor:'#BDBDBD', marginRight: 50,marginTop: 70, width: 300, height: 450, backgroundColor: "white"}}>
 
-          <View style={{alignItems: 'center', marginLeft: 50, marginRight: 50,marginTop: 70, width: 300, height: 500, backgroundColor: "white"}}>
-          <View>
-             <View style={{flex:2}}>
-               <View style={{flex: 3, justifyContent: 'flex-end', alignItems: 'center', marginBottom: 5}}>
-               <TouchableHighlight onPress={this.setModalVisible}>
-                 <Text>Close</Text>
-               </TouchableHighlight>
-               </View>
+          <View style={{ backgroundColor: '#FFC107', width: 300, height:250, alignItems:'center',borderBottomColor: '#BDBDBD', borderBottomWidth: 1,borderRightWidth:1, borderRightColor:'#BDBDBD'}}>
+            {reportImageView}
+          </View>
+
+
+           <View style={{flex:2}}>
+
+             <View style={{padding: 10, width: 300, height: 100, backgroundColor:'white',borderBottomColor: '#BDBDBD', borderBottomWidth: 1,borderRightWidth:1, borderRightColor:'#BDBDBD'}}>
+                  <Text>Description:</Text>
+                  <Text style={{fontSize:20, paddingRight:5}}>{this.state.description}</Text>
+                  <Text>Date:</Text>
+                  <Text style={{fontSize:16, paddingRight:5}}>{this.state.date}</Text>
+
              </View>
-          </View>
-          </View>
 
+             <View style={{justifyContent: 'flex-end', alignItems: 'center', paddingBottom: 5}}>
+
+             <TouchableOpacity onPress={this.setModalVisible} style={styles.button}>
+               <Text style={styles.buttonText}>Close</Text>
+
+             </TouchableOpacity>
+             </View>
+           </View>
+          </View>
 
         </Modal>
     );

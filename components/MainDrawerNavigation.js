@@ -53,17 +53,6 @@ export default class MainDrawerNavigation extends Component {
       />
     );
   };
-    componentDidUpdate() {
-        AsyncStorage.getItem("id_token", (err, result) => {
-            if (result) {
-                this.setState({isLoggedIn: true});
-                return true;
-            } else {
-                this.setState({isLoggedIn: false});
-                return false;
-            }
-        });
-    }
 
     componentDidMount() {
         AsyncStorage.getItem("id_token", (err, result) => {
@@ -79,11 +68,6 @@ export default class MainDrawerNavigation extends Component {
 
   // Renders the main drawer with all its components
   render() {
-    let loggedInButton = null;
-
-    if (this.state.isLoggedIn) {
-        loggedInButton = <DrawerNavigationItem></DrawerNavigationItem>
-    }
 
     // Return all the DrawerNavigationItem's with icons, title and StackNavigation to their corresponding components
     return (
@@ -134,23 +118,6 @@ export default class MainDrawerNavigation extends Component {
           <StackNavigation
             id="browseUploads"
             initialRoute={Router.getRoute('browseUploads')}
-            defaultRouteConfig={{
-              navigationBar: {
-                backgroundColor: 'rgb(0, 198, 209)',
-                tintColor: '#fff',
-              },
-            }}
-          />
-        </DrawerNavigationItem>
-
-        <DrawerNavigationItem
-          id="browseTags"
-          selectedStyle={styles.selectedItemStyle}
-          renderTitle={isSelected => this._renderTitle('Browse Tags', isSelected)}
-          renderIcon={isSelected => this._renderIcon('list', isSelected)}>
-          <StackNavigation
-            id="browseTags"
-            initialRoute={Router.getRoute('browseTags')}
             defaultRouteConfig={{
               navigationBar: {
                 backgroundColor: 'rgb(0, 198, 209)',
