@@ -65,8 +65,8 @@ export default class MainDrawerNavigation extends Component {
         <DrawerNavigationItem
           id="home"
           selectedStyle={styles.selectedItemStyle}
-          renderTitle={isSelected => this._renderTitle('Home', isSelected)}
-          renderIcon={isSelected => this._renderIcon('apps', isSelected)}>
+          renderTitle={isSelected => this._renderTitle('Map', isSelected)}
+          renderIcon={isSelected => this._renderIcon('map', isSelected)}>
           <StackNavigation
             id="root"
             initialRoute={Router.getRoute('home')}
@@ -83,7 +83,7 @@ export default class MainDrawerNavigation extends Component {
               id="testAuthentication"
               selectedStyle={styles.selectedItemStyle}
               renderTitle={isSelected => this._renderTitle('Test Authentication', isSelected)}
-              renderIcon={isSelected => this._renderIcon('free-breakfast', isSelected)}>
+              renderIcon={isSelected => this._renderIcon('person-add', isSelected)}>
               <StackNavigation
                   id="testAuthentication"
                   initialRoute={Router.getRoute('testAuthentication')}
