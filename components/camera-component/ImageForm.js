@@ -4,28 +4,59 @@ import Image from 'react-native-image-progress';
 import moment from 'moment';
 import Button from './Button';
 import api from '../utils/APImanager';
-import FileUpload from 'react-native-file-upload';
-
-//import {Base64} from "js-base64"
 
 
 class ImageForm extends React.Component {
 	constructor(props) {
 		super(props);
-
 		this.savingAttempt = this.savingAttempt.bind(this);
 		// it's not necessary to bind savePhoto
 		this.state = {
-			id_token: ""
-		}
+			id_token: "",
+			myCurrentPosition: {
+				latitude: 70.78825,
+				longitude: 24.4324
+			},
+		};
 		this.convertImage = this.convertImage.bind(this);
 		this.readerCallback = this.readerCallback.bind(this);
+		this.getMyCurrentPosition = this.getMyCurrentPosition.bind(this);
+		this.updateMyCurrentPosition = this.updateMyCurrentPosition.bind(this);
 	}
 
 	componentDidMount(){
 		AsyncStorage.getItem("id_token", (err, result) => {
-        this.setState({id_token: result})
-    });
+			this.setState({id_token: result})
+		});
+
+		this.getMyCurrentPosition()
+	}
+
+	componentDidUpdate(){
+		this.updateMyCurrentPosition()
+	}
+
+	//Called from component did mount. get users current position and set it as state.
+	getMyCurrentPosition(){
+		navigator.geolocation.getCurrentPosition(
+			(position) => {
+				this.setState({myCurrentPosition: position.coords});
+				console.log("get position " , JSON.stringify(position));
+			},
+			(error) => alert(JSON.stringify(error)),
+			{enableHighAccuracy: false, timeout: 20000, maximumAge: 1000}
+		);
+	}
+
+	updateMyCurrentPosition(){
+		navigator.geolocation.watchPosition(
+			(position) => {
+				this.setState({myCurrentPosition: position.coords});
+				console.log("updated position " , JSON.stringify(position));
+			},
+			(error) => alert(JSON.stringify(error)),
+			{enableHighAccuracy: false, timeout: 20000}
+		);
 	}
 
 	updateTextCaptionValue = caption => this.props.setCaption(caption);
@@ -48,50 +79,11 @@ class ImageForm extends React.Component {
 		const imageKey = moment().format();
 		const imageToSave = {
 			uri: this.props.photo.uri,
-			caption: this.props.caption,
+			caption: this.props.caption
 		};
-
-		/*
-		let body = new FormData();
-		body.append('title', 'A beautiful photo!');
-		body.append('location', location);
-		body.append('image', photo);
-		body.append('description', 'some text');
-		body.append('date', '12-12-16');
-		body.append('categoryId', 'something');
-		headers.append();
-		xhr.setRequestHeader('Authorization', 'Bearer '+ this.state.id_token);
-
-		xhr.open('POST', 'http://www.balticapp.fi/lukeA/report/create');
-		xhr.send(body);
-		*/
-		var id_token = this.state.id_token;
-
-		console.log("image url:" , this.props.photo.uri);
-		this.convertImage(this.props.photo.uri);
-	/*
-    var reportForm ={
-        title: "My Photo",
-        location: {
-            long: "22.122759",
-            lat: "60.425572",
-        },
-        image: this.props.photo,
-        description:"beautiful image",
-        date: "",
-				categoryId: ""
-    };
-
-    console.log("before api" , id_token );
-
-    api.createSome('report' , reportForm, id_token).then(response => {
-      console.log("createSome report callback " , response);
-    });
-*/
 		AsyncStorage.setItem(
 			imageKey,
 			JSON.stringify(imageToSave),
-
 			(err) => {
 				if (err) {
 					// console.log('ERROR: ', err);
@@ -102,9 +94,9 @@ class ImageForm extends React.Component {
 
 					Alert.alert(
 						'Saved!',
-						'Redirecting to photo gallery...',
+						' ',
 						[
-							{ text: 'OK', /*onPress: () => this.goToGallery()*/ }
+							{ text: 'OK', onPress: () => this.convertImage(this.props.photo.uri) }
 						]
 					);
 				}
@@ -112,47 +104,61 @@ class ImageForm extends React.Component {
 		);
 	}
 	convertImage(dataUrl){
-		console.log("dataUrl in convertImage " , dataUrl);
+		console.log("dataUri in convertImage " , dataUrl);
 		ImageStore.getBase64ForTag(dataUrl, this.readerCallback, this.readerCallback);
+		this.props.setModalVisible(false)
+
 	}
 
 	readerCallback(result){
 		console.log("readerCallback result:" , result);
-		//TODO: fetch
+		console.log("image url:" , this.props.photo.uri);
+		var id_token = this.state.id_token;
+
+		var reportForm ={
+			title: "My Photo",
+			location: {
+				long: this.state.myCurrentPosition.longitude,
+				lat: this.state.myCurrentPosition.latitude,
+			},
+			image: result,
+			description: this.props.caption,
+			date: "",
+			categoryId: ""
+		};
+
+		console.log("before api" , id_token );
+
+		api.createSome('report' , reportForm, id_token).then(response => {
+			console.log("createSome report callback " , response);
+		})
 	}
 
 
-  /*
-   goToGallery() {
-   this.props.navigation.performAction(({ tabs }) => {
-   tabs('tab-navigation').jumpToTab('photoGallery');
-   });
-   }
-   */
 	render() {
 		return (
-            <View style={styles.formContainer}>
-              <View style={styles.imageContainer}>
-                <Image
-                    style={styles.image}
-                    source={{ uri: this.props.photo.uri }}
-                />
+			<View style={styles.formContainer}>
+				<View style={styles.imageContainer}>
+					<Image
+						style={styles.image}
+						source={{ uri: this.props.photo.uri }}
+					/>
 
-                <TextInput
-                    style={styles.textInput}
-                    placeholder="Write a caption to your photo..."
-                    onChangeText={this.updateTextCaptionValue}
-                    value={this.props.caption}
-                    autoCorrect={false}
-                />
-              </View>
+					<TextInput
+						style={styles.textInput}
+						placeholder="Write a description for your report..."
+						onChangeText={this.updateTextCaptionValue}
+						value={this.props.caption}
+						autoCorrect={false}
+					/>
+				</View>
 
-              <View style={styles.inputContainer}>
-                <Button onPress={this.savingAttempt}>
-                  Save
-                </Button>
-              </View>
-            </View>
+				<View style={styles.inputContainer}>
+					<Button onPress={this.savingAttempt}>
+						Save
+					</Button>
+				</View>
+			</View>
 		);
 	}
 }
@@ -162,7 +168,8 @@ ImageForm.propTypes = {
 	setPhoto: PropTypes.func.isRequired,
 	caption: PropTypes.string.isRequired,
 	photo: PropTypes.object.isRequired,
-	navigation: PropTypes.object
+	navigation: PropTypes.object,
+	setModalVisible: PropTypes.object
 };
 
 const styles = StyleSheet.create({

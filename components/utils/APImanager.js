@@ -5,11 +5,6 @@
  console.log("testServerConnection callback " , response.status , response.type , response.ok);
  });
 
-<<<<<<< HEAD
- api.getSome("category").then(response => {
- console.log("getSome callback category " , response);
- });
-=======
 api.getSome("category").then(response => {
   console.log("getSome callback category " , response);
 });
@@ -47,26 +42,6 @@ var serverCommunicator = {
 	   {
 	     method: 'get'
 
-	   })
-	     .then((response) => {
-	        return response
-	     })
-	     .catch((err) => {
-	         return err
-	     });
-	 },
-
-	 getSomeAsUser: function(destination , id_token){
-		 console.log("httpGET: " , destination , id_token);
-		 //http://balticapp.fi/lukeB/place/upvote?id=28h2e82818210u
-		 //place/upvote?id=584ab3f4fbd9d66ff57479a8
-		 return fetch('http://www.balticapp.fi/lukeB/'+destination,
-	   {
-			method: 'get',
-    	headers: new Headers({
-        'Authorization': 'Bearer ' + id_token,
-        'Content-Type': 'application/json',
-    	})
 	   })
 	     .then((response) => {
 	        return response

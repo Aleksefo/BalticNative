@@ -14,6 +14,7 @@ class CameraTakePhoto extends React.Component {
 		await ImagePicker.launchCameraAsync({ allowsEditing: true, aspect: [1, 1] })
 			.then((result) => {
 				this.props.setPhoto(result);
+				this.props.setModalVisible(true)
 			});
 	}
 
@@ -30,7 +31,8 @@ class CameraTakePhoto extends React.Component {
 }
 
 CameraTakePhoto.propTypes = {
-	setPhoto: PropTypes.func.isRequired
+	setPhoto: PropTypes.func.isRequired,
+	setModalVisible: PropTypes.func.isRequired
 };
 
 const styles = StyleSheet.create({
