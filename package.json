@@ -11,11 +11,14 @@
     "auth0-react-native": "0.0.4",
     "babel-preset-react-native-stage-0": "^1.0.1",
     "exponent": "~11.0.2",
+    "js-base64": "^2.1.9",
     "jsonschema": "^1.1.0",
     "react": "~15.3.2",
     "react-native": "git+https://github.com/exponentjs/react-native#sdk-11.0.3",
     "react-native-button": "^1.7.1",
     "react-native-easy-grid-view": "^0.1.1",
-    "react-native-html-parser": "^0.0.4"
+    "react-native-html-parser": "^0.0.4",
+    "react-native-image-progress": "^0.6.0",
+    "react-native-image-to-base64": "^0.1.0"
   }
 }
