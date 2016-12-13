@@ -49,8 +49,7 @@ const styles = StyleSheet.create({
 
 	icon: {
 		backgroundColor: 'transparent',
-		color: '#FFF',
-		fontSize: 38,
+		color: '#FFC107',
 		alignItems: 'center'
 	}
 });
