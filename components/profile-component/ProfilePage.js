@@ -49,25 +49,13 @@ export default class ProfilePage extends Component {
     state = {
         isLoggedIn: false
     };
-    changelogOutButtonView(){
-        console.log("change logOutButtonView" , this.state.logout);
-
-        this.setState({
-            logout: !this.state.logout
-        })
-    }
   componentWillMount(){
       AsyncStorage.getItem("id_token", (err, result) => {
-          console.log("async tulos:________________" + result);
-          console.log("async error:_________________" + err);
           if (result == null) {
-              console.log("ei kirjautunu");
               this.setState({isLoggedIn: false});
           }else{
-              console.log("kirjautunu");
               this.setState({isLoggedIn: true});
               api.getSome("user/me", result).then(response => {
-                  console.log("getSome callback user " , response._bodyInit);
                   this.setState({userInfo: JSON.parse(response._bodyInit)});
               });
           }
@@ -85,11 +73,8 @@ export default class ProfilePage extends Component {
     });
       AsyncStorage.getItem("id_token", (err, result) => {
           if (result == null) {
-              console.log("not logged in")
           }else{
-              console.log("logged in");
               api.getSome("user/set-username?username="+ this.state.username, result).then(response => {
-                  console.log("getSome callback user " , response._bodyInit);
               });
           }
       });
@@ -105,20 +90,14 @@ export default class ProfilePage extends Component {
       };
           AsyncStorage.getItem("id_token", (err, result) => {
               if (result == null) {
-                  console.log("not logged in")
               }else{
-                  console.log("logged in");
                   api.postSome("user/update", userData, result).then(response => {
-                      console.log("postSome callback user " , response);
                   });
               }
           });
   }
 
   render() {
-        console.log("render");
-        console.log("kirjautunu state " + this.state.isLoggedIn);
-        console.log("userinfo " + this.state.userInfo.id);
       let logOutButtonView = null;
       if(this.state.isLoggedIn){
           logOutButtonView = <View style={styles.profilePageLogOutButtonView}>
@@ -189,7 +168,6 @@ export default class ProfilePage extends Component {
   }
 
   logOut() {
-      console.log("asdasdasd");
       this.setState({isLoggedIn: false});
       AsyncStorage.removeItem("id_token", null);
 /*    navigator or navigation actions should work but they dont --antti
@@ -204,7 +182,6 @@ this.props.navigator.push({
       Store.dispatch(NavigationActions.pop(navigatorUID))*/
   }
   deleteAccount() {
-    console.log("<------------DELETE ACCOUNT PUSHED------------->");
   }
 
 }
