@@ -25,6 +25,7 @@ export default class MapViewComponent extends Component {
 			openModal: false,
 			popupTitle: undefined,
 			popupDescription: undefined,
+			popupId: undefined,
 			myCurrentPosition: undefined,
 			OS: Platform.OS,
       region: {
@@ -94,7 +95,8 @@ export default class MapViewComponent extends Component {
 			markerObject ={
 				latlng: {longitude: Number(placesList[i].location.long), latitude: Number(placesList[i].location.lat)},
 				title: placesList[i].title,
-				description: placesList[i].description
+				description: placesList[i].description,
+				identifier: placesList[i].id
 			}
 			markerList.push(markerObject);
 		}
@@ -106,10 +108,12 @@ export default class MapViewComponent extends Component {
 	}
 
 	handleOpenModal(modalData){
+		console.log("modalData:" , modalData);
 		this.setState({
 			openModal: true,
 			popupTitle: modalData.title,
-			popupDescription: modalData.description
+			popupDescription: modalData.description,
+			popupId: modalData.identifier
 		})
 	}
 
@@ -123,7 +127,6 @@ export default class MapViewComponent extends Component {
 	findMarkerFromState(coordinate){
 		for(var i =0; i<this.state.markers.length; i++){
 			if(JSON.stringify(this.state.markers[i].latlng) === JSON.stringify(coordinate)){
-				console.log("FOUND MATCH IN:" , this.state.markers[i].title, this.state.markers[i].description);
 				this.handleOpenModal(this.state.markers[i])
 			}
 		}
@@ -197,9 +200,10 @@ export default class MapViewComponent extends Component {
 						 onPress={this.onMarkerPress}
 						 //onPress={this.onMarkerPress}
 						 //onPress={(marker.title) => this._handleTextChange({})}
+						 coordinate={marker.latlng}
 						 title={marker.title}
 						 description={marker.description}
-						 identifier={marker.title}
+						 identifier={marker.id}
 						 />
 					 ))}
 
@@ -209,7 +213,8 @@ export default class MapViewComponent extends Component {
 							openModal={this.state.openModal}
 							callBack={this.handleCloseModal}
 							popupTitle={this.state.popupTitle}
-							popupDescription={this.state.popupDescription}/>
+							popupDescription={this.state.popupDescription}
+							popupId={this.state.popupId}/>
 				</View>
 
 			</View>

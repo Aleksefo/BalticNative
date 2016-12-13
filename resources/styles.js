@@ -12,11 +12,10 @@ the last one. Always remeber to comment it!
 var styles = StyleSheet.create({
   //MainDrawerNavigation STYLES
   header: {
-    flex: 1,
-    height: 180,
-    width: null,
+    width: 300,
+    height: 194,
     backgroundColor: 'rgb(0, 198, 209)',
-    resizeMode: 'cover',
+    resizeMode: 'contain',
   },
   buttonTitleText: {
     color: '#222',

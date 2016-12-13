@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import { View, TextInput, Alert, AsyncStorage, StyleSheet, NativeModules } from 'react-native';
+import { View, TextInput, Alert, AsyncStorage, StyleSheet, NativeModules, ImageStore  } from 'react-native';
 import Image from 'react-native-image-progress';
 import moment from 'moment';
 import Button from './Button';
@@ -18,6 +18,8 @@ class ImageForm extends React.Component {
 		this.state = {
 			id_token: ""
 		}
+		this.convertImage = this.convertImage.bind(this);
+		this.readerCallback = this.readerCallback.bind(this);
 	}
 
 	componentDidMount(){
@@ -65,44 +67,8 @@ class ImageForm extends React.Component {
 		*/
 		var id_token = this.state.id_token;
 
-
-
-		var photo = {
-				uri: this.props.photo.uri,
-				type: 'image/jpeg',
-				name: 'myphoto.jpg',
-			};
-
-			var obj = {
-	        uploadUrl: 'http://www.balticapp.fi/lukeA/report/create',
-	        method: 'POST', // default 'POST',support 'POST' and 'PUT'
-	        headers: {
-						'Authorization': 'Bearer ' + id_token,
-						'Content-Type': 'application/json',	        },
-	        fields: {
-						title: "My Photo",
-						location: {
-								long: "22.122759",
-								lat: "60.425572",
-						},
-						description:"beautiful image",
-						date: "",
-						categoryId: ""
-	        },
-	        files: [
-	          {
-	            name: 'one', // optional, if none then `filename` is used instead
-	            filename: 'testFileNape', // require, file name
-	            filepath: this.props.photo.uri, // require, file absoluete path
-	            filetype: '', // options, if none, will get mimetype from `filepath` extension
-	          },
-	        ]
-	    };
-	    FileUpload.upload(obj, function(err, result) {
-	      console.log('upload:', err, result);
-	    })
-
-
+		console.log("image url:" , this.props.photo.uri);
+		this.convertImage(this.props.photo.uri);
 	/*
     var reportForm ={
         title: "My Photo",
@@ -145,6 +111,16 @@ class ImageForm extends React.Component {
 			}
 		);
 	}
+	convertImage(dataUrl){
+		console.log("dataUrl in convertImage " , dataUrl);
+		ImageStore.getBase64ForTag(dataUrl, this.readerCallback, this.readerCallback);
+	}
+
+	readerCallback(result){
+		console.log("readerCallback result:" , result);
+		//TODO: fetch
+	}
+
 
   /*
    goToGallery() {
@@ -221,7 +197,7 @@ const styles = StyleSheet.create({
 	},
 
 	inputContainer: {
-		padding: 10
+		padding: 10,
 	}
 });
 

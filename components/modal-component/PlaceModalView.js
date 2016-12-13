@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { Modal, Text, TouchableHighlight, View } from 'react-native';
+import api from '../utils/APImanager.js';
+
 
 export default class PlaceModalView extends Component {
 
@@ -12,9 +14,12 @@ export default class PlaceModalView extends Component {
   }
 
   componentDidMount(){
+    console.log("this.prooops:" , this.props);
     this.setState({
       modalVisible: this.props.openModal
-    })
+    });
+
+    
   }
 
 
@@ -32,11 +37,16 @@ export default class PlaceModalView extends Component {
           <View style={{flex:2}}>
             <Text style={{fontSize: 30}}>{this.props.popupTitle}</Text>
             <Text>{this.props.popupDescription}</Text>
+
+            <View>
+
+            </View>
+
             <View style={{flex: 3, justifyContent: 'flex-end', alignItems: 'center', marginBottom: 5}}>
             <TouchableHighlight onPress={() => {
               this.setModalVisible(!this.state.modalVisible)
             }}>
-              <Text>Hide Modal</Text>
+              <Text>Close</Text>
             </TouchableHighlight>
             </View>
           </View>

@@ -27,7 +27,7 @@ export default class MainDrawerNavigation extends Component {
 
   // Render the header image for the main drawer
   _renderHeader = () => {
-    return <Image style={styles.header} />;
+    return <Image source={require('../assets/bonuslogo.png')} style={styles.header} />;
   };
 
   // Renders the titles in the main drawer
@@ -240,64 +240,6 @@ export default class MainDrawerNavigation extends Component {
             }}
           />
         </DrawerNavigationItem>
-
-        <DrawerNavigationItem
-          id="testApi"
-          selectedStyle={styles.selectedItemStyle}
-          renderTitle={isSelected => this._renderTitle('Test API', isSelected)}
-          renderIcon={isSelected => this._renderIcon('free-breakfast', isSelected)}>
-          <StackNavigation
-            id="testApi"
-            initialRoute={Router.getRoute('testApi')}
-            defaultRouteConfig={{
-              navigationBar: {
-                backgroundColor: 'rgb(0, 198, 209)',
-                tintColor: '#fff',
-              },
-            }}
-          />
-        </DrawerNavigationItem>
-
-        <DrawerNavigationItem
-          id="template"
-          selectedStyle={styles.selectedItemStyle}
-          renderTitle={isSelected => this._renderTitle('Template', isSelected)}
-          renderIcon={isSelected => this._renderIcon('free-breakfast', isSelected)}>
-          <StackNavigation
-            id="template"
-            initialRoute={Router.getRoute('template')}
-            defaultRouteConfig={{
-              navigationBar: {
-                backgroundColor: 'rgb(0, 198, 209)',
-                tintColor: '#fff',
-              },
-            }}
-          />
-        </DrawerNavigationItem>
-
-
-
-
-        <DrawerNavigationItem
-          id="eventEmitterExample"
-          selectedStyle={styles.selectedItemStyle}
-          renderTitle={isSelected => this._renderTitle('eventEmitterExample', isSelected)}
-          renderIcon={isSelected => this._renderIcon('free-breakfast', isSelected)}>
-          <StackNavigation
-            id="eventEmitter"
-            initialRoute={Router.getRoute('eventEmitterExample')}
-            defaultRouteConfig={{
-              navigationBar: {
-                backgroundColor: 'rgb(0, 198, 209)',
-                tintColor: '#fff',
-              },
-            }}
-          />
-        </DrawerNavigationItem>
-
-
-
-        {superUserButton}
 
       </DrawerNavigation>
     );
