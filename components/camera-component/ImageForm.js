@@ -59,7 +59,7 @@ class ImageForm extends React.Component {
 
 					Alert.alert(
 						'Saved!',
-						'Redirecting to photo gallery...',
+						' ',
 						[
 							{ text: 'OK', onPress: () => this.convertImage(this.props.photo.uri) }
 						]
@@ -71,6 +71,7 @@ class ImageForm extends React.Component {
 	convertImage(dataUrl){
 		console.log("dataUri in convertImage " , dataUrl);
 		ImageStore.getBase64ForTag(dataUrl, this.readerCallback, this.readerCallback);
+		this.props.setModalVisible(false)
 
 	}
 
@@ -132,7 +133,8 @@ ImageForm.propTypes = {
 	setPhoto: PropTypes.func.isRequired,
 	caption: PropTypes.string.isRequired,
 	photo: PropTypes.object.isRequired,
-	navigation: PropTypes.object
+	navigation: PropTypes.object,
+	setModalVisible: PropTypes.object
 };
 
 const styles = StyleSheet.create({

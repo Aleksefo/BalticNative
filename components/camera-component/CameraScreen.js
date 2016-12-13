@@ -46,6 +46,7 @@ class CameraScreen extends React.Component {
 				caption={this.state.caption}
 				setCaption={this.setCaption}
 				setPhoto={this.setPhoto}
+				setModalVisible={this.setModalVisible}
 			/>)
 
 		}
