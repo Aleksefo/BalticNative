@@ -53,17 +53,7 @@ export default class MainDrawerNavigation extends Component {
       />
     );
   };
-    componentDidUpdate() {
-        AsyncStorage.getItem("id_token", (err, result) => {
-            if (result) {
-                this.setState({isLoggedIn: true});
-                return true;
-            } else {
-                this.setState({isLoggedIn: false});
-                return false;
-            }
-        });
-    }
+
 
     componentDidMount() {
         AsyncStorage.getItem("id_token", (err, result) => {

@@ -5,6 +5,7 @@ import React, { Component } from 'react';
 import Button from 'react-native-button';
 import styles from '../../resources/styles.js';
 import api from '../utils/APImanager.js'
+import { MaterialIcons } from '@exponent/vector-icons';
 
 import  {
   StyleSheet,
@@ -15,6 +16,7 @@ import  {
   TouchableHighlight,
   TouchableOpacity,
   ScrollView,
+    AsyncStorage
 } from 'react-native';
 
 import TextField from 'react-native-md-textinput';
@@ -24,14 +26,20 @@ export default class ProfilePage extends Component {
     super(props);
 
     this.state = {
-      userName: "userName",
-      userAge: "userAge",
-      userGender: "userGender",
-      userBio: "userBio",
-      editUser: false
-    }
+      username: "",
+      userage: "",
+      usergender: "",
+      useremail: "",
+      userlocation: "",
+      userhobby: "",
+      userbio: "",
+      editUser: true,
+      userimage: null,
+      userInfo: ""
+    };
 
-    this.handleEditUser = this.handleEditUser.bind(this);
+    this.handleEditName = this.handleEditName.bind(this);
+    this.handleEditInfo = this.handleEditInfo.bind(this);
   }
   static route = {
     navigationBar: {
@@ -48,40 +56,69 @@ export default class ProfilePage extends Component {
             logout: !this.state.logout
         })
     }
-    componentDidMount() {
-        AsyncStorage.getItem("id_token", (err, result) => {
-            console.log("async tulos:________________" + result);
-            console.log("async error:_________________" + err);
-            if (result == null) {
-                console.log("ei kirjautunu");
-                this.setState({isLoggedIn: false});
-            }else{
-                console.log("kirjautunu");
-                this.setState({isLoggedIn: true});
-            }
-        });
-    }
-
   componentWillMount(){
-
+      AsyncStorage.getItem("id_token", (err, result) => {
+          console.log("async tulos:________________" + result);
+          console.log("async error:_________________" + err);
+          if (result == null) {
+              console.log("ei kirjautunu");
+              this.setState({isLoggedIn: false});
+          }else{
+              console.log("kirjautunu");
+              this.setState({isLoggedIn: true});
+              api.getSome("user/me", result).then(response => {
+                  console.log("getSome callback user " , response._bodyInit);
+                  this.setState({userInfo: JSON.parse(response._bodyInit)});
+              });
+          }
+      });
   }
 
   componentDidMount(){
 
-    api.getSome("user").then(response => {
-      console.log("getSome callback user " , response);
-    });
+
 
   }
-  handleEditUser(){
+  handleEditName(){
     this.setState({
       editUser: !this.state.editUser
-    })
+    });
+      AsyncStorage.getItem("id_token", (err, result) => {
+          if (result == null) {
+              console.log("not logged in")
+          }else{
+              console.log("logged in");
+              api.getSome("user/set-username?username="+ this.state.username, result).then(response => {
+                  console.log("getSome callback user " , response._bodyInit);
+              });
+          }
+      });
+  }
+  handleEditInfo(){
+      var userData = {
+          id: "",
+          email: this.state.useremail,
+          bio: this.state.userbio,
+          location: this.state.userlocation,
+          gender: this.state.usergender,
+          hobby: this.state.userhobby,
+      };
+          AsyncStorage.getItem("id_token", (err, result) => {
+              if (result == null) {
+                  console.log("not logged in")
+              }else{
+                  console.log("logged in");
+                  api.postSome("user/update", userData, result).then(response => {
+                      console.log("postSome callback user " , response);
+                  });
+              }
+          });
   }
 
   render() {
         console.log("render");
         console.log("kirjautunu state " + this.state.isLoggedIn);
+        console.log("userinfo " + this.state.userInfo.id);
       let logOutButtonView = null;
       if(this.state.isLoggedIn){
           logOutButtonView = <View style={styles.profilePageLogOutButtonView}>
@@ -112,30 +149,36 @@ export default class ProfilePage extends Component {
                 <View style={styles.profileInfoStyle}>
                   <View style={{width:50, height:50, backgroundColor:'red', marginTop:10, marginLeft: 10, borderRadius:30}}></View>
                   <View style={styles.profileInfoTextStyle}>
-                  <TouchableOpacity onPress={this.handleEditUser}><Text>Edit</Text></TouchableOpacity>
-                  <TextInput placeholder="User Name" editable={this.state.editUser} style={{fontSize:35, color: 'white', marginLeft: 10}}>{this.state.userName}</TextInput>
-                  <Text style={{marginLeft:10, marginTop:2, color:'white'}}>Profile Info</Text>
-                  <TextInput placeholder="Your Gender" editable={this.state.editUser} style={{textAlign: 'right', fontSize:20, marginBottom: 2, marginRight:5, color:'white' }}>{this.state.userGender}</TextInput>
+                  <TouchableOpacity onPress={this.handleEditName}><Text><MaterialIcons name="save" size={24} color="black" style={{padding: 10}}/>Save username</Text></TouchableOpacity>
+                      <Text>User name</Text>
+                  <TextInput onChangeText={(username) => this.setState({username})} placeholder="" editable={this.state.editUser} style={{fontSize:35, color: 'black', marginLeft: 10}}>{this.state.userInfo.username}</TextInput>
+
+
+
                   </View>
                 </View>
 
+              <TouchableOpacity onPress={this.handleEditInfo}><Text><MaterialIcons name="save" size={24} color="black" style={{padding: 10}}/>Save fields</Text></TouchableOpacity>
                 <View style={styles.profilePageMainWhite}>
                   <Text>Biography</Text>
                   <ScrollView>
-                    <TextInput label={'Bio'} highlightColor={'#00BCD4'}></TextInput>
+                      <TextInput onChangeText={(userbio) => this.setState({userbio})} placeholder="" editable={this.state.editUser} style={{fontSize:35, color: 'black', marginLeft: 10}}>{this.state.userInfo.bio}</TextInput>
                   </ScrollView>
                 </View>
 
                 <View style={styles.profilePageMainGrey}>
-                  <Text>Recent Images</Text>
+                    <Text style={{color: 'white'}}>Location</Text>
+                    <TextInput onChangeText={(userlocation) => this.setState({userlocation})} placeholder="" editable={this.state.editUser} style={{fontSize:35, color: 'white', marginLeft: 10}}>{this.state.userInfo.location}</TextInput>
                 </View>
 
                 <View style={styles.profilePageMainWhite}>
-                  <Text>Recent Comments</Text>
+                    <Text>Gender</Text>
+                    <TextInput onChangeText={(usergender) => this.setState({usergender})} placeholder="" editable={this.state.editUser} style={{fontSize:35, color: '#BDBDBD', marginLeft: 10}}>{this.state.userInfo.gender}</TextInput>
                 </View>
 
                 <View style={styles.profilePageMainGrey}>
-                  <Text>Statistics</Text>
+                  <Text style={{color: 'white'}}>Hobby</Text>
+                    <TextInput onChangeText={(userhobby) => this.setState({userhobby})} placeholder="" editable={this.state.editUser} style={{fontSize:35, color: 'white', marginLeft: 10}}>{this.state.userInfo.hobby}</TextInput>
                 </View>
 
               {logOutButtonView}

@@ -42,11 +42,13 @@ var serverCommunicator = {
 	    });
     },
 
-	 getSome: function(param){
+	 getSome: function(param, id_token){
 	   return fetch('http://www.balticapp.fi/lukeB/'+param,
 	   {
-	     method: 'get'
-
+	     method: 'get',
+           headers: new Headers({
+               'Authorization': 'Bearer ' + id_token
+           })
 	   })
 	     .then((response) => {
 	        return response
@@ -55,6 +57,23 @@ var serverCommunicator = {
 	         return err
 	     });
 	 },
+    postSome: function(param, postBody, id_token){
+	  return fetch('http://www.balticapp.fi/lukeB/'+param,
+          {
+              method: 'post',
+              body: JSON.stringify(postBody),
+              headers: new Headers({
+                  'Authorization': 'Bearer ' + id_token,
+                  'Content-Type': 'application/json',
+              })
+          })
+          .then((response) => {
+              return response
+          })
+          .catch((err) => {
+              return err
+          });
+    },
 
   createSome: function(destination, postBody, id_token){
 		console.log("createsome: " , destination, postBody, id_token);
