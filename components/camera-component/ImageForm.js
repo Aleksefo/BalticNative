@@ -21,6 +21,7 @@ class ImageForm extends React.Component {
 		this.convertImage = this.convertImage.bind(this);
 		this.readerCallback = this.readerCallback.bind(this);
 		this.getMyCurrentPosition = this.getMyCurrentPosition.bind(this);
+		this.updateMyCurrentPosition = this.updateMyCurrentPosition.bind(this);
 	}
 
 	componentDidMount(){
@@ -31,15 +32,30 @@ class ImageForm extends React.Component {
 		this.getMyCurrentPosition()
 	}
 
+	componentDidUpdate(){
+		this.updateMyCurrentPosition()
+	}
+
 	//Called from component did mount. get users current position and set it as state.
 	getMyCurrentPosition(){
 		navigator.geolocation.getCurrentPosition(
 			(position) => {
-				//console.log("position " , JSON.stringify(position));
 				this.setState({myCurrentPosition: position.coords});
+				console.log("get position " , JSON.stringify(position));
 			},
 			(error) => alert(JSON.stringify(error)),
-			{enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
+			{enableHighAccuracy: false, timeout: 20000, maximumAge: 1000}
+		);
+	}
+
+	updateMyCurrentPosition(){
+		navigator.geolocation.watchPosition(
+			(position) => {
+				this.setState({myCurrentPosition: position.coords});
+				console.log("updated position " , JSON.stringify(position));
+			},
+			(error) => alert(JSON.stringify(error)),
+			{enableHighAccuracy: false, timeout: 20000}
 		);
 	}
 
