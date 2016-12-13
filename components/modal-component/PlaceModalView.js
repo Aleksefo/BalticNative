@@ -40,18 +40,14 @@ export default class PlaceModalView extends Component {
         //var result = response._bodyInit;
         //var placeInfo = JSON.parse(response_bodyInit)
         var responseObject = JSON.parse(response._bodyInit);
-        console.log("wearherdata: " , responseObject);
-
 
           var upVoteCount =0;
           var downVoteCount =0;
 
            for(var i=0; i<responseObject.votes.length; i++){
              if(responseObject.votes[i].vote === true){
-               console.log("UP");
                upVoteCount ++;
              }else if(responseObject.votes[i].vote === false) {
-               console.log("DOWN");
                downVoteCount ++
              }
            }
@@ -69,32 +65,22 @@ export default class PlaceModalView extends Component {
   }
 
   upVote(){
-    console.log("UPVOTE PRESSED!" , this.props , this.state.id_token);
     var id_token = this.state.id_token;
 
     if(this.props.popupId){
       api.getSomeAsUser("place/upvote?id="+this.props.popupId , id_token).then(response => {
-
-        console.log("getSomeAsUser response " , response)
-
       });
     }
-    //http://balticapp.fi/lukeB/place/upvote?id=28h2e82818210u
 
   }
 
   downVote(){
-    console.log("DOWNVOTE PRESSED!" , this.props , this.state.id_token);
     var id_token = this.state.id_token;
 
     if(this.props.popupId){
       api.getSomeAsUser("place/downvote?id="+this.props.popupId , id_token).then(response => {
-
-        console.log("getSomeAsUser response " , response)
-
       });
     }
-    //http://balticapp.fi/lukeB/place/downvote?id=28h2e82818210u
   }
 
   render() {
@@ -108,8 +94,6 @@ export default class PlaceModalView extends Component {
     }else {
       weatherDataView = <View></View>
     }
-
-    console.log("this.state:" , this.state.weatherData)
 
     return (
         <Modal
