@@ -1,8 +1,8 @@
 {
-  "exponentServerPort": 19007,
-  "exponentServerNgrokUrl": "https://b9-qvb.juhanivl.balticnative.exp.direct",
-  "packagerNgrokUrl": "https://packager.b9-qvb.juhanivl.balticnative.exp.direct",
-  "ngrokPid": 26473,
-  "packagerPort": 19009,
-  "packagerPid": 26459
+  "exponentServerPort": 19002,
+  "exponentServerNgrokUrl": "https://b9-qvb.aleksefo.balticnative.exp.direct",
+  "packagerNgrokUrl": "https://packager.b9-qvb.aleksefo.balticnative.exp.direct",
+  "ngrokPid": 32188,
+  "packagerPort": 19004,
+  "packagerPid": 51128
 }

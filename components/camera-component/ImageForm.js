@@ -6,7 +6,6 @@ import Button from './Button';
 import api from '../utils/APImanager';
 import FileUpload from 'react-native-file-upload';
 
-//import {Base64} from "js-base64"
 
 
 class ImageForm extends React.Component {
@@ -66,7 +65,7 @@ class ImageForm extends React.Component {
 		var id_token = this.state.id_token;
 
 
-
+/*
 		var photo = {
 				uri: this.props.photo.uri,
 				type: 'image/jpeg',
@@ -102,7 +101,7 @@ class ImageForm extends React.Component {
 	      console.log('upload:', err, result);
 	    })
 
-
+*/
 	/*
     var reportForm ={
         title: "My Photo",
@@ -136,7 +135,7 @@ class ImageForm extends React.Component {
 
 					Alert.alert(
 						'Saved!',
-						'Redirecting to photo gallery...',
+						'Uploading to the server...',
 						[
 							{ text: 'OK', /*onPress: () => this.goToGallery()*/ }
 						]
