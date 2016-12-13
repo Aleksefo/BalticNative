@@ -37,7 +37,7 @@ export default class ReportModalView extends Component {
         //var result = response._bodyInit;
         //var placeInfo = JSON.parse(response_bodyInit)
         var responseObject = JSON.parse(response._bodyInit);
-        console.log("api.getSome(report?id=" , responseObject[0]);
+        //console.log("api.getSome(report?id=" , responseObject[0]);
 
         /* [{"image_url":"http://www.balticapp.fi/images/lukeB/report/585028a37d84f1094cc1a1c0.jpeg",
         "flagged":false,
