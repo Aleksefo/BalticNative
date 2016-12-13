@@ -14,6 +14,7 @@ import MapView from 'react-native-maps';
 import styles from '../../resources/styles.js'
 import api from '../utils/APImanager.js';
 import PlaceModalView from '../modal-component/PlaceModalView'
+import { MaterialIcons } from '@exponent/vector-icons';
 
 
 export default class MapViewComponent extends Component {
@@ -139,7 +140,9 @@ export default class MapViewComponent extends Component {
 		});
 	}
 
-	flyToMyLoc(){		
+	//first copy default region attributes to currentRegionState,
+	//then setting myCurrentPosition attributes to currentRegionState and update region
+	flyToMyLoc(){
 		let currentRegionState = this.state.region;
 
 		currentRegionState.latitude = this.state.myCurrentPosition.latitude;
@@ -152,15 +155,16 @@ export default class MapViewComponent extends Component {
 
 
 	render() {
-
 		let flyMeToIosButton = null
 
 		//if OS is ios create flyMeToIosButton in the view
 		if (this.state.OS == 'ios') {
-			flyMeToIosButton = <View style={{height:50, width: 50, backgroundColor: 'yellow', top: 10, right: 10, position: 'absolute'}}>
+			flyMeToIosButton = <View style={{height:40, width: 40, top: 45, right: 5, position: 'absolute'}}>
 				<TouchableOpacity
-				style={{height:50, width: 50, backgroundColor: 'green'}}
+				style={{height:40, width: 40, backgroundColor: 'rgb(0, 198, 209)'}}
 				onPress={this.flyToMyLoc}>
+				<MaterialIcons name="my-location" size={32} color="white" style={{padding: 5}}  />
+
 
 				</TouchableOpacity>
 			</View>
@@ -176,7 +180,7 @@ export default class MapViewComponent extends Component {
 					<MapView
 						style={{flex: 1}}
 						region={this.state.region}
-						//onMarkerPress={this.onMarkerPress}
+						onMarkerPress={this.onMarkerPress}
 						moveOnMarkerPress={false}
 						onRegionChangeComplete={this.handleOnRegionChangeComplete}
 						loadingEnabled={true}
@@ -188,6 +192,8 @@ export default class MapViewComponent extends Component {
 						 coordinate={marker.latlng}
 						 onSelect={this.onMarkerPress}
 						 onPress={this.onMarkerPress}
+						 //onPress={this.onMarkerPress}
+						 //onPress={(marker.title) => this._handleTextChange({})}
 						 title={marker.title}
 						 description={marker.description}
 						 identifier={marker.title}

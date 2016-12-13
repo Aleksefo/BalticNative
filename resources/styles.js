@@ -15,6 +15,7 @@ var styles = StyleSheet.create({
     flex: 1,
     height: 180,
     width: null,
+    backgroundColor: 'rgb(0, 198, 209)',
     resizeMode: 'cover',
   },
   buttonTitleText: {
