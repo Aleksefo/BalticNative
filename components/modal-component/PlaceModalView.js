@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Modal, Text, TouchableHighlight, View, TouchableOpacity, AsyncStorage } from 'react-native';
 import api from '../utils/APImanager.js';
 import { MaterialIcons } from '@exponent/vector-icons';
+import styles from '../../resources/styles.js';
 
 
 export default class PlaceModalView extends Component {
@@ -116,9 +117,10 @@ export default class PlaceModalView extends Component {
     let weatherDataView = null;
 
     if(this.state.weatherData){
-    weatherDataView =  <View>
-                        <Text>{this.state.weatherData.temperature}</Text>
-                        <Text>{this.state.weatherData.wind}</Text>
+    weatherDataView =  <View style={{paddingTop:40}}>
+
+                          <Text style={{fontSize: 20, color: 'white'}}>Temperature: {this.state.weatherData.temperature.toFixed(1)}°C</Text>
+                          <Text style={{fontSize: 20, color: 'white'}}>Wind speed:  {this.state.weatherData.wind}m/s</Text>
                         </View>
     }else {
       weatherDataView = <View></View>
@@ -132,38 +134,47 @@ export default class PlaceModalView extends Component {
           transparent={true}
           visible={this.props.openModal}
           >
-         <View style={{alignItems: 'center', marginLeft: 50, marginRight: 50,marginTop: 70, width: 300, height: 500, backgroundColor: "white"}}>
-         <View style={{ backgroundColor: 'red', width: 300, height:250}}></View>
+         <View style={{alignItems: 'center', elevation: 2, marginLeft: 50,borderBottomColor: '#BDBDBD', borderBottomWidth: 1,borderRightWidth:1, borderRightColor:'#BDBDBD', marginRight: 50,marginTop: 70, width: 300, height: 500, backgroundColor: "white"}}>
+         <View style={{ backgroundColor: '#FFC107', width: 300, height:250, alignItems:'center',borderBottomColor: '#BDBDBD', borderBottomWidth: 1,borderRightWidth:1, borderRightColor:'#BDBDBD'}}>
+           <Text style={{fontSize: 30, color: 'white'}}>{this.props.popupTitle}</Text>
+           <Text style={{fontSize: 16, marginTop: 10, color: 'white'}}>{this.props.popupDescription}</Text>
+           {weatherDataView}
+         </View>
           <View style={{flex:2}}>
-            <Text style={{fontSize: 30}}>{this.props.popupTitle}</Text>
-            <Text>{this.props.popupDescription}</Text>
-            {weatherDataView}
-            <View style={{width: 300, height: 100, backgroundColor:'yellow', flexDirection:'row', justifyContent: 'center', alignItems: 'center'}}>
+
+            <View style={{width: 300, height: 100, backgroundColor:'white',borderBottomColor: '#BDBDBD', borderBottomWidth: 1,borderRightWidth:1, borderRightColor:'#BDBDBD', flexDirection:'row', justifyContent: 'center', alignItems: 'center'}}>
+            <View style={{width:100, height:50, flexDirection: 'row',justifyContent: 'center', }}>
               <View>
                 <TouchableOpacity
                 style={{width:50, height: 50,}}
                 onPress={this.upVote}>
-                  <MaterialIcons name="favorite" size={32} color="black" style={{padding: 5}}/>
+                  <MaterialIcons name="favorite" size={32} color="#FFC107" style={{padding: 5, paddingTop:5}}/>
                 </TouchableOpacity>
+
               </View>
-              <Text>UpVote</Text>
-              <Text>{this.state.upVoteCount}</Text>
+              <Text style={{fontSize:35, paddingRight:5}}>{this.state.upVoteCount}</Text>
+              </View>
+
+              <View style={{width:100, height:50, flexDirection: 'row'}}>
               <View>
                 <TouchableOpacity
-                style={{width:50, height: 50, backgroundColor: 'green'}}
+                style={{width:50, height: 50, }}
                 onPress={this.downVote}>
-                  <MaterialIcons name="flag" size={32} color="black" style={{padding: 5, alignItems: 'center'}}/>
+                  <MaterialIcons name="flag" size={32} color="#E91E63" style={{padding: 5, alignItems: 'center'}}/>
                 </TouchableOpacity>
               </View>
-              <Text>Downvote</Text>
-              <Text>{this.state.downVoteCount}</Text>
+
+              <Text style={{fontSize:35}}>{this.state.downVoteCount}</Text>
+              </View>
 
             </View>
 
-            <View style={{flex: 3, justifyContent: 'flex-end', alignItems: 'center', marginBottom: 5}}>
-            <TouchableHighlight onPress={this.setModalVisible}>
-              <Text>Close</Text>
-            </TouchableHighlight>
+            <View style={{flex: 3, justifyContent: 'flex-end', alignItems: 'center', paddingBottom: 5}}>
+
+            <TouchableOpacity onPress={this.setModalVisible} style={styles.button}>
+              <Text style={styles.buttonText}>Close</Text>
+
+            </TouchableOpacity>
             </View>
           </View>
          </View>
