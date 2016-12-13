@@ -14,8 +14,10 @@ import MapView from 'react-native-maps';
 import styles from '../../resources/styles.js'
 import api from '../utils/APImanager.js';
 import PlaceModalView from '../modal-component/PlaceModalView'
+import ReportModalView from '../modal-component/ReportModalView'
 import { MaterialIcons } from '@exponent/vector-icons';
 import placeMarker from '../../assets/place-marker-100.png';
+import poiMarker from '../../assets/poi-marker-100.png';
 
 
 export default class MapViewComponent extends Component {
@@ -24,6 +26,7 @@ export default class MapViewComponent extends Component {
 
     this.state = {
 			openModal: false,
+			openReportModal: false,
 			popupTitle: undefined,
 			popupDescription: undefined,
 			popupId: undefined,
@@ -35,15 +38,25 @@ export default class MapViewComponent extends Component {
         latitudeDelta: 20.0922,
         longitudeDelta: 7.0421
       },
-      markers: []
+      markers: [],
+			reports: []
     };
+		//Methods related to place's markers event handling, onPress and modal
     this.onMarkerPress = this.onMarkerPress.bind(this);
-		this.handleCloseModal = this.handleCloseModal.bind(this);
-		this.handleOpenModal = this.handleOpenModal.bind(this);
-		this.handleOnRegionChangeComplete = this.handleOnRegionChangeComplete.bind(this);
 		this.findMarkerFromState = this.findMarkerFromState.bind(this);
-		this.flyToMyLoc = this.flyToMyLoc.bind(this);
 		this.updateMarkerState = this.updateMarkerState.bind(this);
+		this.handleOpenModal = this.handleOpenModal.bind(this);
+		this.handleCloseModal = this.handleCloseModal.bind(this);
+
+		//Methods related to reports' markers event handling, onPress and modal
+		this.onReportPress = this.onReportPress.bind(this);
+		this.findReportFromState = this.findReportFromState.bind(this);
+		this.updateReportState = this.updateReportState.bind(this);
+		this.handleOpenReportModal = this.handleOpenReportModal.bind(this);
+		this.handleCloseReportModal = this.handleCloseReportModal.bind(this);
+
+		this.handleOnRegionChangeComplete = this.handleOnRegionChangeComplete.bind(this);
+		this.flyToMyLoc = this.flyToMyLoc.bind(this);
 		this.getMyCurrentPosition = this.getMyCurrentPosition.bind(this);
   }
 
@@ -60,14 +73,21 @@ export default class MapViewComponent extends Component {
 			this.updateMarkerState(response._bodyInit);
     });
 
+		//Get list of reports and update the state based on them
+    api.getSome("report").then(response => {
+			this.updateReportState(response._bodyInit);
+    });
+
 		this.getMyCurrentPosition();
 	}
 
 	//when user types in the search bar check if that string is found in markers title and TODO fly to that markers location
 	componentDidUpdate(){
-		for(var i=0; i<this.state.markers.length; i++){
-			if(this.props.searchString.toUpperCase() == this.state.markers[i].title.toUpperCase()){
-				console.log("FOUND MATCH!!!!" , this.state.markers[i].title);
+		if(this.props.searchString){
+			for(var i=0; i<this.state.markers.length; i++){
+				if(this.props.searchString.toUpperCase() == this.state.markers[i].title.toUpperCase()){
+						// found match in: this.state.markers[i].title
+				}
 			}
 		}
 	}
@@ -84,20 +104,39 @@ export default class MapViewComponent extends Component {
 	 );
 	}
 
-	//run through list of places and create marker objects from that list
+	//run through list of reports and create report objects from that list then change state
+	updateReportState(reportList){
+		let reportMarkerList = [];
+		let reportObject = {};
+		let reports = JSON.parse(reportList);
+
+		for(var i=0; i<reports.length; i++){
+			reportObject = {
+				title: reports[i].title,
+				description:reports[i].description,
+				latlng: {longitude: Number(reports[i].location.long), latitude: Number(reports[i].location.lat)},
+				identifier: reports[i].id
+			}
+			reportMarkerList.push(reportObject);
+		}
+
+		this.setState({
+			reports: reportMarkerList
+		});
+	}
+
+	//run through list of places and create marker objects from that list then change state
 	updateMarkerState(placesList){
-		var markerList = [];
-		var markerObject = {};
-		var placesList = JSON.parse(placesList);
-	//When map region is changed update the state
+		let markerList = [];
+		let markerObject = {};
+		let places = JSON.parse(placesList);
 
-
-		for(var i=0; i<placesList.length; i++){
+		for(var i=0; i<places.length; i++){
 			markerObject ={
-				latlng: {longitude: Number(placesList[i].location.long), latitude: Number(placesList[i].location.lat)},
-				title: placesList[i].title,
-				description: placesList[i].description,
-				identifier: placesList[i].id
+				latlng: {longitude: Number(places[i].location.long), latitude: Number(places[i].location.lat)},
+				title: places[i].title,
+				description: places[i].description,
+				identifier: places[i].id
 			}
 			markerList.push(markerObject);
 		}
@@ -108,20 +147,14 @@ export default class MapViewComponent extends Component {
 		})
 	}
 
-	handleOpenModal(modalData){
-		this.setState({
-			openModal: true,
-			popupTitle: modalData.title,
-			popupDescription: modalData.description,
-			popupId: modalData.identifier
-		})
+	//When place marker is pressed find the corresponding marker from state where we have all the places listed
+  onMarkerPress(event){
+		this.findMarkerFromState(event.nativeEvent.coordinate);
 	}
 
-	handleCloseModal(){
-		console.log("handleCloseModalhandleCloseModalhandleCloseModalhandleCloseModal");
-		this.setState({
-			openModal: false
-		})
+	//When report marker is pressed find the corresponding report marker from state where we have all the report listed
+	onReportPress(event){
+		this.findReportFromState(event.nativeEvent.coordinate)
 	}
 
 	//compare the coordinates of the pressed marker to existing ones in the state and call handleOpenModal with that markers parameters
@@ -133,10 +166,49 @@ export default class MapViewComponent extends Component {
 		}
 	}
 
-	//{"dispatchConfig":null,"_targetInst":null,"isDefaultPrevented":null,"isPropagationStopped":null,"_dispatchListeners":null,"_dispatchInstances":null,"type":null,"target":null,"eventPhase":null,"bubbles":null,"cancelable":null,"defaultPrevented":null,"isTrusted":null,"nativeEvent":null}
-  onMarkerPress(event){
-		this.findMarkerFromState(event.nativeEvent.coordinate);
+	//compare the coordinates of the pressed marker to existing ones in the state and call handleOpenModal with that markers parameters
+	findReportFromState(coordinate){
+		for(var i =0; i<this.state.reports.length; i++){
+			if(JSON.stringify(this.state.reports[i].latlng) === JSON.stringify(coordinate)){
+				//this.handleOpenModal(this.state.markers[i])
+				console.log("FOUND MATCH IN:" , this.state.reports[i]);
+				this.handleOpenReportModal(this.state.reports[i])
+			}
+		}
 	}
+
+	//handle place marker press event
+	handleOpenModal(modalData){
+		this.setState({
+			openModal: true,
+			popupTitle: modalData.title,
+			popupDescription: modalData.description,
+			popupId: modalData.identifier
+		})
+	}
+
+	handleCloseModal(){
+		this.setState({
+			openModal: false
+		})
+	}
+
+	//handle report marker press event
+	handleOpenReportModal(modalData){
+		this.setState({
+			openReportModal: true,
+			popupTitle: modalData.title,
+			popupDescription: modalData.description,
+			popupId: modalData.identifier
+		})
+	}
+
+	handleCloseReportModal(){
+		this.setState({
+			openReportModal: false
+		})
+	}
+
 
 	//when region change is completed save the region in components state.
 	handleOnRegionChangeComplete(region){
@@ -162,6 +234,7 @@ export default class MapViewComponent extends Component {
 	render() {
 		let placeModalView = null;
 		let flyMeToIosButton = null;
+		let reportModalView = null;
 
 		if(this.state.openModal){
 			placeModalView = <PlaceModalView
@@ -172,6 +245,17 @@ export default class MapViewComponent extends Component {
 					popupId={this.state.popupId}/>
 		}else {
 			placeModalView = <View></View>
+		}
+
+		if(this.state.openReportModal){
+			reportModalView = <ReportModalView
+													openModal={this.state.openReportModal}
+													callBack={this.handleCloseReportModal}
+													popupTitle={this.state.popupTitle}
+													popupDescription={this.state.popupDescription}
+													popupId={this.state.popupId}/>
+		}else{
+			reportModalView = <View></View>
 		}
 
 		//if OS is ios create flyMeToIosButton in the view
@@ -210,9 +294,6 @@ export default class MapViewComponent extends Component {
 						 onSelect={this.onMarkerPress}
 						 onPress={this.onMarkerPress}
 						 image={placeMarker}
-						 size={500}
-						 //onPress={this.onMarkerPress}
-						 //onPress={(marker.title) => this._handleTextChange({})}
 						 coordinate={marker.latlng}
 						 title={marker.title}
 						 description={marker.description}
@@ -220,9 +301,24 @@ export default class MapViewComponent extends Component {
 						 />
 					 ))}
 
+					 {this.state.reports.map(report => (
+						 <MapView.Marker
+							coordinate={report.latlng}
+							onSelect={this.onReportPress}
+							onPress={this.onReportPress}
+							image={poiMarker}
+							coordinate={report.latlng}
+							title={report.title}
+							description={report.description}
+							identifier={report.id}
+							/>
+						))}
+
+
 					</MapView>
 					{flyMeToIosButton}
 					{placeModalView}
+					{reportModalView}
 				</View>
 
 			</View>

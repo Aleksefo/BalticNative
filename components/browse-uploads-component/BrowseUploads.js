@@ -45,11 +45,9 @@ export default class BrowseUploads extends Component {
     let renderList = [];
     let uploadList = []
 
-    //Get list of places and create markers from that list
+    //Get list of reports and update the state based on them
     api.getSome("report").then(response => {
       var response = JSON.parse(response._bodyInit)
-
-      console.log("response: " , response);
 
       for(var i=0; i<response.length; i++){
         let reportObject = {
@@ -65,21 +63,6 @@ export default class BrowseUploads extends Component {
       });
 
     });
-    /*
-    for(let i=0; i<30; i++){
-
-      let listObject ={
-        text: i,
-        backgroundColor:'#fafafa'
-      }
-      renderList.push(listObject)
-    }
-
-    // Set dataSource state with previously created renderList and then update this.ds
-    this.setState({
-      dataSource: this.ds.cloneWithCells(renderList , 2)
-    });*/
-
   }
 
   //Give width and height to a cell and render

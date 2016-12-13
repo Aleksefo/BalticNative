@@ -21,7 +21,6 @@ export default class PlaceModalView extends Component {
   }
 
   setModalVisible() {
-    console.log("akmslkdndsaklasnkjads");
     this.props.callBack();
   }
 
@@ -32,10 +31,9 @@ export default class PlaceModalView extends Component {
   }
 
   componentDidUpdate(){
-    console.log("componentDidUpdate PROPS:" , this.props , "this.state*****" , this.state);
 
+    //Update state only if popup exists and there isn't data yet
     if(this.props.popupId !== undefined && this.state.dataReceived == false){
-      console.log("MENTIINKÖ TÄNNE KOSKAAAN?");
       //first get the weather data for the place
       api.getSome("place?id="+this.props.popupId).then(response => {
         //var result = response._bodyInit;
