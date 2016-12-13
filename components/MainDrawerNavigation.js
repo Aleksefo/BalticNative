@@ -25,7 +25,7 @@ export default class MainDrawerNavigation extends Component {
 
   // Render the header image for the main drawer
   _renderHeader = () => {
-    return <Image source={require('../assets/maxresdefault.jpg')} style={styles.header} />;
+    return <Image source={require('../assets/bonuslogo.png')} style={styles.header} />;
   };
 
   // Renders the titles in the main drawer
