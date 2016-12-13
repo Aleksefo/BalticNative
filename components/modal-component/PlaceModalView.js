@@ -8,8 +8,10 @@ export default class PlaceModalView extends Component {
   constructor(props){
     super(props);
     state = {
-      modalVisible: false,
-      placeData: {}
+      modalVisible: this.props.openModal,
+      placeData: {},
+      upVoteCount: 'loadingUpVoteCount....',
+      downVoteCount: 'loading downVoteCount.....'
     }
     this.upVote = this.upVote.bind(this);
     this.downVote = this.downVote.bind(this);
@@ -34,23 +36,54 @@ export default class PlaceModalView extends Component {
   }
 
   componentDidUpdate(){
-    if(this.props.popupId !== undefined){
+    if(this.props.popupId !== undefined && this.props.openModal == true){
+      //first get the weather data for the place
       api.getSome("place?id="+this.props.popupId).then(response => {
         //var result = response._bodyInit;
         //var placeInfo = JSON.parse(response_bodyInit)
-  			console.log("RESPONSE!!", response._bodyInit);
         var responseObject = JSON.parse(response._bodyInit);
+        console.log("wearherdata: " , responseObject);
 
-        /*this.setState ({
-          placeData: {
-            votes: responseObject.votes,
-            weatherData: responseObject.weatherData,
-            id: responseObject.id
-          }
-        })*/
+
+          var upVoteCount =0;
+          var downVoteCount =0;
+
+           for(var i=0; i<responseObject.votes.length; i++){
+             if(responseObject.votes[i].vote === true){
+               console.log("UP");
+               upVoteCount ++;
+             }else if(responseObject.votes[i].vote === false) {
+               console.log("DOWN");
+               downVoteCount ++
+             }
+           }
+
+           this.setState({
+             weatherData: responseObject.weatherData,
+             upVoteCount: upVoteCount,
+             downVoteCount: downVoteCount
+           })
       });
+
     }
+
   }
+
+  /*
+"votes":[
+{"profileId":"auth0|5846bc895d3ccb985cf4fa7c",
+"date":"2016-12-13T15:36:09.424Z",
+"vote":true},
+
+{"profileId":"google-oauth2|105185586303115555386",
+"date":"2016-12-13T16:11:44.972Z",
+"vote":false},
+
+{"profileId":"google-oauth2|105185586303115555386",
+"date":"2016-12-13T16:11:44.972Z",
+"vote":false}
+]
+  */
 
   upVote(){
     console.log("UPVOTE PRESSED!" , this.props , this.state.id_token);
@@ -68,10 +101,23 @@ export default class PlaceModalView extends Component {
   }
 
   downVote(){
-    console.log("DOWNVOTE PRESSED!");
+    console.log("DOWNVOTE PRESSED!" , this.props , this.state.id_token);
+    var id_token = this.state.id_token;
+
+    if(this.props.popupId){
+      api.getSomeAsUser("place/downvote?id="+this.props.popupId , id_token).then(response => {
+
+        console.log("getSomeAsUser response " , response)
+
+      });
+    }
+    //http://balticapp.fi/lukeB/place/downvote?id=28h2e82818210u
   }
 
   render() {
+
+    console.log("this.state:" , this.state)
+
     return (
         <Modal
           animationType={"fade"}
@@ -93,7 +139,7 @@ export default class PlaceModalView extends Component {
                   <MaterialIcons name="favorite" size={32} color="black" style={{padding: 5}}/>
                 </TouchableOpacity>
               </View>
-              <Text>Upvote</Text>
+              <Text>UpVote</Text>
               <View>
                 <TouchableOpacity
                 style={{width:50, height: 50, backgroundColor: 'green'}}
