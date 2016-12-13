@@ -72,23 +72,9 @@ class CameraScreen extends React.Component {
 							marginTop: 70}}>
 							<View>
 								{ imageForm }
-
-								<TouchableHighlight onPress={() => {
-									this.setModalVisible(!this.state.modalVisible)
-								}}>
-									<Text>Hide Modal</Text>
-								</TouchableHighlight>
-
 							</View>
 						</View>
 					</Modal>
-
-					<TouchableHighlight onPress={() => {
-						this.setModalVisible(true)
-					}}>
-						<Text>Show Modal</Text>
-					</TouchableHighlight>
-
 				</View>
 			</View>
 		);

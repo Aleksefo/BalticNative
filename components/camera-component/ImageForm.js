@@ -12,16 +12,35 @@ class ImageForm extends React.Component {
 		this.savingAttempt = this.savingAttempt.bind(this);
 		// it's not necessary to bind savePhoto
 		this.state = {
-			id_token: ""
+			id_token: "",
+			myCurrentPosition: {
+				latitude: 70.78825,
+				longitude: 24.4324
+			},
 		};
 		this.convertImage = this.convertImage.bind(this);
 		this.readerCallback = this.readerCallback.bind(this);
+		this.getMyCurrentPosition = this.getMyCurrentPosition.bind(this);
 	}
 
 	componentDidMount(){
 		AsyncStorage.getItem("id_token", (err, result) => {
 			this.setState({id_token: result})
 		});
+
+		this.getMyCurrentPosition()
+	}
+
+	//Called from component did mount. get users current position and set it as state.
+	getMyCurrentPosition(){
+		navigator.geolocation.getCurrentPosition(
+			(position) => {
+				//console.log("position " , JSON.stringify(position));
+				this.setState({myCurrentPosition: position.coords});
+			},
+			(error) => alert(JSON.stringify(error)),
+			{enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
+		);
 	}
 
 	updateTextCaptionValue = caption => this.props.setCaption(caption);
@@ -83,8 +102,8 @@ class ImageForm extends React.Component {
 		var reportForm ={
 			title: "My Photo",
 			location: {
-				long: "22.122759",
-				lat: "60.425572",
+				long: this.state.myCurrentPosition.longitude,
+				lat: this.state.myCurrentPosition.latitude,
 			},
 			image: result,
 			description: this.props.caption,
