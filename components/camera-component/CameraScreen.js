@@ -62,9 +62,6 @@ class CameraScreen extends React.Component {
 						animationType={"fade"}
 						transparent={true}
 						visible={this.state.modalVisible}
-						onRequestClose={() => {
-							alert("Modal has been closed.")
-						}}
 					>
 						<View style={{flex: 1,
 							justifyContent: 'center',

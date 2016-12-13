@@ -146,7 +146,7 @@ class ImageForm extends React.Component {
 
 					<TextInput
 						style={styles.textInput}
-						placeholder="Write a caption to your photo..."
+						placeholder="Write a description for your report..."
 						onChangeText={this.updateTextCaptionValue}
 						value={this.props.caption}
 						autoCorrect={false}
