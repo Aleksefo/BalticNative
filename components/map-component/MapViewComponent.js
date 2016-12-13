@@ -15,6 +15,7 @@ import styles from '../../resources/styles.js'
 import api from '../utils/APImanager.js';
 import PlaceModalView from '../modal-component/PlaceModalView'
 import { MaterialIcons } from '@exponent/vector-icons';
+import placeMarker from '../../assets/placemarker.png';
 
 
 export default class MapViewComponent extends Component {
@@ -208,6 +209,8 @@ export default class MapViewComponent extends Component {
 						 coordinate={marker.latlng}
 						 onSelect={this.onMarkerPress}
 						 onPress={this.onMarkerPress}
+						 image={placeMarker}
+						 size={500}
 						 //onPress={this.onMarkerPress}
 						 //onPress={(marker.title) => this._handleTextChange({})}
 						 coordinate={marker.latlng}
