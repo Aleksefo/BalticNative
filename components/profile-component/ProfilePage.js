@@ -26,13 +26,11 @@ export default class ProfilePage extends Component {
     super(props);
 
     this.state = {
-      username: "",
-      userage: "",
-      usergender: "",
-      useremail: "",
-      userlocation: "",
-      userhobby: "",
-      userbio: "",
+      userName: "",
+      userGender: "",
+      userLocation: "",
+      userHobby: "",
+      userBio: "",
       isEditingName: false,
       isEditingInfo: false,
       userimage: null,
@@ -41,6 +39,7 @@ export default class ProfilePage extends Component {
 
     this.handleEditName = this.handleEditName.bind(this);
     this.handleEditInfo = this.handleEditInfo.bind(this);
+    this.parseUserInfo = this.parseUserInfo.bind(this);
   }
   static route = {
     navigationBar: {
@@ -59,40 +58,38 @@ export default class ProfilePage extends Component {
           }else{
             //http://balticapp.fi/lukeB/user?id=2u190e2u02190u
               this.setState({isLoggedIn: true});
-              api.getSomeAsUser("user?id="+ result , result).then(response => {
-                  console.log("componentWillMount:" , response);
-                  /*TODO: response_bodyInit will return null, eventhough the status is 200...
-                  when fiexd set the incoming values to this.states
-                    username: "",
-                    userage: "",
-                    usergender: "",
-                    useremail: "",
-                    userlocation: "",
-                    userhobby: "",
-                    userbio: "",
 
-                    */
-                  //this.setState({userInfo: JSON.parse(response._bodyInit)});
+              api.getSomeAsUser("user/me", result).then(response => {
+                  console.log("componentWillMount:" , response);
+                  let userInfo = JSON.parse(response._bodyInit);
+
+                  this.setState({
+                    userName: userInfo.username,
+                    userBio: userInfo.bio,
+                    userLocation: userInfo.location,
+                    userGender: userInfo.gender,
+                    userHobby: userInfo.hobby,
+                  });
               });
           }
       });
   }
 
   /*User presses isEditingNameView check if state isEditingName is true
-   -> this means that we should save the typed value(this.state.username)
+   -> this means that we should save the typed value(this.state.userName)
    and update it to the server
-   If isEditingName is false that means user is about to edit username
+   If isEditingName is false that means user is about to edit userName
    so toggle the state and TextInput editable property will change also*/
   handleEditName(){
       if (this.state.isEditingName) {
           AsyncStorage.getItem("id_token", (err, result) => {
               if (result == null) {
               } else {
-                //http://balticapp.fi/lukeB/user/set-username?username=JohnDoe
-                  api.getSomeAsUser("user/set-username?username=" + this.state.username, result).then(response => {
+                //http://balticapp.fi/lukeB/user/set-userName?userName=JohnDoe
+                  api.getSomeAsUser("user/set-userName?userName=" + this.state.userName, result).then(response => {
                     console.log("handleEditName response:" , response);
                     if(response.status !== 200){
-                      Alert.alert("Couldn't edit username. Username may have already been taken");
+                      Alert.alert("Couldn't edit userName. Username may have already been taken");
                     }
                   });
                   this.setState({
@@ -113,13 +110,31 @@ export default class ProfilePage extends Component {
    so toggle the state and TextInput editable properties will change also*/
   handleEditInfo(){
       if (this.state.isEditingInfo) {
+
+          let userBio = this.state.userBio;
+          let userLocation = this.state.userLocation;
+          let userGender = this.state.userGender;
+          let userHobby = this.state.userHobby;
+
+          if(!this.state.userBio){
+            userBio = " "
+          }
+          if(!this.state.userLocation){
+            userLocation = " "
+          }
+          if(!this.state.userGender){
+            userGender = " "
+          }
+          if(!this.state.userHobby){
+            userHobby = " "
+          }
+
           let userData = {
               id: "",
-              email: this.state.useremail,
-              bio: this.state.userbio,
-              location: this.state.userlocation,
-              gender: this.state.usergender,
-              hobby: this.state.userhobby,
+              bio: userBio,
+              location: userLocation,
+              gender: userGender,
+              hobby: userHobby,
           };
           AsyncStorage.getItem("id_token", (err, result) => {
               if (result == null) {
@@ -138,6 +153,10 @@ export default class ProfilePage extends Component {
               isEditingInfo: !this.state.isEditingInfo
           });
       }
+  }
+
+  parseUserInfo(){
+
   }
 
   render() {
@@ -175,43 +194,42 @@ export default class ProfilePage extends Component {
           isEditingNameView = <MaterialIcons name="create" size={24} color="white"/>
       }
       if(this.state.isEditingInfo) {
-          isEditingInfoView = <MaterialIcons name="save" size={24} color="white"/>
+          isEditingInfoView = <MaterialIcons name="save" size={24} color="black"/>
       } else {
-          isEditingInfoView = <MaterialIcons name="create" size={24} color="white"/>
+          isEditingInfoView = <MaterialIcons name="create" size={24} color="black"/>
       }
     return (
       <View style={{flex:1}}>
           <View style={{flex: 1}}>
                 <View style={styles.profileInfoStyle}>
-                    <TouchableOpacity onPress={this.handleEditName} style={{position: 'absolute', right: 10, top: 10}}>{isEditingNameView}</TouchableOpacity>
                   <View style={styles.profileInfoTextStyle}>
                       <Text style={{color: 'white'}}>Username</Text>
-                        <TextInput onChangeText={(username) => this.setState({username})} placeholder="" editable={this.state.isEditingName} style={{fontSize:35, color: 'white', marginLeft: 10}}></TextInput>
+                        <TextInput onChangeText={(userName) => this.setState({userName})} placeholder="" editable={this.state.isEditingName} style={{fontSize:35, color: 'white', marginLeft: 10}}>{this.state.userName}</TextInput>
                   </View>
-                    <TouchableOpacity onPress={this.handleEditInfo}  style={{position: 'absolute', right: 10, bottom: 10}}>{isEditingInfoView}</TouchableOpacity>
+                  <TouchableOpacity onPress={this.handleEditName} style={{position: 'absolute', right: 10, bottom: 10}}>{isEditingNameView}</TouchableOpacity>
                 </View>
 
                 <View style={styles.profilePageMainWhite}>
                   <Text>Biography</Text>
 
-                  <ScrollView>
-                      <TextInput onChangeText={(userbio) => this.setState({userbio})} placeholder="" editable={this.state.isEditingInfo} style={{fontSize:35, color: 'black', marginLeft: 10}}></TextInput>
-                  </ScrollView>
+                      <TextInput onChangeText={(userBio) => this.setState({userBio})} placeholder="" editable={this.state.isEditingInfo} style={{fontSize:20, color: 'black', marginLeft: 10}}>{this.state.userBio}</TextInput>
+                  <TouchableOpacity onPress={this.handleEditInfo}  style={{position: 'absolute', right: 10, bottom: 10}}>{isEditingInfoView}</TouchableOpacity>
+
                 </View>
 
                 <View style={styles.profilePageMainGrey}>
                     <Text>Location</Text>
-                    <TextInput onChangeText={(userlocation) => this.setState({userlocation})} placeholder="" editable={this.state.isEditingInfo} style={{fontSize:35, color: 'white', marginLeft: 10}}></TextInput>
+                    <TextInput onChangeText={(userLocation) => this.setState({userLocation})} placeholder="" editable={this.state.isEditingInfo} style={{fontSize:20, color: 'white', marginLeft: 10}}>{this.state.userLocation}</TextInput>
                 </View>
 
                 <View style={styles.profilePageMainWhite}>
                     <Text>Gender</Text>
-                    <TextInput onChangeText={(usergender) => this.setState({usergender})} placeholder="" editable={this.state.isEditingInfo} style={{fontSize:35, color: '#BDBDBD', marginLeft: 10}}></TextInput>
+                    <TextInput onChangeText={(userGender) => this.setState({userGender})} placeholder="" editable={this.state.isEditingInfo} style={{fontSize:20, color: '#BDBDBD', marginLeft: 10}}>{this.state.userGender}</TextInput>
                 </View>
 
                 <View style={styles.profilePageMainGrey}>
                   <Text>Hobby</Text>
-                    <TextInput onChangeText={(userhobby) => this.setState({userhobby})} placeholder="" editable={this.state.isEditingInfo} style={{fontSize:35, color: 'white', marginLeft: 10}}></TextInput>
+                    <TextInput onChangeText={(userHobby) => this.setState({userHobby})} placeholder="" editable={this.state.isEditingInfo} style={{fontSize:20, color: 'white', marginLeft: 10}}>{this.state.userHobby}</TextInput>
                 </View>
 
               {logOutButtonView}
