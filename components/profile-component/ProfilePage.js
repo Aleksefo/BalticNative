@@ -60,7 +60,6 @@ export default class ProfilePage extends Component {
               this.setState({isLoggedIn: true});
 
               api.getSomeAsUser("user/me", result).then(response => {
-                  console.log("componentWillMount:" , response);
                   let userInfo = JSON.parse(response._bodyInit);
 
                   this.setState({
@@ -141,7 +140,6 @@ export default class ProfilePage extends Component {
               } else {
                   //http://www.balticapp.fi/lukeB/user/update
                   api.createSome("user/update", userData, result).then(response => {
-                    console.log("handleEditInfo response: " , response);
                   });
                   this.setState({
                       isEditingInfo: !this.state.isEditingInfo
