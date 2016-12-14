@@ -99,7 +99,7 @@ export default class MapViewComponent extends Component {
 			 this.setState({myCurrentPosition: position.coords});
 		 },
 		 (error) => {
-			 console.log("getMyCurrentPosition error" , error);
+			 console.log("getMyCurrentPosition error " , error);
 		 },
 		 {enableHighAccuracy: false, timeout: 20000, maximumAge: 1000}
 	 );
