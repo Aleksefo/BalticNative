@@ -129,7 +129,7 @@ class ImageForm extends React.Component {
 
 		console.log("before api" , id_token );
 
-		api.createSome('report' , reportForm, id_token).then(response => {
+		api.createSome('report/create' , reportForm, id_token).then(response => {
 			console.log("createSome report callback " , response);
 		})
 	}
