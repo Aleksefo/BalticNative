@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import { View, TouchableOpacity, StyleSheet } from 'react-native';
-import { Foundation } from '@exponent/vector-icons';
 import { ImagePicker, Components } from 'exponent';
+import { Foundation } from '@exponent/vector-icons';
 
 class CameraTakePhoto extends React.Component {
 	constructor(props) {
@@ -14,23 +14,26 @@ class CameraTakePhoto extends React.Component {
 		await ImagePicker.launchCameraAsync({ allowsEditing: true, aspect: [1, 1] })
 			.then((result) => {
 				this.props.setPhoto(result);
+				this.props.setModalVisible(true)
 			});
 	}
 
 	render() {
 		return (
               <TouchableOpacity onPress={this.showCamera}>
-                  <Foundation
-                      style={styles.icon}
-                      name="camera"
-                  />
+				  <Foundation
+					  style={styles.icon}
+					  name="camera"
+					  size={64}
+				  />
               </TouchableOpacity>
 		);
 	}
 }
 
 CameraTakePhoto.propTypes = {
-	setPhoto: PropTypes.func.isRequired
+	setPhoto: PropTypes.func.isRequired,
+	setModalVisible: PropTypes.func.isRequired
 };
 
 const styles = StyleSheet.create({
@@ -46,9 +49,7 @@ const styles = StyleSheet.create({
 
 	icon: {
 		backgroundColor: 'transparent',
-		color: '#FFF',
-		fontSize: 38,
-		padding: 5,
+		color: '#FFC107',
 		alignItems: 'center'
 	}
 });

@@ -5,3 +5,4 @@
 node_modules/.staging/
 node_modules/normalize-package-data/test/normalize.js~
 .exponent/packager-info.json
+.exponent/packager-info.json

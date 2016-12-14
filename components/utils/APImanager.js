@@ -5,11 +5,6 @@
  console.log("testServerConnection callback " , response.status , response.type , response.ok);
  });
 
-<<<<<<< HEAD
- api.getSome("category").then(response => {
- console.log("getSome callback category " , response);
- });
-=======
 api.getSome("category").then(response => {
   console.log("getSome callback category " , response);
 });
