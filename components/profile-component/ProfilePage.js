@@ -126,19 +126,20 @@ export default class ProfilePage extends Component {
       <View style={{flex:1}}>
           <View style={{flex: 1}}>
                 <View style={styles.profileInfoStyle}>
-                  <View style={{width:50, height:50, backgroundColor:'red', marginTop:10, marginLeft: 10, borderRadius:30}}></View>
+                    <TouchableOpacity onPress={this.handleEditName} style={{position: 'absolute', right: 20, top: 20}}><MaterialIcons name="create" size={24} color="white"/></TouchableOpacity>
                   <View style={styles.profileInfoTextStyle}>
-                  <TouchableOpacity onPress={this.handleEditName}><Text><MaterialIcons name="save" size={24} color="black" style={{padding: 10}}/>Save username</Text></TouchableOpacity>
-                      <Text>User name</Text>
-                  <TextInput onChangeText={(username) => this.setState({username})} placeholder="" editable={this.state.editUser} style={{fontSize:35, color: 'black', marginLeft: 10}}>{this.state.userInfo.username}</TextInput>
+
+                      <Text style={{color: 'white'}}>Username</Text>
+                  <TextInput onChangeText={(username) => this.setState({username})} placeholder="" editable={this.state.editUser} style={{fontSize:35, color: 'white', marginLeft: 10}}>{this.state.userInfo.username}</TextInput>
 
 
 
                   </View>
                 </View>
 
-              <TouchableOpacity onPress={this.handleEditInfo}><Text><MaterialIcons name="save" size={24} color="black" style={{padding: 10}}/>Save fields</Text></TouchableOpacity>
+
                 <View style={styles.profilePageMainWhite}>
+                    <TouchableOpacity onPress={this.handleEditInfo} style={{position: 'absolute', right: 10, top: 10}}><MaterialIcons name="create" size={24} color="black"/></TouchableOpacity>
                   <Text>Biography</Text>
                   <ScrollView>
                       <TextInput onChangeText={(userbio) => this.setState({userbio})} placeholder="" editable={this.state.editUser} style={{fontSize:35, color: 'black', marginLeft: 10}}>{this.state.userInfo.bio}</TextInput>
@@ -146,7 +147,7 @@ export default class ProfilePage extends Component {
                 </View>
 
                 <View style={styles.profilePageMainGrey}>
-                    <Text style={{color: 'white'}}>Location</Text>
+                    <Text>Location</Text>
                     <TextInput onChangeText={(userlocation) => this.setState({userlocation})} placeholder="" editable={this.state.editUser} style={{fontSize:35, color: 'white', marginLeft: 10}}>{this.state.userInfo.location}</TextInput>
                 </View>
 
@@ -156,7 +157,7 @@ export default class ProfilePage extends Component {
                 </View>
 
                 <View style={styles.profilePageMainGrey}>
-                  <Text style={{color: 'white'}}>Hobby</Text>
+                  <Text>Hobby</Text>
                     <TextInput onChangeText={(userhobby) => this.setState({userhobby})} placeholder="" editable={this.state.editUser} style={{fontSize:35, color: 'white', marginLeft: 10}}>{this.state.userInfo.hobby}</TextInput>
                 </View>
 
