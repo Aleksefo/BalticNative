@@ -173,7 +173,6 @@ export default class MapViewComponent extends Component {
 		for(var i =0; i<this.state.reports.length; i++){
 			if(JSON.stringify(this.state.reports[i].latlng) === JSON.stringify(coordinate)){
 				//this.handleOpenModal(this.state.markers[i])
-				console.log("FOUND MATCH IN:" , this.state.reports[i]);
 				this.handleOpenReportModal(this.state.reports[i])
 			}
 		}
