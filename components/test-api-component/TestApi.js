@@ -70,7 +70,7 @@ export default class MyComponent extends Component {
 
         console.log("before api", id_token);
 
-        api.createSome('place', testPlace, id_token).then(response => {
+        api.createSome('place/create', testPlace, id_token).then(response => {
             console.log("createSome callback ", response);
         });
     }
