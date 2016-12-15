@@ -41,7 +41,6 @@ class ImageForm extends React.Component {
 		navigator.geolocation.getCurrentPosition(
 			(position) => {
 				this.setState({myCurrentPosition: position.coords});
-				console.log("get position " , JSON.stringify(position));
 			},
 			(error) => alert(JSON.stringify(error)),
 			{enableHighAccuracy: false, timeout: 20000, maximumAge: 1000}
@@ -52,7 +51,6 @@ class ImageForm extends React.Component {
 		navigator.geolocation.watchPosition(
 			(position) => {
 				this.setState({myCurrentPosition: position.coords});
-				console.log("updated position " , JSON.stringify(position));
 			},
 			(error) => alert(JSON.stringify(error)),
 			{enableHighAccuracy: false, timeout: 20000}
@@ -62,14 +60,7 @@ class ImageForm extends React.Component {
 	updateTextCaptionValue = caption => this.props.setCaption(caption);
 
 	savingAttempt() {
-		Alert.alert(
-			'Really want to save that picture?',
-			null,
-			[
-				{ text: 'Save', onPress: () => this.savePhoto() },
-				{ text: 'Cancel', onPress: () => null, style: 'cancel' }
-			]
-		);
+		this.savePhoto()
 	}
 
 	savePhoto() {
@@ -86,33 +77,23 @@ class ImageForm extends React.Component {
 			JSON.stringify(imageToSave),
 			(err) => {
 				if (err) {
-					// console.log('ERROR: ', err);
 				} else {
 					// clean photo and caption
 					this.props.setPhoto({});
 					this.props.setCaption('');
 
-					Alert.alert(
-						'Saved!',
-						' ',
-						[
-							{ text: 'OK', onPress: () => this.convertImage(this.props.photo.uri) }
-						]
-					);
+					this.convertImage(this.props.photo.uri)
 				}
 			}
 		);
 	}
 	convertImage(dataUrl){
-		console.log("dataUri in convertImage " , dataUrl);
 		ImageStore.getBase64ForTag(dataUrl, this.readerCallback, this.readerCallback);
 		this.props.setModalVisible(false)
 
 	}
 
 	readerCallback(result){
-		console.log("readerCallback result:" , result);
-		console.log("image url:" , this.props.photo.uri);
 		var id_token = this.state.id_token;
 
 		var reportForm ={
@@ -127,10 +108,8 @@ class ImageForm extends React.Component {
 			categoryId: ""
 		};
 
-		console.log("before api" , id_token );
 
 		api.createSome('report' , reportForm, id_token).then(response => {
-			console.log("createSome report callback " , response);
 		})
 	}
 
