@@ -85,7 +85,7 @@ export default class ProfilePage extends Component {
               if (result == null) {
               } else {
                 //http://balticapp.fi/lukeB/user/set-userName?userName=JohnDoe
-                  api.getSomeAsUser("user/set-userName?userName=" + this.state.userName, result).then(response => {
+                  api.getSomeAsUser("user/set-username?username=" + this.state.userName, result).then(response => {
                     console.log("handleEditName response:" , response);
                     if(response.status !== 200){
                       Alert.alert("Couldn't edit userName. Username may have already been taken");
@@ -210,7 +210,6 @@ export default class ProfilePage extends Component {
                 </View>
 
                 <View style={styles.profilePageMainWhite}>
-                    <TouchableOpacity onPress={this.handleEditInfo} style={{position: 'absolute', right: 10, top: 10}}><MaterialIcons name="create" size={24} color="black"/></TouchableOpacity>
                   <Text>Biography</Text>
 
                       <TextInput onChangeText={(userBio) => this.setState({userBio})} placeholder="" editable={this.state.isEditingInfo} style={{fontSize:20, color: 'black', marginLeft: 10}}>{this.state.userBio}</TextInput>
