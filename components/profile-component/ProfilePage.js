@@ -53,6 +53,7 @@ export default class ProfilePage extends Component {
   */
   componentWillMount(){
       AsyncStorage.getItem("id_token", (err, result) => {
+
           if (result == null) {
               this.setState({isLoggedIn: false});
           }else{
@@ -61,7 +62,7 @@ export default class ProfilePage extends Component {
 
               api.getSomeAsUser("user/me", result).then(response => {
                   let userInfo = JSON.parse(response._bodyInit);
-
+                  console.log("userInfo: " , userInfo);
                   this.setState({
                     userName: userInfo.username,
                     userBio: userInfo.bio,
@@ -140,6 +141,7 @@ export default class ProfilePage extends Component {
               } else {
                   //http://www.balticapp.fi/lukeB/user/update
                   api.createSome("user/update", userData, result).then(response => {
+                    console.log("handleEditInfo response" , response);
                   });
                   this.setState({
                       isEditingInfo: !this.state.isEditingInfo

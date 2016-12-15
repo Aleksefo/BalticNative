@@ -52,6 +52,9 @@ let serverCommunicator = {
 	},
 
 	 getSomeAsUser: function(destination, id_token){
+
+		 console.log("getSomeAsUser" , destination , id_token);
+
 	   return fetch('http://www.balticapp.fi/lukeB/'+destination,
 	   {
 	     method: 'get',
@@ -60,9 +63,11 @@ let serverCommunicator = {
            })
 	   })
 	     .then((response) => {
+				 console.log("getSomeAsUser response ", response);
 	        return response
 	     })
 	     .catch((err) => {
+				 console.log("getSomeAsUser err ", err);
 	         return err
 	     });
 	 },
