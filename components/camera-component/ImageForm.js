@@ -14,8 +14,8 @@ class ImageForm extends React.Component {
 		this.state = {
 			id_token: "",
 			myCurrentPosition: {
-				latitude: 0.0,
-				longitude: 0.0
+				latitude: 0,
+				longitude: 0
 			},
 		};
 		this.convertImage = this.convertImage.bind(this);
@@ -36,7 +36,7 @@ class ImageForm extends React.Component {
 
 	componentWillUnmount() {
 		console.log("component will unmoount");
-    navigator.geolocation.clearWatch();
+    //navigator.geolocation.clearWatch();
   }
 
 	//Called from component did mount. get users current position and set it as state.
@@ -47,7 +47,7 @@ class ImageForm extends React.Component {
 				console.log("get position " , JSON.stringify(position));
 			},
 			(error) => {
-				console.log("getMyCurrentPosition error ");
+				console.log("getMyCurrentPosition error " , error);
 			},
 			{enableHighAccuracy: false, timeout: 20000, maximumAge: 5000}
 		);
@@ -61,7 +61,7 @@ class ImageForm extends React.Component {
 				console.log("updated position " , JSON.stringify(position));
 			},
 			(error) => {
-				console.log("getMyCurrentPosition error ");
+				console.log("updateMyCurrentPosition error " , error);
 			},
 			{enableHighAccuracy: false, timeout: 15000}
 		)
@@ -135,6 +135,8 @@ class ImageForm extends React.Component {
 			categoryId: ""
 		};
 
+		console.log("REPORT FORM!");
+
 		api.createSome('report/create' , reportForm, id_token).then(response => {
 			console.log("createSome report callback " , response);
 			Alert.alert(
@@ -161,6 +163,9 @@ class ImageForm extends React.Component {
 
 
 	render() {
+
+		console.log("this.state.my" , this.state.myCurrentPosition);
+
 		return (
 			<View style={styles.formContainer}>
 				<View style={styles.imageContainer}>
