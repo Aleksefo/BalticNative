@@ -77,31 +77,29 @@ export default class LoginView extends Component {
         console.log("params",params);
         console.log("hash",hash);
 
-        //TODO: _onNavigationStateChange gets called everytime when webview loads and stops loading ->
-        //this causes this method to be fired many times also..
-        //later find a way to distinquish when we're in redirect page versus the original page
         let myList = [];
 
-
-        if (params.length == 3) {
+        if (params.length == 4) {
             for (let i = 0; i < params.length; i++) {
                 var a = params[i].split("=");
                 myList.push(a[1]);
             }
-            if (myList[2] == "Bearer") {
+            console.log("myList:" , myList);
+            if (myList[3] == "Bearer") {
                 AsyncStorage.setItem("access_token", myList[0]);
-                AsyncStorage.setItem("id_token", myList[1]);
+                AsyncStorage.setItem("id_token", myList[2]);
+
                 fetch('http://www.balticapp.fi/lukeB/login', {
                     method: 'get',
                     headers:new Headers({
-                        'Authorization': 'Bearer ' + myList[1]
+                        'Authorization': 'Bearer ' + myList[2]
                     })
                 })
                     .then((response) => {
                     console.log("redirection should happen");
                     this.props.navigator.pop();
 
-/*                    var asd = Router.getRoute('map');
+/*                   var asd = Router.getRoute('map');
                     console.log("homeroute " + asd);
                     let navigatorUID = Store.getState().navigation.currentNavigatorUID;
                     Store.dispatch(NavigationActions.push(navigatorUID), Router.getRoute('map'));

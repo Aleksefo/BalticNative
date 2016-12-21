@@ -25,7 +25,7 @@ export default class MapViewComponent extends Component {
     super(props);
 
     this.state = {
-			openModal: false,
+			openPlaceModal: false,
 			openReportModal: false,
 			popupTitle: undefined,
 			popupDescription: undefined,
@@ -38,22 +38,22 @@ export default class MapViewComponent extends Component {
         latitudeDelta: 20.0922,
         longitudeDelta: 7.0421
       },
-      markers: [],
+      places: [],
 			reports: []
     };
-		//Methods related to place's markers event handling, onPress and modal
-    this.onMarkerPress = this.onMarkerPress.bind(this);
-		this.findMarkerFromState = this.findMarkerFromState.bind(this);
-		this.updateMarkerState = this.updateMarkerState.bind(this);
+
+		//Generic methods for marker and popUpHandling
+		this.createMarkers = this.createMarkers.bind(this);
 		this.handleOpenModal = this.handleOpenModal.bind(this);
 		this.handleCloseModal = this.handleCloseModal.bind(this);
 
-		//Methods related to reports' markers event handling, onPress and modal
+		//Methods related to place's markers event handling
+    this.onMarkerPress = this.onMarkerPress.bind(this);
+		this.findPlaceFromState = this.findPlaceFromState.bind(this);
+
+		//Methods related to reports' markers event handling
 		this.onReportPress = this.onReportPress.bind(this);
 		this.findReportFromState = this.findReportFromState.bind(this);
-		this.updateReportState = this.updateReportState.bind(this);
-		this.handleOpenReportModal = this.handleOpenReportModal.bind(this);
-		this.handleCloseReportModal = this.handleCloseReportModal.bind(this);
 
 		this.handleOnRegionChangeComplete = this.handleOnRegionChangeComplete.bind(this);
 		this.flyToMyLoc = this.flyToMyLoc.bind(this);
@@ -70,23 +70,22 @@ export default class MapViewComponent extends Component {
 
 		//Get list of places and create markers from that list
 		api.getSome("place").then(response => {
-			this.updateMarkerState(response._bodyInit);
+			this.createMarkers(response._bodyInit, "places");
     });
 
 		//Get list of reports and update the state based on them
     api.getSome("report").then(response => {
-			this.updateReportState(response._bodyInit);
+			this.createMarkers(response._bodyInit, "reports");
     });
 
 		this.getMyCurrentPosition();
 	}
 
-	//when user types in the search bar check if that string is found in markers title and TODO fly to that markers location
+	//when user types in the search bar check if that string is found in markers
 	componentDidUpdate(){
 		if(this.props.searchString){
-			for(var i=0; i<this.state.markers.length; i++){
-				if(this.props.searchString.toUpperCase() == this.state.markers[i].title.toUpperCase()){
-						// found match in: this.state.markers[i].title
+			for(let i=0; i<this.state.places.length; i++){
+				if(this.props.searchString.toUpperCase() == this.state.places[i].title.toUpperCase()){
 				}
 			}
 		}
@@ -100,58 +99,43 @@ export default class MapViewComponent extends Component {
 			 this.setState({myCurrentPosition: position.coords});
 		 },
 		 (error) => {
-			 console.log("getMyCurrentPosition error" , error);
+			 console.log("getMyCurrentPosition error " , error);
 		 },
 		 {enableHighAccuracy: false, timeout: 20000, maximumAge: 1000}
 	 );
 	}
 
-	//run through list of reports and create report objects from that list then change state
-	updateReportState(reportList){
-		let reportMarkerList = [];
-		let reportObject = {};
-		let reports = JSON.parse(reportList);
 
-		for(var i=0; i<reports.length; i++){
-			reportObject = {
-				title: reports[i].title,
-				description:reports[i].description,
-				latlng: {longitude: Number(reports[i].location.long), latitude: Number(reports[i].location.lat)},
-				identifier: reports[i].id
-			}
-			reportMarkerList.push(reportObject);
-		}
-
-		this.setState({
-			reports: reportMarkerList
-		});
-	}
-
-	//run through list of places and create marker objects from that list then change state
-	updateMarkerState(placesList){
+	createMarkers(response, placesOrReports){
+		let marker = {};
 		let markerList = [];
-		let markerObject = {};
-		let places = JSON.parse(placesList);
+		let responseList = JSON.parse(response);
 
-		for(var i=0; i<places.length; i++){
-			markerObject ={
-				latlng: {longitude: Number(places[i].location.long), latitude: Number(places[i].location.lat)},
-				title: places[i].title,
-				description: places[i].description,
-				identifier: places[i].id
+		for(let i=0; i<responseList.length; i++){
+			marker ={
+				latlng: {longitude: Number(responseList[i].location.long), latitude: Number(responseList[i].location.lat)},
+				title: responseList[i].title,
+				description: responseList[i].description,
+				identifier: responseList[i].id
 			}
-			markerList.push(markerObject);
+			markerList.push(marker);
 		}
 
-		//update this.state.markers -> this will cause component to re-render and update the view
-		this.setState({
-			markers: markerList
-		})
+		if(placesOrReports == "places"){
+			this.setState({
+				places: markerList
+			})
+
+		}else if(placesOrReports == "reports"){
+			this.setState({
+				reports: markerList
+			})
+		}
 	}
 
 	//When place marker is pressed find the corresponding marker from state where we have all the places listed
   onMarkerPress(event){
-		this.findMarkerFromState(event.nativeEvent.coordinate);
+		this.findPlaceFromState(event.nativeEvent.coordinate);
 	}
 
 	//When report marker is pressed find the corresponding report marker from state where we have all the report listed
@@ -160,57 +144,54 @@ export default class MapViewComponent extends Component {
 	}
 
 	//compare the coordinates of the pressed marker to existing ones in the state and call handleOpenModal with that markers parameters
-	findMarkerFromState(coordinate){
-		for(var i =0; i<this.state.markers.length; i++){
-			if(JSON.stringify(this.state.markers[i].latlng) === JSON.stringify(coordinate)){
-				this.handleOpenModal(this.state.markers[i])
+	findPlaceFromState(coordinate){
+		for(let i =0; i<this.state.places.length; i++){
+			if(JSON.stringify(this.state.places[i].latlng) === JSON.stringify(coordinate)){
+				this.handleOpenModal(this.state.places[i] , "places")
 			}
 		}
 	}
 
 	//compare the coordinates of the pressed marker to existing ones in the state and call handleOpenModal with that markers parameters
 	findReportFromState(coordinate){
-		for(var i =0; i<this.state.reports.length; i++){
+		for(let i =0; i<this.state.reports.length; i++){
 			if(JSON.stringify(this.state.reports[i].latlng) === JSON.stringify(coordinate)){
-				//this.handleOpenModal(this.state.markers[i])
-				console.log("FOUND MATCH IN:" , this.state.reports[i]);
-				this.handleOpenReportModal(this.state.reports[i])
+				//this.handleOpenReportModal(this.state.reports[i])
+				this.handleOpenModal(this.state.reports[i], "reports")
 			}
 		}
 	}
 
-	//handle place marker press event
-	handleOpenModal(modalData){
-		this.setState({
-			openModal: true,
-			popupTitle: modalData.title,
-			popupDescription: modalData.description,
-			popupId: modalData.identifier
-		})
+	handleOpenModal(modalData , placesOrReports){
+		if(placesOrReports == "places"){
+			this.setState({
+				openPlaceModal: true,
+				popupTitle: modalData.title,
+				popupDescription: modalData.description,
+				popupId: modalData.identifier
+			})
+		}else if(placesOrReports == "reports"){
+			this.setState({
+				openReportModal: true,
+				popupTitle: modalData.title,
+				popupDescription: modalData.description,
+				popupId: modalData.identifier
+			})
+		}
 	}
 
-	handleCloseModal(){
-		this.setState({
-			openModal: false
-		})
-	}
+	handleCloseModal(placesOrReports){
+		if(placesOrReports == "places"){
+			this.setState({
+				openPlaceModal: false
+			});
 
-	//handle report marker press event
-	handleOpenReportModal(modalData){
-		this.setState({
-			openReportModal: true,
-			popupTitle: modalData.title,
-			popupDescription: modalData.description,
-			popupId: modalData.identifier
-		})
+		}else if(placesOrReports == "reports"){
+			this.setState({
+				openReportModal: false
+			});
+		}
 	}
-
-	handleCloseReportModal(){
-		this.setState({
-			openReportModal: false
-		})
-	}
-
 
 	//when region change is completed save the region in components state.
 	handleOnRegionChangeComplete(region){
@@ -239,13 +220,13 @@ export default class MapViewComponent extends Component {
 		let reportModalView = null;
 
 		//check the state whether or not modal should be opened
-		if(this.state.openModal){
+		if(this.state.openPlaceModal){
 			placeModalView = <PlaceModalView
-					openModal={this.state.openModal}
-					callBack={this.handleCloseModal}
-					popupTitle={this.state.popupTitle}
-					popupDescription={this.state.popupDescription}
-					popupId={this.state.popupId}/>
+													openModal={this.state.openPlaceModal}
+													closeModal={this.handleCloseModal}
+													popupTitle={this.state.popupTitle}
+													popupDescription={this.state.popupDescription}
+													popupId={this.state.popupId}/>
 		}else {
 			placeModalView = <View></View>
 		}
@@ -253,7 +234,7 @@ export default class MapViewComponent extends Component {
 		if(this.state.openReportModal){
 			reportModalView = <ReportModalView
 													openModal={this.state.openReportModal}
-													callBack={this.handleCloseReportModal}
+													closeModal={this.handleCloseModal}
 													popupTitle={this.state.popupTitle}
 													popupDescription={this.state.popupDescription}
 													popupId={this.state.popupId}/>
@@ -291,16 +272,16 @@ export default class MapViewComponent extends Component {
 						showsUserLocation={true}
 					>
 
-					{this.state.markers.map(marker => (
+					{this.state.places.map(place => (
 						<MapView.Marker
-						 coordinate={marker.latlng}
+						 coordinate={place.latlng}
 						 onSelect={this.onMarkerPress}
 						 onPress={this.onMarkerPress}
 						 image={placeMarker}
-						 coordinate={marker.latlng}
-						 title={marker.title}
-						 description={marker.description}
-						 identifier={marker.id}
+						 coordinate={place.latlng}
+						 title={place.title}
+						 description={place.description}
+						 identifier={place.id}
 						 />
 					 ))}
 
