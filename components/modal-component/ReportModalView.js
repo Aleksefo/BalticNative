@@ -22,7 +22,7 @@ export default class ReportModalView extends Component {
   }
 
   setModalVisible() {
-    this.props.callBack();
+    this.props.closeModal("reports");
   }
 
   componentDidMount(){
@@ -35,7 +35,7 @@ export default class ReportModalView extends Component {
 
     if(this.props.popupId !== undefined && this.state.dataReceived == false){
       api.getSome("report?id="+this.props.popupId).then(response => {
-        var responseObject = JSON.parse(response._bodyInit);
+        let responseObject = JSON.parse(response._bodyInit);
         //console.log("api.getSome(report?id=" , responseObject[0]);
 
         this.setState({

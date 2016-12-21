@@ -14,12 +14,13 @@ class ImageForm extends React.Component {
 		this.state = {
 			id_token: "",
 			myCurrentPosition: {
-				latitude: 70.78825,
-				longitude: 24.4324
+				latitude: 0,
+				longitude: 0
 			},
 		};
 		this.convertImage = this.convertImage.bind(this);
 		this.readerCallback = this.readerCallback.bind(this);
+		this.readerErrorCallback = this.readerErrorCallback.bind(this);
 		this.getMyCurrentPosition = this.getMyCurrentPosition.bind(this);
 		this.updateMyCurrentPosition = this.updateMyCurrentPosition.bind(this);
 	}
@@ -29,40 +30,58 @@ class ImageForm extends React.Component {
 			this.setState({id_token: result})
 		});
 
-		this.getMyCurrentPosition()
+		this.getMyCurrentPosition();
+		this.updateMyCurrentPosition();
 	}
 
-	componentDidUpdate(){
-		this.updateMyCurrentPosition()
-	}
+	componentWillUnmount() {
+		console.log("component will unmoount");
+    //navigator.geolocation.clearWatch();
+  }
 
 	//Called from component did mount. get users current position and set it as state.
 	getMyCurrentPosition(){
 		navigator.geolocation.getCurrentPosition(
 			(position) => {
 				this.setState({myCurrentPosition: position.coords});
+				console.log("get position " , JSON.stringify(position));
 			},
-			(error) => alert(JSON.stringify(error)),
-			{enableHighAccuracy: false, timeout: 20000, maximumAge: 1000}
+			(error) => {
+				console.log("getMyCurrentPosition error " , error);
+			},
+			{enableHighAccuracy: false, timeout: 20000, maximumAge: 5000}
 		);
 	}
 
 	updateMyCurrentPosition(){
+		console.log("updateMyCurrentPosition");
 		navigator.geolocation.watchPosition(
 			(position) => {
 				this.setState({myCurrentPosition: position.coords});
+				console.log("updated position " , JSON.stringify(position));
 			},
-			(error) => alert(JSON.stringify(error)),
-			{enableHighAccuracy: false, timeout: 20000}
-		);
+			(error) => {
+				console.log("updateMyCurrentPosition error " , error);
+			},
+			{enableHighAccuracy: false, timeout: 15000}
+		)
 	}
 
 	updateTextCaptionValue = caption => this.props.setCaption(caption);
 
+	//When image is cropped and used wants to save it propmt the user with aler where he/she will start uploading part
 	savingAttempt() {
-		this.savePhoto()
+		Alert.alert(
+			'Report upload will start soon.',
+			null,
+			[
+				{ text: 'All right!', onPress: () => this.savePhoto() },
+				{ text: 'Cancel', onPress: () => null, style: 'cancel' }
+			]
+		);
 	}
 
+	//saves image to camera roll and starts to convert it to base64
 	savePhoto() {
 		// Set default caption if empty
 		if (!this.props.caption) this.props.setCaption('Anonymous');
@@ -77,22 +96,30 @@ class ImageForm extends React.Component {
 			JSON.stringify(imageToSave),
 			(err) => {
 				if (err) {
+					// console.log('ERROR: ', err);
 				} else {
 					// clean photo and caption
 					this.props.setPhoto({});
 					this.props.setCaption('');
 
 					this.convertImage(this.props.photo.uri)
+
+
 				}
 			}
 		);
 	}
+
+	//convert image to base64 before attempting to upload it to the server
+	//getBase64ForTag gets three arguments dataURl and two callback functions
 	convertImage(dataUrl){
-		ImageStore.getBase64ForTag(dataUrl, this.readerCallback, this.readerCallback);
+		console.log("dataUri in convertImage " , dataUrl);
+		ImageStore.getBase64ForTag(dataUrl, this.readerCallback, this.readerErrorCallback);
 		this.props.setModalVisible(false)
 
 	}
 
+	//when convertion is complete upload the image
 	readerCallback(result){
 		var id_token = this.state.id_token;
 
@@ -108,13 +135,37 @@ class ImageForm extends React.Component {
 			categoryId: ""
 		};
 
+		console.log("REPORT FORM!");
 
-		api.createSome('report' , reportForm, id_token).then(response => {
+		api.createSome('report/create' , reportForm, id_token).then(response => {
+			console.log("createSome report callback " , response);
+			Alert.alert(
+				'Image uploaded!',
+				' ',
+				[
+					{text: 'OK'}
+				]
+			);
+
 		})
+	}
+
+	//error callback
+	readerErrorCallback(){
+		Alert.alert(
+			'There was an error with the image',
+			' ',
+			[
+				{text: 'OK'}
+			]
+		);
 	}
 
 
 	render() {
+
+		console.log("this.state.my" , this.state.myCurrentPosition);
+
 		return (
 			<View style={styles.formContainer}>
 				<View style={styles.imageContainer}>

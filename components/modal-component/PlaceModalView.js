@@ -22,7 +22,7 @@ export default class PlaceModalView extends Component {
   }
 
   setModalVisible() {
-    this.props.callBack();
+    this.props.closeModal("places");
   }
 
   componentDidMount(){
@@ -37,14 +37,14 @@ export default class PlaceModalView extends Component {
     if(this.props.popupId !== undefined && this.state.dataReceived == false){
       //first get the weather data for the place
       api.getSome("place?id="+this.props.popupId).then(response => {
-        //var result = response._bodyInit;
-        //var placeInfo = JSON.parse(response_bodyInit)
-        var responseObject = JSON.parse(response._bodyInit);
+        //let result = response._bodyInit;
+        //let placeInfo = JSON.parse(response_bodyInit)
+        let responseObject = JSON.parse(response._bodyInit);
 
-          var upVoteCount =0;
-          var downVoteCount =0;
+          let upVoteCount =0;
+          let downVoteCount =0;
 
-           for(var i=0; i<responseObject.votes.length; i++){
+           for(let i=0; i<responseObject.votes.length; i++){
              if(responseObject.votes[i].vote === true){
                upVoteCount ++;
              }else if(responseObject.votes[i].vote === false) {
@@ -59,23 +59,20 @@ export default class PlaceModalView extends Component {
              dataReceived: true
            })
       });
-
     }
-
   }
 
   upVote(){
-    var id_token = this.state.id_token;
+    let id_token = this.state.id_token;
 
     if(this.props.popupId){
       api.getSomeAsUser("place/upvote?id="+this.props.popupId , id_token).then(response => {
       });
     }
-
   }
 
   downVote(){
-    var id_token = this.state.id_token;
+    let id_token = this.state.id_token;
 
     if(this.props.popupId){
       api.getSomeAsUser("place/downvote?id="+this.props.popupId , id_token).then(response => {
