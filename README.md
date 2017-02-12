@@ -28,11 +28,13 @@ Bonus Baltic App is a media sharing application that can be used for sharing rep
 ![Alt tag](/assets/Ios.jpg?raw=true "iOS display of the map view (the only different view compared to android)")
 </br>
 iOS display of the map view (the only different view compared to android).
+
 ![Alt tag](/assets/and.png?raw=true "Android display of the map view")
 </br>
 Android display of the map view.
 
 ![Alt text](/assets/place.png?raw=true "The view from place marker")
+</br>
 The view from place marker.
 
 ![Alt text](/assets/rep.png?raw=true "The view from image marker")
